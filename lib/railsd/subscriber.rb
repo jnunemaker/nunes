@@ -30,18 +30,18 @@ module Railsd
       end
     end
 
-    # Internal: Count a metric with statsd client.
+    # Internal: Increment a metric for the client.
     #
     # metric - The String name of the metric to increment.
     #
     # Returns nothing.
-    def count(metric)
+    def increment(metric)
       if @client
         @client.increment metric
       end
     end
 
-    # Internal: Tracking the timing of a metric with statsd client.
+    # Internal: Track the timing of a metric for the client.
     #
     # metric - The String name of the metric.
     # duration_in_ms - The Integer duration of the event in milliseconds.

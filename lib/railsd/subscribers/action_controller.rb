@@ -36,8 +36,8 @@ module Railsd
         timing "action_controller.view_runtime", view_runtime if view_runtime
         timing "action_controller.db_runtime",   db_runtime   if db_runtime
 
-        count  "action_controller.format.#{format}" if format
-        count  "action_controller.status.#{status}" if status
+        increment "action_controller.format.#{format}" if format
+        increment "action_controller.status.#{status}" if status
 
         if controller && action
           namespace = "action_controller.#{controller}.#{action}"
@@ -50,7 +50,7 @@ module Railsd
         if exception_info
           exception_class, exception_message = exception_info
 
-          count "action_controller.exception.#{exception_class}"
+          increment "action_controller.exception.#{exception_class}"
         end
       end
 
