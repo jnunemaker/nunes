@@ -2,13 +2,8 @@ module Railsd
   class Subscriber
     BANG = '!'
 
-    # Public: Subscribe to a pattern of event notifications.
-    #
-    # match - The String or Regexp to subscribe to.
-    #
-    # Returns nothing.
-    def self.subscribe(match, client)
-      ActiveSupport::Notifications.subscribe match, new(client)
+    def self.subscribe(client)
+      ActiveSupport::Notifications.subscribe pattern, new(client)
     end
 
     def initialize(client)

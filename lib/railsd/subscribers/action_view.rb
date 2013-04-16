@@ -2,9 +2,11 @@ require "railsd/subscriber"
 
 module Railsd
   module Subscribers
-    class ActionViewSubscriber < ::Railsd::Subscriber
-      def self.subscribe(client)
-        super /\.action_view\Z/, client
+    class ActionView < ::Railsd::Subscriber
+      Pattern = /\.action_view\Z/
+
+      def self.pattern
+        Pattern
       end
 
       def render_template(start, ending, transaction_id, payload)
@@ -14,6 +16,8 @@ module Railsd
       def render_partial(start, ending, transaction_id, payload)
         instrument_identifier payload[:identifier], start, ending
       end
+
+      private
 
       # Private: Sends timing information about identifier event.
       def instrument_identifier(identifier, start, ending)

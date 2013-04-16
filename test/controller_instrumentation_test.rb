@@ -3,6 +3,17 @@ require "helper"
 class ControllerInstrumentationTest < ActionController::TestCase
   tests PostsController
 
+  setup :setup_subscriber
+  teardown :teardown_subscriber
+
+  def setup_subscriber
+    @subscriber = Railsd::Subscribers::ActionController.subscribe(Statsd.new)
+  end
+
+  def teardown_subscriber
+    ActiveSupport::Notifications.unsubscribe @subscriber if @subscriber
+  end
+
   test "process_action" do
     get :index
 

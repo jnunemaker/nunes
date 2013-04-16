@@ -3,8 +3,10 @@ require "railsd/subscriber"
 module Railsd
   module Subscribers
     class ActionController < ::Railsd::Subscriber
-      def self.subscribe(client)
-        super /\.action_controller\Z/, client
+      Pattern = /\.action_controller\Z/
+
+      def self.pattern
+        Pattern
       end
 
       # Internal: Instrument process_action events.

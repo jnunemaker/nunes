@@ -4,3 +4,4 @@ end
 
 require "railsd/subscriber"
 require "railsd/subscribers/action_controller"
+require "railsd/subscribers/action_view"
