@@ -15,3 +15,5 @@ require "rails_app/config/environment"
 
 require "railsd"
 require "statsd"
+
+Railsd::Subscribers::ActionController.subscribe(Statsd.new)
