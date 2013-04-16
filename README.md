@@ -1,6 +1,6 @@
 # Railsd
 
-TODO: Write a gem description
+Automatic Rails instrumentation to Statsd.
 
 ## Installation
 
