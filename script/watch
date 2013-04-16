@@ -1,0 +1,17 @@
+#!/usr/bin/env ruby
+# Run the tests when anything changes.
+
+require "pathname"
+
+# Put us where we belong, in the root dir of the project.
+Dir.chdir Pathname.new(__FILE__).realpath + "../.."
+
+require 'rb-fsevent'
+
+fs = FSEvent.new
+
+fs.watch ['lib', 'test'], latency: 1 do |*args|
+  system "clear; script/test"
+end
+
+fs.run
