@@ -4,6 +4,6 @@
 set -e
 
 cd $(dirname "$0")/..
-  script/bootstrap && ruby -I lib -r rubygems \
+  script/bootstrap && ruby -I lib -I test -r rubygems \
     -e 'require "bundler/setup"' \
     -e '(ARGV.empty? ? Dir["test/**/*_test.rb"] : ARGV).each { |f| load f }' -- "$@"
