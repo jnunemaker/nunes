@@ -3,8 +3,16 @@ require "helper"
 class InstrumentationTest < ActiveSupport::TestCase
   attr_reader :thing_class
 
-  setup :setup_class
-  teardown :teardown_class
+  setup :setup_subscriber, :setup_class
+  teardown :teardown_subscriber, :teardown_class
+
+  def setup_subscriber
+    @subscriber = Railsd::Subscribers::Railsd.subscribe(Statsd.new)
+  end
+
+  def teardown_subscriber
+    ActiveSupport::Notifications.unsubscribe @subscriber if @subscriber
+  end
 
   def setup_class
     @thing_class = Class.new {
@@ -46,6 +54,8 @@ class InstrumentationTest < ActiveSupport::TestCase
     assert_equal [{some: "thing"}], event.payload[:arguments]
     assert_equal :dude, event.payload[:result]
     assert_in_delta 0, event.duration, 0.1
+
+    assert_timer "thing.yo"
   end
 
   test "instrument_method_time with custom name in hash" do
@@ -55,6 +65,8 @@ class InstrumentationTest < ActiveSupport::TestCase
 
     assert_not_nil event, "No events were found."
     assert_equal "thingy.yohoho", event.payload[:metric]
+
+    assert_timer "thingy.yohoho"
   end
 
   test "instrument_method_time with custom name as string" do
@@ -64,6 +76,8 @@ class InstrumentationTest < ActiveSupport::TestCase
 
     assert_not_nil event, "No events were found."
     assert_equal "thingy.yohoho", event.payload[:metric]
+
+    assert_timer "thingy.yohoho"
   end
 
   test "instrument_method_time with custom payload" do
@@ -73,6 +87,8 @@ class InstrumentationTest < ActiveSupport::TestCase
 
     assert_not_nil event, "No events were found."
     assert_equal "loadin", event.payload[:pay]
+
+    assert_timer "thing.yo"
   end
 
   def slurp_events(&block)
