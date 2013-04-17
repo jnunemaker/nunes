@@ -16,6 +16,10 @@ class ActionMailer::TestCase
   include StatsdSocketTestHelpers
 end
 
+class ActiveSupport::TestCase
+  include StatsdSocketTestHelpers
+end
+
 require "rails_app/config/environment"
 
 require "railsd"
