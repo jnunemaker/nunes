@@ -19,6 +19,12 @@ module Railsd
         else
           timing "active_support.cache_read", runtime
         end
+
+        hit = payload[:hit]
+        unless hit.nil?
+          hit_type = hit ? :hit : :miss
+          increment "active_support.cache_#{hit_type}"
+        end
       end
 
       def cache_generate(start, ending, transaction_id, payload)

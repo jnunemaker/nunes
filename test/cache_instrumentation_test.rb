@@ -24,9 +24,20 @@ class CacheInstrumentationTest < ActiveSupport::TestCase
     @cache = nil
   end
 
-  test "cache_read" do
+  test "cache_read miss" do
     cache.read('foo')
+
     assert statsd_socket.timer?("active_support.cache_read")
+    assert statsd_socket.counter?("active_support.cache_miss")
+  end
+
+  test "cache_read hit" do
+    cache.write('foo', 'bar')
+    statsd_socket.clear
+    cache.read('foo')
+
+    assert statsd_socket.timer?("active_support.cache_read")
+    assert statsd_socket.counter?("active_support.cache_hit")
   end
 
   test "cache_generate" do
