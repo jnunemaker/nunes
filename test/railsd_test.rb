@@ -26,7 +26,7 @@ class RailsdTest < ActiveSupport::TestCase
     end.new
 
     adapter = Railsd.to_adapter(client_with_gauge_and_timing)
-    assert_instance_of Railsd::Adapters::Statsd, adapter
+    assert_instance_of Railsd::Adapters::Default, adapter
   end
 
   test "to_adapter for instrumental" do

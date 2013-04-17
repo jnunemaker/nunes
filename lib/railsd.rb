@@ -1,7 +1,7 @@
 require "railsd/instrumentable"
 
+require "railsd/adapters/default"
 require "railsd/adapters/instrumental"
-require "railsd/adapters/statsd"
 
 require "railsd/subscriber"
 require "railsd/subscribers/action_controller"
@@ -42,7 +42,7 @@ module Railsd
     has_gauge = client.respond_to?(:gauge)
 
     if has_increment && has_timing
-      Adapters::Statsd.new(client)
+      Adapters::Default.new(client)
     elsif has_increment && has_gauge && !has_timing
       Adapters::Instrumental.new(client)
     else

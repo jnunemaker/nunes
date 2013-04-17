@@ -1,13 +1,13 @@
 require "helper"
 require "minitest/mock"
 
-class StatsdAdapterTest < ActiveSupport::TestCase
+class DefaultAdapterTest < ActiveSupport::TestCase
   test "passes increment along" do
     mock = MiniTest::Mock.new
     mock.expect :increment, nil, ["single", 1]
     mock.expect :increment, nil, ["double", 2]
 
-    client = Railsd::Adapters::Statsd.new(mock)
+    client = Railsd::Adapters::Default.new(mock)
     client.increment("single")
     client.increment("double", 2)
 
@@ -18,7 +18,7 @@ class StatsdAdapterTest < ActiveSupport::TestCase
     mock = MiniTest::Mock.new
     mock.expect :timing, nil, ["foo", 23]
 
-    client = Railsd::Adapters::Statsd.new(mock)
+    client = Railsd::Adapters::Default.new(mock)
     client.timing("foo", 23)
 
     mock.verify
