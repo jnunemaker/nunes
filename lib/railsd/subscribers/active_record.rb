@@ -14,10 +14,10 @@ module Railsd
         runtime = ((ending - start) * 1_000).round
         name = payload[:name]
         sql = payload[:sql].to_s.strip
+        operation = sql.split(' ', 2).first.to_s.downcase
 
         timing "active_record.sql", runtime
 
-        operation = sql.split(' ', 2).first.to_s.downcase
         case operation
         when "begin"
           timing "active_record.sql.transaction_begin", runtime
