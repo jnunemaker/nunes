@@ -7,7 +7,7 @@ class ControllerInstrumentationTest < ActionController::TestCase
   teardown :teardown_subscriber
 
   def setup_subscriber
-    @subscriber = Railsd::Subscribers::ActionController.subscribe(Statsd.new)
+    @subscriber = Railsd::Subscribers::ActionController.subscribe(adapter)
   end
 
   def teardown_subscriber
@@ -53,8 +53,8 @@ class ControllerInstrumentationTest < ActionController::TestCase
     assert_timer "action_controller.runtime"
     assert_timer "action_controller.posts.some_file.runtime"
 
-    assert ! statsd_socket.timer?("action_controller.view_runtime")
-    assert ! statsd_socket.timer?("action_controller.posts.some_file.view_runtime")
+    assert ! adapter.timer?("action_controller.view_runtime")
+    assert ! adapter.timer?("action_controller.posts.some_file.view_runtime")
   end
 
   test "redirect_to" do

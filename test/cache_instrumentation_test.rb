@@ -7,7 +7,7 @@ class CacheInstrumentationTest < ActiveSupport::TestCase
   teardown :teardown_subscriber, :teardown_cache
 
   def setup_subscriber
-    @subscriber = Railsd::Subscribers::ActiveSupport.subscribe(Statsd.new)
+    @subscriber = Railsd::Subscribers::ActiveSupport.subscribe(adapter)
   end
 
   def teardown_subscriber
@@ -33,7 +33,7 @@ class CacheInstrumentationTest < ActiveSupport::TestCase
 
   test "cache_read hit" do
     cache.write('foo', 'bar')
-    statsd_socket.clear
+    adapter.clear
     cache.read('foo')
 
     assert_timer "active_support.cache_read"
@@ -47,7 +47,7 @@ class CacheInstrumentationTest < ActiveSupport::TestCase
 
   test "cache_fetch with hit" do
     cache.write('foo', 'bar')
-    statsd_socket.clear
+    adapter.clear
     cache.fetch('foo') { |key| :never_gets_here }
 
     assert_timer "active_support.cache_fetch"

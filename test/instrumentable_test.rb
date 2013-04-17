@@ -7,7 +7,7 @@ class InstrumentationTest < ActiveSupport::TestCase
   teardown :teardown_subscriber, :teardown_class
 
   def setup_subscriber
-    @subscriber = Railsd::Subscribers::Railsd.subscribe(Statsd.new)
+    @subscriber = Railsd::Subscribers::Railsd.subscribe(adapter)
   end
 
   def teardown_subscriber

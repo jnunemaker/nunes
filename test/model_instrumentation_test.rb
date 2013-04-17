@@ -5,7 +5,7 @@ class ModelInstrumentationTest < ActiveSupport::TestCase
   teardown :teardown_subscriber
 
   def setup_subscriber
-    @subscriber = Railsd::Subscribers::ActiveRecord.subscribe(Statsd.new)
+    @subscriber = Railsd::Subscribers::ActiveRecord.subscribe(adapter)
   end
 
   def teardown_subscriber
@@ -28,7 +28,7 @@ class ModelInstrumentationTest < ActiveSupport::TestCase
 
   test "update" do
     post = Post.create
-    statsd_socket.clear
+    adapter.clear
     post.update_attributes(title: "Title")
 
     assert_timer "active_record.sql"
@@ -37,7 +37,7 @@ class ModelInstrumentationTest < ActiveSupport::TestCase
 
   test "find" do
     post = Post.create
-    statsd_socket.clear
+    adapter.clear
     Post.find(post.id)
 
     assert_timer "active_record.sql"
@@ -46,7 +46,7 @@ class ModelInstrumentationTest < ActiveSupport::TestCase
 
   test "destroy" do
     post = Post.create
-    statsd_socket.clear
+    adapter.clear
     post.destroy
 
     assert_timer "active_record.sql"

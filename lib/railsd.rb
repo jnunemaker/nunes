@@ -1,5 +1,6 @@
 require "railsd/instrumentable"
 
+require "railsd/adapters/memory"
 require "railsd/adapters/default"
 require "railsd/adapters/timing_aliased"
 

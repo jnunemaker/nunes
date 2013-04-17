@@ -3,7 +3,7 @@ require "helper"
 class RailsdTest < ActiveSupport::TestCase
   test "subscribe" do
     begin
-      subscribers = Railsd.subscribe(Statsd.new)
+      subscribers = Railsd.subscribe(adapter)
       assert_instance_of Array, subscribers
 
       subscribers.each do |subscriber|

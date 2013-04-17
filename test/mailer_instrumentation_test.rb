@@ -7,7 +7,7 @@ class MailerInstrumentationTest < ActionMailer::TestCase
   teardown :teardown_subscriber
 
   def setup_subscriber
-    @subscriber = Railsd::Subscribers::ActionMailer.subscribe(Statsd.new)
+    @subscriber = Railsd::Subscribers::ActionMailer.subscribe(adapter)
   end
 
   def teardown_subscriber
