@@ -19,20 +19,23 @@ class RailsdTest < ActiveSupport::TestCase
   end
 
   test "to_adapter" do
-    adapter = Railsd.to_adapter(Statsd.new)
+    client_with_gauge_and_timing = Class.new do
+      def increment(*args); end
+      def gauge(*args); end
+      def timing(*args); end
+    end.new
+
+    adapter = Railsd.to_adapter(client_with_gauge_and_timing)
     assert_instance_of Railsd::Adapters::Statsd, adapter
   end
 
   test "to_adapter for instrumental" do
-    begin
-      module ::Instrumental
-        class Agent; end
-      end
+    client_with_gauge_but_not_timing = Class.new do
+      def increment(*args); end
+      def gauge(*args); end
+    end.new
 
-      adapter = Railsd.to_adapter(Instrumental::Agent.new)
-      assert_instance_of Railsd::Adapters::Instrumental, adapter
-    ensure
-      Object.send :remove_const, :Instrumental
-    end
+    adapter = Railsd.to_adapter(client_with_gauge_but_not_timing)
+    assert_instance_of Railsd::Adapters::Instrumental, adapter
   end
 end

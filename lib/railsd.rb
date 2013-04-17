@@ -37,12 +37,16 @@ module Railsd
   #
   # Returns Railsd::Adapter instance.
   def self.to_adapter(client)
-    if Object.const_defined?(:Instrumental) &&
-      Instrumental.const_defined?(:Agent) &&
-      client.is_a?(Instrumental::Agent)
+    has_increment = client.respond_to?(:increment)
+    has_timing = client.respond_to?(:timing)
+    has_gauge = client.respond_to?(:gauge)
+
+    if has_increment && has_timing
+      Adapters::Statsd.new(client)
+    elsif has_increment && has_gauge && !has_timing
       Adapters::Instrumental.new(client)
     else
-      Adapters::Statsd.new(client)
+      raise "I have no clue how to wrap what you've given me (#{client.inspect})"
     end
   end
 end
