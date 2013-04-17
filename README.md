@@ -1,6 +1,6 @@
 # Railsd
 
-Automatic Rails instrumentation to Statsd.
+Automatic instrumentation for Rails.
 
 ## Installation
 

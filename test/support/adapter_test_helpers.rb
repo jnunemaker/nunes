@@ -1,4 +1,4 @@
-module StatsdSocketTestHelpers
+module AdapterTestHelpers
   extend ActiveSupport::Concern
 
   included do

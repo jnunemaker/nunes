@@ -15,7 +15,12 @@ require "railsd/subscribers/railsd"
 module Railsd
   # Public: Shortcut method to setup all subscribers for a given client.
   #
-  # client - The statsd instance that will receive all instrumentation.
+  # client - The instance that will be adapted and receive all instrumentation.
+  #
+  # Examples:
+  #
+  #   Railsd.subscribe(Statsd.new)
+  #   Railsd.subscribe(Instrumental::Agent.new)
   #
   # Returns Array of subscribers that were setup.
   def self.subscribe(client)
