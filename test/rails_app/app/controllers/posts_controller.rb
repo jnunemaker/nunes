@@ -1,4 +1,5 @@
 class PostsController < ApplicationController
+  # Use fake post for controller as I don't want active record to mingle here.
   Post = Struct.new(:title)
 
   def index
