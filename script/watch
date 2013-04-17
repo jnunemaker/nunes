@@ -9,11 +9,9 @@ Dir.chdir Pathname.new(__FILE__).realpath + "../.."
 require "rb-fsevent"
 
 fs = FSEvent.new
-
 fs.watch ['lib', 'test'], latency: 1 do |args|
-  unless args[0] =~ /rails_app\/log/
+  unless args[0] =~ /rails_app\/(log|db)/
     system "clear; script/test"
   end
 end
-
 fs.run
