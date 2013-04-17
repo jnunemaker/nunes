@@ -1,5 +1,3 @@
-require "active_support/concern"
-
 module Railsd
   # Include and instrument. Simple class that makes it easy to instrument method
   # timing using ActiveSupport::Notifications.
