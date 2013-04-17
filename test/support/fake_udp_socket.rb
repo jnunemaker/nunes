@@ -1,5 +1,8 @@
 class FakeUdpSocket
+  attr_reader :buffer
+
   TimingRegex = /\:\d+\|ms\Z/
+  CounterRegex = /\:\d+\|c\Z/
 
   def initialize
     @buffer = []
@@ -17,15 +20,28 @@ class FakeUdpSocket
     @buffer = []
   end
 
-  def timer?(metric)
-    timing_messages = @buffer.grep(TimingRegex)
-    metric_names = timing_messages.map { |op| op.gsub(TimingRegex, '') }
-    metric_names.include?(metric)
+  def timer_metrics
+    @buffer.grep(TimingRegex)
   end
 
-  def counter?(metric, incr_by = 1)
-    counter_message = "#{metric}:#{incr_by}|c"
-    @buffer.include?(counter_message)
+  def timer_metric_names
+    timer_metrics.map { |op| op.gsub(TimingRegex, '') }
+  end
+
+  def timer?(metric)
+    timer_metric_names.include?(metric)
+  end
+
+  def counter_metrics
+    @buffer.grep(CounterRegex)
+  end
+
+  def counter_metric_names
+    counter_metrics.map { |op| op.gsub(CounterRegex, '') }
+  end
+
+  def counter?(metric)
+    counter_metric_names.include?(metric)
   end
 
   def inspect
