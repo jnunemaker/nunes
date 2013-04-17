@@ -1,13 +1,13 @@
 require "helper"
 require "minitest/mock"
 
-class InstrumentalAdapterTest < ActiveSupport::TestCase
+class TimingAliasedAdapterTest < ActiveSupport::TestCase
   test "passes increment along" do
     mock = MiniTest::Mock.new
     mock.expect :increment, nil, ["single", 1]
     mock.expect :increment, nil, ["double", 2]
 
-    client = Railsd::Adapters::Instrumental.new(mock)
+    client = Railsd::Adapters::TimingAliased.new(mock)
     client.increment("single")
     client.increment("double", 2)
 
@@ -18,7 +18,7 @@ class InstrumentalAdapterTest < ActiveSupport::TestCase
     mock = MiniTest::Mock.new
     mock.expect :gauge, nil, ["foo", 23]
 
-    client = Railsd::Adapters::Instrumental.new(mock)
+    client = Railsd::Adapters::TimingAliased.new(mock)
     client.timing("foo", 23)
 
     mock.verify

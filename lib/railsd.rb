@@ -1,7 +1,7 @@
 require "railsd/instrumentable"
 
 require "railsd/adapters/default"
-require "railsd/adapters/instrumental"
+require "railsd/adapters/timing_aliased"
 
 require "railsd/subscriber"
 require "railsd/subscribers/action_controller"
@@ -44,7 +44,7 @@ module Railsd
     if has_increment && has_timing
       Adapters::Default.new(client)
     elsif has_increment && has_gauge && !has_timing
-      Adapters::Instrumental.new(client)
+      Adapters::TimingAliased.new(client)
     else
       raise "I have no clue how to wrap what you've given me (#{client.inspect})"
     end

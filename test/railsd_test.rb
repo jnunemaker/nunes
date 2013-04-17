@@ -36,6 +36,6 @@ class RailsdTest < ActiveSupport::TestCase
     end.new
 
     adapter = Railsd.to_adapter(client_with_gauge_but_not_timing)
-    assert_instance_of Railsd::Adapters::Instrumental, adapter
+    assert_instance_of Railsd::Adapters::TimingAliased, adapter
   end
 end

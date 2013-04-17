@@ -2,7 +2,7 @@ require "railsd/adapter"
 
 module Railsd
   module Adapters
-    class Instrumental < ::Railsd::Adapter
+    class TimingAliased < ::Railsd::Adapter
       # Instrumental uses gauge for timing.
       def timing(metric, duration)
         @client.gauge metric, duration
