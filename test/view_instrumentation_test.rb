@@ -18,13 +18,13 @@ class ViewInstrumentationTest < ActionController::TestCase
     get :index
 
     assert_response :success
-    assert statsd_socket.timer?("action_view.app.views.posts.index.html.erb")
+    assert_timer "action_view.app.views.posts.index.html.erb"
   end
 
   test "render_partial" do
     get :index
 
     assert_response :success
-    assert statsd_socket.timer?("action_view.app.views.posts._post.html.erb")
+    assert_timer "action_view.app.views.posts._post.html.erb"
   end
 end

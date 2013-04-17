@@ -19,14 +19,14 @@ class ControllerInstrumentationTest < ActionController::TestCase
 
     assert_response :success
 
-    assert statsd_socket.counter?("action_controller.status.200")
-    assert statsd_socket.counter?("action_controller.format.html")
+    assert_counter "action_controller.status.200"
+    assert_counter "action_controller.format.html"
 
-    assert statsd_socket.timer?("action_controller.runtime")
-    assert statsd_socket.timer?("action_controller.view_runtime")
+    assert_timer "action_controller.runtime"
+    assert_timer "action_controller.view_runtime"
 
-    assert statsd_socket.timer?("action_controller.posts.index.runtime")
-    assert statsd_socket.timer?("action_controller.posts.index.view_runtime")
+    assert_timer "action_controller.posts.index.runtime"
+    assert_timer "action_controller.posts.index.view_runtime"
   end
 
   test "send_data" do
@@ -34,13 +34,13 @@ class ControllerInstrumentationTest < ActionController::TestCase
 
     assert_response :success
 
-    assert statsd_socket.counter?("action_controller.status.200")
+    assert_counter "action_controller.status.200"
 
-    assert statsd_socket.timer?("action_controller.runtime")
-    assert statsd_socket.timer?("action_controller.view_runtime")
+    assert_timer "action_controller.runtime"
+    assert_timer "action_controller.view_runtime"
 
-    assert statsd_socket.timer?("action_controller.posts.some_data.runtime")
-    assert statsd_socket.timer?("action_controller.posts.some_data.view_runtime")
+    assert_timer "action_controller.posts.some_data.runtime"
+    assert_timer "action_controller.posts.some_data.view_runtime"
   end
 
   test "send_file" do
@@ -48,10 +48,10 @@ class ControllerInstrumentationTest < ActionController::TestCase
 
     assert_response :success
 
-    assert statsd_socket.counter?("action_controller.status.200")
+    assert_counter"action_controller.status.200"
 
-    assert statsd_socket.timer?("action_controller.runtime")
-    assert statsd_socket.timer?("action_controller.posts.some_file.runtime")
+    assert_timer "action_controller.runtime"
+    assert_timer "action_controller.posts.some_file.runtime"
 
     assert ! statsd_socket.timer?("action_controller.view_runtime")
     assert ! statsd_socket.timer?("action_controller.posts.some_file.view_runtime")
@@ -62,13 +62,13 @@ class ControllerInstrumentationTest < ActionController::TestCase
 
     assert_response :redirect
 
-    assert statsd_socket.counter?("action_controller.status.302")
+    assert_counter "action_controller.status.302"
 
-    assert statsd_socket.timer?("action_controller.runtime")
-    assert statsd_socket.timer?("action_controller.posts.some_redirect.runtime")
+    assert_timer "action_controller.runtime"
+    assert_timer "action_controller.posts.some_redirect.runtime"
 
-    assert ! statsd_socket.timer?("action_controller.view_runtime")
-    assert ! statsd_socket.timer?("action_controller.posts.some_redirect.view_runtime")
+    assert_no_timer "action_controller.view_runtime"
+    assert_no_timer "action_controller.posts.some_redirect.view_runtime"
   end
 
   test "action with exception" do
@@ -76,13 +76,13 @@ class ControllerInstrumentationTest < ActionController::TestCase
 
     assert_response :success
 
-    assert statsd_socket.counter?("action_controller.exception.RuntimeError")
-    assert statsd_socket.counter?("action_controller.format.html")
+    assert_counter "action_controller.exception.RuntimeError"
+    assert_counter "action_controller.format.html"
 
-    assert statsd_socket.timer?("action_controller.runtime")
-    assert statsd_socket.timer?("action_controller.posts.some_boom.runtime")
+    assert_timer "action_controller.runtime"
+    assert_timer "action_controller.posts.some_boom.runtime"
 
-    assert ! statsd_socket.timer?("action_controller.view_runtime")
-    assert ! statsd_socket.timer?("action_controller.posts.some_boom.view_runtime")
+    assert_no_timer "action_controller.view_runtime"
+    assert_no_timer "action_controller.posts.some_boom.view_runtime"
   end
 end
