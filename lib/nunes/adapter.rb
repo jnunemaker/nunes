@@ -1,5 +1,8 @@
 module Nunes
   class Adapter
+    # Private
+    attr_reader :client
+
     # Internal: Sets the client for the adapter.
     #
     # client - The thing being adapted to a simple interface.
