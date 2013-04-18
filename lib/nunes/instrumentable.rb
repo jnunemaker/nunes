@@ -1,3 +1,5 @@
+require "active_support/notifications"
+
 module Nunes
   # Extend and instrument. Simple class that makes it easy to instrument method
   # timing using ActiveSupport::Notifications.
@@ -59,6 +61,7 @@ module Nunes
 
       action = :time
       payload = options.fetch(:payload) { {} }
+      instrumenter = options.fetch(:instrumenter) { ActiveSupport::Notifications }
 
       payload[:metric] = options.fetch(:name) {
         "#{self.name}/#{method_name}"
@@ -66,7 +69,7 @@ module Nunes
 
       nunes_wrap_method(method_name, action) do |old_method_name, new_method_name|
         define_method(new_method_name) do |*args, &block|
-          ActiveSupport::Notifications.instrument(MethodTimeEventName, payload) {
+          instrumenter.instrument(MethodTimeEventName, payload) {
             result = send(old_method_name, *args, &block)
 
             payload[:arguments] = args
