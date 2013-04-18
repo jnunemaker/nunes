@@ -42,7 +42,7 @@ class SubscriberTest < ActiveSupport::TestCase
 
   test "initialize" do
     adapter = Object.new
-    Nunes.stub :to_adapter, adapter do
+    Nunes::Adapter.stub :wrap, adapter do
       instance = subscriber_class.new({})
       assert_equal adapter, instance.adapter
     end

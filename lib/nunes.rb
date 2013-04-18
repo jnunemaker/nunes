@@ -25,7 +25,7 @@ module Nunes
   # Returns Array of subscribers that were setup.
   def self.subscribe(client)
     subscribers = []
-    adapter = to_adapter(client)
+    adapter = Nunes::Adapter.wrap(client)
 
     subscribers << Subscribers::ActionController.subscribe(adapter)
     subscribers << Subscribers::ActionView.subscribe(adapter)
@@ -35,36 +35,5 @@ module Nunes
     subscribers << Subscribers::Nunes.subscribe(adapter)
 
     subscribers
-  end
-
-  # Private: Wraps a given object with the correct adapter/decorator.
-  #
-  # client - The thing to be wrapped.
-  #
-  # Returns Nunes::Adapter instance.
-  def self.to_adapter(client)
-    if client.nil?
-      raise ArgumentError.new("client cannot be nil")
-    end
-
-    if client.is_a?(::Nunes::Adapter)
-      return client
-    end
-
-    if client.is_a?(Hash)
-      return Adapters::Memory.new(client)
-    end
-
-    has_increment = client.respond_to?(:increment)
-    has_timing = client.respond_to?(:timing)
-    has_gauge = client.respond_to?(:gauge)
-
-    if has_increment && has_timing
-      Adapters::Default.new(client)
-    elsif has_increment && has_gauge && !has_timing
-      Adapters::TimingAliased.new(client)
-    else
-      raise "I have no clue how to wrap what you've given me (#{client.inspect})"
-    end
   end
 end

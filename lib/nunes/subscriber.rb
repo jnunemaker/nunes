@@ -25,7 +25,7 @@ module Nunes
     #
     # adapter - The adapter instance to send instrumentation to.
     def initialize(adapter)
-      @adapter = Nunes.to_adapter(adapter)
+      @adapter = Nunes::Adapter.wrap(adapter)
     end
 
     # Private: Dispatcher that converts incoming events to method calls.
