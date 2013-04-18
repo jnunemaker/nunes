@@ -11,6 +11,10 @@ module Nunes
       ActiveSupport::Notifications.subscribe pattern, new(adapter)
     end
 
+    def self.pattern
+      raise "Not Implemented, override in subclass and provide a regex or string."
+    end
+
     # Internal: Initializes a new instance.
     #
     # adapter - The adapter instance to send instrumentation to.
