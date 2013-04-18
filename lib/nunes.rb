@@ -43,7 +43,14 @@ module Nunes
   #
   # Returns Nunes::Adapter instance.
   def self.to_adapter(client)
-    return client if client.is_a?(::Nunes::Adapter)
+    if client.is_a?(::Nunes::Adapter)
+      return client
+    end
+
+    if client.is_a?(Hash)
+      return Adapters::Memory.new(client)
+    end
+
     has_increment = client.respond_to?(:increment)
     has_timing = client.respond_to?(:timing)
     has_gauge = client.respond_to?(:gauge)

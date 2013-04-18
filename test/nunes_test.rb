@@ -44,4 +44,10 @@ class NunesTest < ActiveSupport::TestCase
     adapter = Nunes.to_adapter(memory)
     assert_equal memory, adapter
   end
+
+  test "to_adapter with hash" do
+    hash = {}
+    adapter = Nunes.to_adapter(hash)
+    assert_instance_of Nunes::Adapters::Memory, adapter
+  end
 end
