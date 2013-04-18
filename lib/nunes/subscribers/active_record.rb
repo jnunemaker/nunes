@@ -1,8 +1,8 @@
-require "railsd/subscriber"
+require "nunes/subscriber"
 
-module Railsd
+module Nunes
   module Subscribers
-    class ActiveRecord < ::Railsd::Subscriber
+    class ActiveRecord < ::Nunes::Subscriber
       # Private
       Pattern = /\.active_record\Z/
 

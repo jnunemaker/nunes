@@ -7,7 +7,7 @@ class InstrumentationTest < ActiveSupport::TestCase
   teardown :teardown_subscriber, :teardown_class
 
   def setup_subscriber
-    @subscriber = Railsd::Subscribers::Railsd.subscribe(adapter)
+    @subscriber = Nunes::Subscribers::Nunes.subscribe(adapter)
   end
 
   def teardown_subscriber
@@ -16,7 +16,7 @@ class InstrumentationTest < ActiveSupport::TestCase
 
   def setup_class
     @thing_class = Class.new {
-      extend Railsd::Instrumentable
+      extend Nunes::Instrumentable
 
       def self.name
         'Thing'
@@ -94,7 +94,7 @@ class InstrumentationTest < ActiveSupport::TestCase
   def slurp_events(&block)
     events = []
     callback = lambda { |*args| events << ActiveSupport::Notifications::Event.new(*args) }
-    ActiveSupport::Notifications.subscribed(callback, Railsd::Instrumentable::MethodTimeEventName, &block)
+    ActiveSupport::Notifications.subscribed(callback, Nunes::Instrumentable::MethodTimeEventName, &block)
     events
   end
 end

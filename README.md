@@ -1,4 +1,4 @@
-# Railsd
+# Nunes
 
 Automatic instrumentation for Rails.
 
@@ -6,7 +6,7 @@ Automatic instrumentation for Rails.
 
 Add this line to your application's Gemfile:
 
-    gem 'railsd'
+    gem 'nunes'
 
 And then execute:
 
@@ -14,7 +14,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install railsd
+    $ gem install nunes
 
 ## Usage
 

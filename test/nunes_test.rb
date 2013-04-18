@@ -1,9 +1,9 @@
 require "helper"
 
-class RailsdTest < ActiveSupport::TestCase
+class NunesTest < ActiveSupport::TestCase
   test "subscribe" do
     begin
-      subscribers = Railsd.subscribe(adapter)
+      subscribers = Nunes.subscribe(adapter)
       assert_instance_of Array, subscribers
 
       subscribers.each do |subscriber|
@@ -25,8 +25,8 @@ class RailsdTest < ActiveSupport::TestCase
       def timing(*args); end
     end.new
 
-    adapter = Railsd.to_adapter(client_with_gauge_and_timing)
-    assert_instance_of Railsd::Adapters::Default, adapter
+    adapter = Nunes.to_adapter(client_with_gauge_and_timing)
+    assert_instance_of Nunes::Adapters::Default, adapter
   end
 
   test "to_adapter for instrumental" do
@@ -35,7 +35,7 @@ class RailsdTest < ActiveSupport::TestCase
       def gauge(*args); end
     end.new
 
-    adapter = Railsd.to_adapter(client_with_gauge_but_not_timing)
-    assert_instance_of Railsd::Adapters::TimingAliased, adapter
+    adapter = Nunes.to_adapter(client_with_gauge_but_not_timing)
+    assert_instance_of Nunes::Adapters::TimingAliased, adapter
   end
 end

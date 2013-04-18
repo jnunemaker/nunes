@@ -1,8 +1,8 @@
-require "railsd/subscriber"
+require "nunes/subscriber"
 
-module Railsd
+module Nunes
   module Subscribers
-    class ActionController < ::Railsd::Subscriber
+    class ActionController < ::Nunes::Subscriber
       # Private
       Pattern = /\.action_controller\Z/
 

@@ -22,4 +22,4 @@ end
 
 require "rails_app/config/environment"
 
-require "railsd"
+require "nunes"

@@ -7,7 +7,7 @@ class TimingAliasedAdapterTest < ActiveSupport::TestCase
     mock.expect :increment, nil, ["single", 1]
     mock.expect :increment, nil, ["double", 2]
 
-    client = Railsd::Adapters::TimingAliased.new(mock)
+    client = Nunes::Adapters::TimingAliased.new(mock)
     client.increment("single")
     client.increment("double", 2)
 
@@ -18,7 +18,7 @@ class TimingAliasedAdapterTest < ActiveSupport::TestCase
     mock = MiniTest::Mock.new
     mock.expect :gauge, nil, ["foo", 23]
 
-    client = Railsd::Adapters::TimingAliased.new(mock)
+    client = Nunes::Adapters::TimingAliased.new(mock)
     client.timing("foo", 23)
 
     mock.verify

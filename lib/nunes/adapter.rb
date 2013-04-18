@@ -1,4 +1,4 @@
-module Railsd
+module Nunes
   class Adapter
     # Internal: Sets the client for the adapter.
     #

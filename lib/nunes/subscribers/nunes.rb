@@ -1,10 +1,10 @@
-require "railsd/subscriber"
+require "nunes/subscriber"
 
-module Railsd
+module Nunes
   module Subscribers
-    class Railsd < ::Railsd::Subscriber
+    class Nunes < ::Nunes::Subscriber
       # Private
-      Pattern = /\.railsd\Z/
+      Pattern = /\.nunes\Z/
 
       # Private: The namespace for events to subscribe to.
       def self.pattern

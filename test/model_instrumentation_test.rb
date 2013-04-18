@@ -5,7 +5,7 @@ class ModelInstrumentationTest < ActiveSupport::TestCase
   teardown :teardown_subscriber
 
   def setup_subscriber
-    @subscriber = Railsd::Subscribers::ActiveRecord.subscribe(adapter)
+    @subscriber = Nunes::Subscribers::ActiveRecord.subscribe(adapter)
   end
 
   def teardown_subscriber

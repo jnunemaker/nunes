@@ -1,10 +1,10 @@
-require "railsd/adapter"
+require "nunes/adapter"
 
-module Railsd
+module Nunes
   module Adapters
     # Internal: Memory backend for recording instrumentation calls. This should
     # never need to be used directly by a user of the gem.
-    class Memory < ::Railsd::Adapter
+    class Memory < ::Nunes::Adapter
       def initialize(client = nil)
         @client = client || {}
         clear

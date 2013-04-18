@@ -1,4 +1,4 @@
-module Railsd
+module Nunes
   # Extend and instrument. Simple class that makes it easy to instrument method
   # timing using ActiveSupport::Notifications.
   #
@@ -10,7 +10,7 @@ module Railsd
   #   # To instrument an instance method, extend the module and instrument it.
   #   class User
   #     # Only need to do this once.
-  #     extend Railsd::Instrumentable
+  #     extend Nunes::Instrumentable
   #
   #     def something
   #       # ...
@@ -33,7 +33,7 @@ module Railsd
   #   # singleton class and use the same to call the method.
   #   class User
   #     # Only need to do this once.
-  #     singleton_class.extend Railsd::Instrumentable
+  #     singleton_class.extend Nunes::Instrumentable
   #
   #     def self.something_class_level
   #       # ...
@@ -44,7 +44,7 @@ module Railsd
   #
   module Instrumentable
     # Private
-    MethodTimeEventName = "instrument_method_time.railsd".freeze
+    MethodTimeEventName = "instrument_method_time.nunes".freeze
 
     # Public: Instrument a method's timing by name.
     #
@@ -64,7 +64,7 @@ module Railsd
         "#{self.name}/#{method_name}"
       }.to_s.underscore.gsub('/', '.')
 
-      railsd_wrap_method(method_name, action) do |old_method_name, new_method_name|
+      nunes_wrap_method(method_name, action) do |old_method_name, new_method_name|
         define_method(new_method_name) do |*args, &block|
           ActiveSupport::Notifications.instrument(MethodTimeEventName, payload) {
             result = send(old_method_name, *args, &block)
@@ -79,7 +79,7 @@ module Railsd
     end
 
     # Private: And so horrendously ugly...
-    def railsd_wrap_method(method_name, action, &block)
+    def nunes_wrap_method(method_name, action, &block)
       method_without_instrumentation = :"#{method_name}_without_#{action}"
       method_with_instrumentation = :"#{method_name}_with_#{action}"
 

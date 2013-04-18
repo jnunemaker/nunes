@@ -1,4 +1,4 @@
-module Railsd
+module Nunes
   class Subscriber
     # Private: The bang character that is the first char of some events.
     BANG = '!'

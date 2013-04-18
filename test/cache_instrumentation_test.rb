@@ -7,7 +7,7 @@ class CacheInstrumentationTest < ActiveSupport::TestCase
   teardown :teardown_subscriber, :teardown_cache
 
   def setup_subscriber
-    @subscriber = Railsd::Subscribers::ActiveSupport.subscribe(adapter)
+    @subscriber = Nunes::Subscribers::ActiveSupport.subscribe(adapter)
   end
 
   def teardown_subscriber

@@ -8,7 +8,7 @@ module AdapterTestHelpers
   attr_reader :adapter
 
   def setup_memory_adapter
-    @adapter = Railsd::Adapters::Memory.new
+    @adapter = Nunes::Adapters::Memory.new
   end
 
   def assert_timer(metric)

@@ -7,7 +7,7 @@ class ViewInstrumentationTest < ActionController::TestCase
   teardown :teardown_subscriber
 
   def setup_subscriber
-    @subscriber = Railsd::Subscribers::ActionView.subscribe(adapter)
+    @subscriber = Nunes::Subscribers::ActionView.subscribe(adapter)
   end
 
   def teardown_subscriber
