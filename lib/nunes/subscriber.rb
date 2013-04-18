@@ -9,7 +9,8 @@ module Nunes
     # provided adapter.
     #
     # adapter - The adapter instance to send instrumentation to.
-    def self.subscribe(adapter, subscriber = ActiveSupport::Notifications)
+    def self.subscribe(adapter, options = {})
+      subscriber = options.fetch(:subscriber) { ActiveSupport::Notifications }
       subscriber.subscribe pattern, new(adapter)
     end
 

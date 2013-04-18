@@ -33,7 +33,8 @@ class SubscriberTest < ActiveSupport::TestCase
       mock = Minitest::Mock.new
       mock.expect :subscribe, :subscriber, [subscriber_class.pattern, instance]
 
-      assert_equal :subscriber, subscriber_class.subscribe(adapter, mock)
+      assert_equal :subscriber,
+        subscriber_class.subscribe(adapter, subscriber: mock)
 
       mock.verify
     end
