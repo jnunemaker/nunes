@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Nunes::VERSION
   spec.authors       = ["John Nunemaker"]
   spec.email         = ["nunemaker@gmail.com"]
-  spec.description   = %q{Automatic instrumentation for Rails.}
-  spec.summary       = %q{Automatic instrumentation for Rails.}
+  spec.description   = %q{The friendly gem that instruments everything for you, like I would if I could.}
+  spec.summary       = %q{The friendly gem that instruments everything for you, like I would if I could.}
   spec.homepage      = ""
   spec.license       = "MIT"
 
