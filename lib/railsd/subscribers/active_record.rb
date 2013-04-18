@@ -3,9 +3,10 @@ require "railsd/subscriber"
 module Railsd
   module Subscribers
     class ActiveRecord < ::Railsd::Subscriber
-      SqlName = 'SQL'
+      # Private
       Pattern = /\.active_record\Z/
 
+      # Private: The namespace for events to subscribe to.
       def self.pattern
         Pattern
       end

@@ -3,8 +3,10 @@ require "railsd/subscriber"
 module Railsd
   module Subscribers
     class ActiveSupport < ::Railsd::Subscriber
+      # Private
       Pattern = /\.active_support\Z/
 
+      # Private: The namespace for events to subscribe to.
       def self.pattern
         Pattern
       end

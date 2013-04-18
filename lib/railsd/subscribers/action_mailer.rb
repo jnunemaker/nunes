@@ -3,8 +3,10 @@ require "railsd/subscriber"
 module Railsd
   module Subscribers
     class ActionMailer < ::Railsd::Subscriber
+      # Private
       Pattern = /\.action_mailer\Z/
 
+      # Private: The namespace for events to subscribe to.
       def self.pattern
         Pattern
       end

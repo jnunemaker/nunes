@@ -1,5 +1,5 @@
 module Railsd
-  # Include and instrument. Simple class that makes it easy to instrument method
+  # Extend and instrument. Simple class that makes it easy to instrument method
   # timing using ActiveSupport::Notifications.
   #
   # The event name is the name of the method being instrumented and the event
@@ -43,9 +43,10 @@ module Railsd
   #   end
   #
   module Instrumentable
+    # Private
     MethodTimeEventName = "instrument_method_time.railsd".freeze
 
-    # Public: Instrument a method by name.
+    # Public: Instrument a method's timing by name.
     #
     # method_name - The String or Symbol name of the method.
     # options_or_string - The Hash of options or the String metic name.
@@ -77,7 +78,7 @@ module Railsd
       end
     end
 
-    # So horrendously ugly...
+    # Private: And so horrendously ugly...
     def railsd_wrap_method(method_name, action, &block)
       method_without_instrumentation = :"#{method_name}_without_#{action}"
       method_with_instrumentation = :"#{method_name}_with_#{action}"

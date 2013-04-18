@@ -3,20 +3,14 @@ require "railsd/subscriber"
 module Railsd
   module Subscribers
     class ActionController < ::Railsd::Subscriber
+      # Private
       Pattern = /\.action_controller\Z/
 
+      # Private: The namespace for events to subscribe to.
       def self.pattern
         Pattern
       end
 
-      # Internal: Instrument process_action events.
-      #
-      # start - The Time when the event started.
-      # ending - The Time when the event stopped.
-      # transaction_id - The String transaction_id for the event.
-      # payload - The Hash payload of information about the event.
-      #
-      # Returns nothing.
       def process_action(start, ending, transaction_id, payload)
         controller = payload[:controller].to_s.gsub('Controller', '').underscore
         action = payload[:action]

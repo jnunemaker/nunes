@@ -1,13 +1,21 @@
 module Railsd
   class Subscriber
+    # Private: The bang character that is the first char of some events.
     BANG = '!'
 
-    def self.subscribe(client)
-      ActiveSupport::Notifications.subscribe pattern, new(client)
+    # Public: Setup a subscription for the subscriber using the
+    # provided adapter.
+    #
+    # adapter - The adapter instance to send instrumentation to.
+    def self.subscribe(adapter)
+      ActiveSupport::Notifications.subscribe pattern, new(adapter)
     end
 
-    def initialize(client)
-      @client = client
+    # Internal: Initializes a new instance.
+    #
+    # adapter - The adapter instance to send instrumentation to.
+    def initialize(adapter)
+      @adapter = adapter
     end
 
     # Private: Dispatcher that converts incoming events to method calls.
@@ -31,8 +39,8 @@ module Railsd
     #
     # Returns nothing.
     def increment(metric)
-      if @client
-        @client.increment metric
+      if @adapter
+        @adapter.increment metric
       end
     end
 
@@ -43,8 +51,8 @@ module Railsd
     #
     # Returns nothing.
     def timing(metric, duration_in_ms)
-      if @client
-        @client.timing metric, duration_in_ms
+      if @adapter
+        @adapter.timing metric, duration_in_ms
       end
     end
   end

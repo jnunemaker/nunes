@@ -3,8 +3,10 @@ require "railsd/subscriber"
 module Railsd
   module Subscribers
     class ActionView < ::Railsd::Subscriber
+      # Private
       Pattern = /\.action_view\Z/
 
+      # Private: The namespace for events to subscribe to.
       def self.pattern
         Pattern
       end
