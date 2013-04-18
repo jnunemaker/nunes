@@ -43,6 +43,10 @@ module Nunes
   #
   # Returns Nunes::Adapter instance.
   def self.to_adapter(client)
+    if client.nil?
+      raise ArgumentError.new("client cannot be nil")
+    end
+
     if client.is_a?(::Nunes::Adapter)
       return client
     end

@@ -50,4 +50,8 @@ class NunesTest < ActiveSupport::TestCase
     adapter = Nunes.to_adapter(hash)
     assert_instance_of Nunes::Adapters::Memory, adapter
   end
+
+  test "to_adapter with nil" do
+    assert_raises(ArgumentError) { Nunes.to_adapter(nil) }
+  end
 end
