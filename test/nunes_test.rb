@@ -38,4 +38,10 @@ class NunesTest < ActiveSupport::TestCase
     adapter = Nunes.to_adapter(client_with_gauge_but_not_timing)
     assert_instance_of Nunes::Adapters::TimingAliased, adapter
   end
+
+  test "to_adapter for adapter" do
+    memory = Nunes::Adapters::Memory.new
+    adapter = Nunes.to_adapter(memory)
+    assert_equal memory, adapter
+  end
 end
