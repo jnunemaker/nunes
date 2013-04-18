@@ -15,35 +15,35 @@ class SubscriberTest < ActiveSupport::TestCase
       def foo(*args)
         increment "test.foo"
       end
-    end
-  end
 
-  test "subscribe with adapter" do
-    begin
-      adapter = Nunes::Adapters::Memory.new
-      subscriber = subscriber_class.subscribe(adapter)
-      ActiveSupport::Notifications.instrument("foo.test")
-
-      assert adapter.counter?("test.foo")
-    ensure
-      ActiveSupport::Notifications.unsubscribe(subscriber) if subscriber
-    end
-  end
-
-  test "subscribe with something that needs to be wrapped by adapter" do
-    begin
-      client = {}
-      adapter = Nunes::Adapters::Memory.new
-      subscriber = nil
-
-      Nunes::Adapters::Memory.stub :new, adapter do
-        subscriber = subscriber_class.subscribe(client)
-        ActiveSupport::Notifications.instrument("foo.test")
-
-        assert adapter.counter?("test.foo")
+      # minitest stub works with call, so i change it to just return self, since
+      # all we really want to test in this instance is that things are wired
+      # up right, not that call dispatches events correctly
+      def call(*args)
+        self
       end
-    ensure
-      ActiveSupport::Notifications.unsubscribe(subscriber) if subscriber
+    end
+  end
+
+  test "subscribe" do
+    client = {}
+    instance = subscriber_class.new(client)
+
+    subscriber_class.stub :new, instance do
+      mock = Minitest::Mock.new
+      mock.expect :subscribe, :subscriber, [subscriber_class.pattern, instance]
+
+      assert_equal :subscriber, subscriber_class.subscribe(adapter, mock)
+
+      mock.verify
+    end
+  end
+
+  test "initialize" do
+    adapter = Object.new
+    Nunes.stub :to_adapter, adapter do
+      instance = subscriber_class.new({})
+      assert_equal adapter, instance.adapter
     end
   end
 end

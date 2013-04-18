@@ -1,3 +1,5 @@
+require "active_support/notifications"
+
 module Nunes
   class Subscriber
     # Private: The bang character that is the first char of some events.
@@ -7,9 +9,8 @@ module Nunes
     # provided adapter.
     #
     # adapter - The adapter instance to send instrumentation to.
-    def self.subscribe(adapter)
-      adapter = Nunes.to_adapter(adapter)
-      ActiveSupport::Notifications.subscribe pattern, new(adapter)
+    def self.subscribe(adapter, subscriber = ActiveSupport::Notifications)
+      subscriber.subscribe pattern, new(adapter)
     end
 
     def self.pattern
@@ -23,7 +24,7 @@ module Nunes
     #
     # adapter - The adapter instance to send instrumentation to.
     def initialize(adapter)
-      @adapter = adapter
+      @adapter = Nunes.to_adapter(adapter)
     end
 
     # Private: Dispatcher that converts incoming events to method calls.
