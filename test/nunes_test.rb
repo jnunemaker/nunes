@@ -18,7 +18,7 @@ class NunesTest < ActiveSupport::TestCase
     end
   end
 
-  test "to_adapter" do
+  test "to_adapter for statsd" do
     client_with_gauge_and_timing = Class.new do
       def increment(*args); end
       def gauge(*args); end
