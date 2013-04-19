@@ -141,6 +141,10 @@ end
 
 If you subscribe to the event on your own, say to log some things, you'll get a key named `:pay` with a value of `"loading"` in the event's payload. Pretty neat, eh?
 
+## Test
+
+Execute `script/test` to run tests.
+
 ## Contributing
 
 1. Fork it
