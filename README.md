@@ -39,7 +39,7 @@ Nunes.subscribe(I)
 
 ## What Can I Do For You?
 
-If you are using nunes with rails, out of the box, I'll subscribe to Actve Support's notifications for:
+If you are using nunes with rails, out of the box, I'll subscribe to Active Support's notifications for:
 
 * `process_action.action_controller`
 * `render_template.action_view`
