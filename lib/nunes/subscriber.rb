@@ -49,9 +49,7 @@ module Nunes
     #
     # Returns nothing.
     def increment(metric)
-      if @adapter
-        @adapter.increment metric
-      end
+      @adapter.increment metric
     end
 
     # Internal: Track the timing of a metric for the client.
@@ -61,9 +59,7 @@ module Nunes
     #
     # Returns nothing.
     def timing(metric, duration_in_ms)
-      if @adapter
-        @adapter.timing metric, duration_in_ms
-      end
+      @adapter.timing metric, duration_in_ms
     end
   end
 end
