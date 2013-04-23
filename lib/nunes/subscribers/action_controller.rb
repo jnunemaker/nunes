@@ -28,9 +28,9 @@ module Nunes
 
         runtime = ((ending - start) * 1_000).round
 
-        timing "action_controller.runtime",      runtime
-        timing "action_controller.view_runtime", view_runtime if view_runtime
-        timing "action_controller.db_runtime",   db_runtime   if db_runtime
+        timing "action_controller.runtime.total", runtime
+        timing "action_controller.runtime.view", view_runtime if view_runtime
+        timing "action_controller.runtime.db",   db_runtime   if db_runtime
 
         increment "action_controller.format.#{format}" if format
         increment "action_controller.status.#{status}" if status
@@ -38,9 +38,9 @@ module Nunes
         if controller && action
           namespace = "action_controller.#{controller}.#{action}"
 
-          timing "#{namespace}.runtime",      runtime
-          timing "#{namespace}.view_runtime", view_runtime if view_runtime
-          timing "#{namespace}.db_runtime",   db_runtime   if db_runtime
+          timing "#{namespace}.runtime.total",      runtime
+          timing "#{namespace}.runtime.view", view_runtime if view_runtime
+          timing "#{namespace}.runtime.db",   db_runtime   if db_runtime
         end
 
         if exception_info
