@@ -38,8 +38,6 @@ module Nunes
 
       if respond_to?(method_name)
         send(method_name, start, ending, transaction_id, payload)
-      else
-        $stderr.puts "#{self.class.name} did not respond to #{method_name} therefore it cannot instrument the event named #{name}."
       end
     end
 
