@@ -1,4 +1,5 @@
 require "nunes/subscriber"
+require "active_support/inflector"
 
 module Nunes
   module Subscribers

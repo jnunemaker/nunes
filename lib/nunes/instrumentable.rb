@@ -1,4 +1,5 @@
 require "active_support/notifications"
+require "active_support/inflector"
 
 module Nunes
   # Extend and instrument. Simple class that makes it easy to instrument method
