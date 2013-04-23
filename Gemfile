@@ -9,3 +9,7 @@ gem "rake"
 group :watch do
   gem "rb-fsevent", require: false
 end
+
+group :bench do
+  gem "rblineprof"
+end
