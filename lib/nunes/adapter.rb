@@ -6,29 +6,33 @@ module Nunes
     #
     # Returns Nunes::Adapter instance.
     def self.wrap(client)
-      if client.nil?
-        raise ArgumentError.new("client cannot be nil")
+      raise ArgumentError, "client cannot be nil" if client.nil?
+
+      adapter_for(client)
+    end
+
+    def self.adapter_for(client)
+      return client if client.is_a?(self)
+
+      adapter = adapters.detect { |adapter| adapter.wraps?(client) }
+
+      if adapter.nil?
+        raise ArgumentError,
+          "I have no clue how to wrap what you've given me (#{client.inspect})"
       end
 
-      if client.is_a?(self)
-        return client
-      end
+      adapter.new(client)
+    end
 
-      if client.is_a?(Hash)
-        return Adapters::Memory.new(client)
-      end
+    # Private
+    def self.wraps?(client)
+      client.respond_to?(:increment) &&
+        client.respond_to?(:timing)
+    end
 
-      has_increment = client.respond_to?(:increment)
-      has_timing = client.respond_to?(:timing)
-      has_gauge = client.respond_to?(:gauge)
-
-      if has_increment && has_timing
-        Adapter.new(client)
-      elsif has_increment && has_gauge && !has_timing
-        Adapters::TimingAliased.new(client)
-      else
-        raise "I have no clue how to wrap what you've given me (#{client.inspect})"
-      end
+    # Private
+    def self.adapters
+      [Nunes::Adapter, *subclasses]
     end
 
     # Private

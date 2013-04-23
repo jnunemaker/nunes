@@ -8,6 +8,12 @@ module Nunes
     # adapter their gauge interface to the timing one used internally in the
     # gem. This should never need to be used directly by a user of the gem.
     class TimingAliased < ::Nunes::Adapter
+      def self.wraps?(client)
+        client.respond_to?(:increment) &&
+          client.respond_to?(:gauge) &&
+          !client.respond_to?(:timing)
+      end
+
       # Internal: Adapter timing to gauge.
       def timing(metric, duration)
         @client.gauge prepare(metric), duration

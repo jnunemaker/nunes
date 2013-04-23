@@ -43,6 +43,10 @@ class AdapterTest < ActiveSupport::TestCase
     assert_raises(ArgumentError) { Nunes::Adapter.wrap(nil) }
   end
 
+  test "wrap with straight up gibberish yo" do
+    assert_raises(ArgumentError) { Nunes::Adapter.wrap(Object.new) }
+  end
+
   test "passes increment along" do
     mock = MiniTest::Mock.new
     mock.expect :increment, nil, ["single", 1]

@@ -5,6 +5,10 @@ module Nunes
     # Internal: Memory backend for recording instrumentation calls. This should
     # never need to be used directly by a user of the gem.
     class Memory < ::Nunes::Adapter
+      def self.wraps?(client)
+        client.is_a?(Hash)
+      end
+
       def initialize(client = nil)
         @client = client || {}
         clear
