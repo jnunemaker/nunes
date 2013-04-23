@@ -15,9 +15,7 @@ module Nunes
         runtime = ((ending - start) * 1_000).round
         metric = payload[:metric]
 
-        if metric
-          timing "#{metric}", runtime
-        end
+        timing "#{metric}", runtime if metric
       end
     end
   end
