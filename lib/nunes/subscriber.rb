@@ -33,7 +33,7 @@ module Nunes
     def call(name, start, ending, transaction_id, payload)
       # rails doesn't recommend instrumenting methods that start with bang
       # when in production
-      return if name.starts_with?(BANG)
+      return if name.start_with?(BANG)
 
       method_name = name.split('.').first
 
