@@ -21,8 +21,7 @@ module Nunes
 
     # Private
     def self.wraps?(client)
-      client.respond_to?(:increment) &&
-        client.respond_to?(:timing)
+      client.respond_to?(:increment) && client.respond_to?(:timing)
     end
 
     # Private
