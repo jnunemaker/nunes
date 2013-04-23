@@ -66,17 +66,19 @@ Based on those events, you'll get metrics like this in instrumental and statsd:
 * `action_controller.status.200`
 * `action_controller.format.html`
 * `action_controller.exception.RuntimeError` - where RuntimeError is the class of any exceptions that occur while processing a controller's action.
-* `active_support.cache_hit`
-* `active_support.cache_miss`
+* `active_support.cache.hit`
+* `active_support.cache.miss`
 
 #### Timers
 
-* `action_controller.runtime`
-* `action_controller.view_runtime`
-* `action_controller.db_runtime`
-* `action_controller.PostsController.index.runtime`
-* `action_view.app.views.posts.index.html.erb` - where `app.views.posts.index.html.erb` is the path of the view file
-* `action_view.app.views.posts._post.html.erb` - I can even do partials! woot woot!
+* `action_controller.runtime.total`
+* `action_controller.runtime.view`
+* `action_controller.runtime.db`
+* `action_controller.controller.PostsController.index.runtime.total`
+* `action_controller.controller.PostsController.index.runtime.view`
+* `action_controller.controller.PostsController.index.runtime.db`
+* `action_view.template.app.views.posts.index.html.erb` - where `app.views.posts.index.html.erb` is the path of the view file
+* `action_view.partial.app.views.posts._post.html.erb` - I can even do partials! woot woot!
 * `action_mailer.deliver.PostMailer`
 * `action_mailer.receive.PostMailer`
 * `active_record.sql`
@@ -84,13 +86,13 @@ Based on those events, you'll get metrics like this in instrumental and statsd:
 * `active_record.sql.insert`
 * `active_record.sql.update`
 * `active_record.sql.delete`
-* `active_support.cache_read`
-* `active_support.cache_generate`
-* `active_support.cache_fetch`
-* `active_support.cache_fetch_hit`
-* `active_support.cache_write`
-* `active_support.cache_delete`
-* `active_support.cache_exist`
+* `active_support.cache.read`
+* `active_support.cache.fetch`
+* `active_support.cache.fetch_hit`
+* `active_support.cache.fetch_generate`
+* `active_support.cache.write`
+* `active_support.cache.delete`
+* `active_support.cache.exist`
 
 ### But wait, there's more!!!
 
