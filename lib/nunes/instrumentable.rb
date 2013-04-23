@@ -1,49 +1,6 @@
 require "active_support/notifications"
 
 module Nunes
-  # Extend and instrument. Simple class that makes it easy to instrument method
-  # timing using ActiveSupport::Notifications.
-  #
-  # The event name is the name of the method being instrumented and the event
-  # namespace is the name of the class the method is in.
-  #
-  # Examples
-  #
-  #   # To instrument an instance method, extend the module and instrument it.
-  #   class User
-  #     # Only need to do this once.
-  #     extend Nunes::Instrumentable
-  #
-  #     def something
-  #       # ...
-  #     end
-  #
-  #     instrument_method_time :something
-  #
-  #     # you can customize the event and namespace by providing the name option
-  #     instrument_method_time :something, {
-  #       name: "something.else.User",
-  #     }
-  #
-  #     # you can also add additional payload items
-  #     instrument_method_time :something, {
-  #       payload: {some: 'thing'},
-  #     }
-  #   end
-  #
-  #   # To instrument a class method, you need to extend the module on the
-  #   # singleton class and use the same to call the method.
-  #   class User
-  #     # Only need to do this once.
-  #     singleton_class.extend Nunes::Instrumentable
-  #
-  #     def self.something_class_level
-  #       # ...
-  #     end
-  #
-  #     singleton_class.instrument_method_time :someting_class_level
-  #   end
-  #
   module Instrumentable
     # Private
     MethodTimeEventName = "instrument_method_time.nunes".freeze
