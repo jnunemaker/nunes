@@ -7,11 +7,6 @@ module Nunes
     # Returns Nunes::Adapter instance.
     def self.wrap(client)
       raise ArgumentError, "client cannot be nil" if client.nil?
-
-      adapter_for(client)
-    end
-
-    def self.adapter_for(client)
       return client if client.is_a?(self)
 
       adapter = adapters.detect { |adapter| adapter.wraps?(client) }
