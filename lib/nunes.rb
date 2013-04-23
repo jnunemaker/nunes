@@ -1,7 +1,6 @@
 require "nunes/instrumentable"
 
 require "nunes/adapters/memory"
-require "nunes/adapters/default"
 require "nunes/adapters/timing_aliased"
 
 require "nunes/subscriber"

@@ -23,7 +23,7 @@ module Nunes
       has_gauge = client.respond_to?(:gauge)
 
       if has_increment && has_timing
-        Adapters::Default.new(client)
+        Adapter.new(client)
       elsif has_increment && has_gauge && !has_timing
         Adapters::TimingAliased.new(client)
       else

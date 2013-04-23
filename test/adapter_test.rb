@@ -1,4 +1,5 @@
 require "helper"
+require "minitest/mock"
 
 class AdapterTest < ActiveSupport::TestCase
   def separator
@@ -13,7 +14,7 @@ class AdapterTest < ActiveSupport::TestCase
     end.new
 
     adapter = Nunes::Adapter.wrap(client_with_gauge_and_timing)
-    assert_instance_of Nunes::Adapters::Default, adapter
+    assert_instance_of Nunes::Adapter, adapter
   end
 
   test "wrap for instrumental" do
@@ -40,6 +41,28 @@ class AdapterTest < ActiveSupport::TestCase
 
   test "wrap with nil" do
     assert_raises(ArgumentError) { Nunes::Adapter.wrap(nil) }
+  end
+
+  test "passes increment along" do
+    mock = MiniTest::Mock.new
+    mock.expect :increment, nil, ["single", 1]
+    mock.expect :increment, nil, ["double", 2]
+
+    client = Nunes::Adapter.new(mock)
+    client.increment("single")
+    client.increment("double", 2)
+
+    mock.verify
+  end
+
+  test "passes timing along" do
+    mock = MiniTest::Mock.new
+    mock.expect :timing, nil, ["foo", 23]
+
+    client = Nunes::Adapter.new(mock)
+    client.timing("foo", 23)
+
+    mock.verify
   end
 
   test "prepare leaves good metrics alone" do
