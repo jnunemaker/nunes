@@ -44,20 +44,21 @@ module Nunes
     # Internal: Increment a metric for the client.
     #
     # metric - The String name of the metric to increment.
+    # value - The Integer value to increment by.
     #
     # Returns nothing.
-    def increment(metric)
-      @adapter.increment metric
+    def increment(metric, value = 1)
+      @adapter.increment metric, value
     end
 
     # Internal: Track the timing of a metric for the client.
     #
     # metric - The String name of the metric.
-    # duration_in_ms - The Integer duration of the event in milliseconds.
+    # value - The Integer duration of the event in milliseconds.
     #
     # Returns nothing.
-    def timing(metric, duration_in_ms)
-      @adapter.timing metric, duration_in_ms
+    def timing(metric, value)
+      @adapter.timing metric, value
     end
   end
 end
