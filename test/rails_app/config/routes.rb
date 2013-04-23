@@ -1,4 +1,8 @@
 RailsApp::Application.routes.draw do
+  namespace :admin do
+    resources :posts, only: :index
+  end
+
   resources :posts, only: :index
 
   get "/some-data",     to: "posts#some_data"
