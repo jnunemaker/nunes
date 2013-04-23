@@ -23,7 +23,7 @@ module Nunes
 
       # Private: Sends timing information about identifier event.
       def instrument_identifier(identifier, start, ending)
-        if identifier.present?
+        if identifier
           runtime = ((ending - start) * 1_000).round
           timing identifier_to_metric(identifier), runtime
         end
