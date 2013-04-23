@@ -11,11 +11,11 @@ module Nunes
       end
 
       def increment(metric, value = 1)
-        counters << [metric, value]
+        counters << [prepare(metric), value]
       end
 
       def timing(metric, value)
-        timers << [metric, value]
+        timers << [prepare(metric), value]
       end
 
       # Internal: Returns Array of any recorded timers with durations.

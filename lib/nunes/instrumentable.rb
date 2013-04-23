@@ -65,8 +65,8 @@ module Nunes
       instrumenter = options.fetch(:instrumenter) { ActiveSupport::Notifications }
 
       payload[:metric] = options.fetch(:name) {
-        "#{self.name}/#{method_name}"
-      }.to_s.underscore.gsub('/', '.')
+        "#{self.name}.#{method_name}"
+      }
 
       nunes_wrap_method(method_name, action) do |old_method_name, new_method_name|
         define_method(new_method_name) do |*args, &block|

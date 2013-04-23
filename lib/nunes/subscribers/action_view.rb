@@ -34,10 +34,9 @@ module Nunes
       #
       # identifier - The String full path to the template or partial.
       def identifier_to_metric(identifier)
-        rails_root = ::Rails.root.to_s + '/'
+        rails_root = ::Rails.root.to_s + File::SEPARATOR
         view_path = identifier.gsub(rails_root, '')
-        metric = view_path.gsub('/', '.')
-        "action_view.#{metric}"
+        "action_view.#{view_path}" if view_path
       end
     end
   end

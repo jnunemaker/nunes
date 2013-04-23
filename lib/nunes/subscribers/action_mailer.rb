@@ -17,7 +17,7 @@ module Nunes
         mailer = payload[:mailer]
 
         if mailer
-          timing "action_mailer.deliver.#{mailer.to_s.underscore}", runtime
+          timing "action_mailer.deliver.#{mailer}", runtime
         end
       end
 
@@ -26,7 +26,7 @@ module Nunes
         mailer = payload[:mailer]
 
         if mailer
-          timing "action_mailer.receive.#{mailer.to_s.underscore}", runtime
+          timing "action_mailer.receive.#{mailer}", runtime
         end
       end
     end

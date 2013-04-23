@@ -50,12 +50,12 @@ class InstrumentationTest < ActiveSupport::TestCase
     event = slurp_events { thing_class.new.yo(some: 'thing') }.last
 
     assert_not_nil event, "No events were found."
-    assert_equal "thing.yo", event.payload[:metric]
+    assert_equal "Thing.yo", event.payload[:metric]
     assert_equal [{some: "thing"}], event.payload[:arguments]
     assert_equal :dude, event.payload[:result]
     assert_in_delta 0, event.duration, 0.1
 
-    assert_timer "thing.yo"
+    assert_timer "Thing.yo"
   end
 
   test "instrument_method_time with custom name in hash" do
@@ -64,9 +64,9 @@ class InstrumentationTest < ActiveSupport::TestCase
     event = slurp_events { thing_class.new.yo(some: 'thing') }.last
 
     assert_not_nil event, "No events were found."
-    assert_equal "thingy.yohoho", event.payload[:metric]
+    assert_equal "Thingy.yohoho", event.payload[:metric]
 
-    assert_timer "thingy.yohoho"
+    assert_timer "Thingy.yohoho"
   end
 
   test "instrument_method_time with custom name as string" do
@@ -75,9 +75,9 @@ class InstrumentationTest < ActiveSupport::TestCase
     event = slurp_events { thing_class.new.yo(some: 'thing') }.last
 
     assert_not_nil event, "No events were found."
-    assert_equal "thingy.yohoho", event.payload[:metric]
+    assert_equal "Thingy.yohoho", event.payload[:metric]
 
-    assert_timer "thingy.yohoho"
+    assert_timer "Thingy.yohoho"
   end
 
   test "instrument_method_time with custom payload" do
@@ -88,7 +88,7 @@ class InstrumentationTest < ActiveSupport::TestCase
     assert_not_nil event, "No events were found."
     assert_equal "loadin", event.payload[:pay]
 
-    assert_timer "thing.yo"
+    assert_timer "Thing.yo"
   end
 
   def slurp_events(&block)

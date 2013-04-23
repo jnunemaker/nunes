@@ -7,16 +7,13 @@ module Nunes
       # Private
       Pattern = /\.action_controller\Z/
 
-      Slash = "/"
-      Dot = "."
-
       # Private: The namespace for events to subscribe to.
       def self.pattern
         Pattern
       end
 
       def process_action(start, ending, transaction_id, payload)
-        controller = payload[:controller].to_s.gsub('Controller', '').underscore.gsub(Slash, Dot)
+        controller = payload[:controller]
         action = payload[:action]
         status = payload[:status]
         exception_info = payload[:exception]

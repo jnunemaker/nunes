@@ -25,8 +25,8 @@ class ControllerInstrumentationTest < ActionController::TestCase
     assert_timer "action_controller.runtime"
     assert_timer "action_controller.view_runtime"
 
-    assert_timer "action_controller.posts.index.runtime"
-    assert_timer "action_controller.posts.index.view_runtime"
+    assert_timer "action_controller.PostsController.index.runtime"
+    assert_timer "action_controller.PostsController.index.view_runtime"
   end
 
   test "send_data" do
@@ -39,8 +39,8 @@ class ControllerInstrumentationTest < ActionController::TestCase
     assert_timer "action_controller.runtime"
     assert_timer "action_controller.view_runtime"
 
-    assert_timer "action_controller.posts.some_data.runtime"
-    assert_timer "action_controller.posts.some_data.view_runtime"
+    assert_timer "action_controller.PostsController.some_data.runtime"
+    assert_timer "action_controller.PostsController.some_data.view_runtime"
   end
 
   test "send_file" do
@@ -51,10 +51,10 @@ class ControllerInstrumentationTest < ActionController::TestCase
     assert_counter"action_controller.status.200"
 
     assert_timer "action_controller.runtime"
-    assert_timer "action_controller.posts.some_file.runtime"
+    assert_timer "action_controller.PostsController.some_file.runtime"
 
     assert ! adapter.timer?("action_controller.view_runtime")
-    assert ! adapter.timer?("action_controller.posts.some_file.view_runtime")
+    assert ! adapter.timer?("action_controller.PostsController.some_file.view_runtime")
   end
 
   test "redirect_to" do
@@ -65,10 +65,10 @@ class ControllerInstrumentationTest < ActionController::TestCase
     assert_counter "action_controller.status.302"
 
     assert_timer "action_controller.runtime"
-    assert_timer "action_controller.posts.some_redirect.runtime"
+    assert_timer "action_controller.PostsController.some_redirect.runtime"
 
     assert_no_timer "action_controller.view_runtime"
-    assert_no_timer "action_controller.posts.some_redirect.view_runtime"
+    assert_no_timer "action_controller.PostsController.some_redirect.view_runtime"
   end
 
   test "action with exception" do
@@ -80,9 +80,9 @@ class ControllerInstrumentationTest < ActionController::TestCase
     assert_counter "action_controller.format.html"
 
     assert_timer "action_controller.runtime"
-    assert_timer "action_controller.posts.some_boom.runtime"
+    assert_timer "action_controller.PostsController.some_boom.runtime"
 
     assert_no_timer "action_controller.view_runtime"
-    assert_no_timer "action_controller.posts.some_boom.view_runtime"
+    assert_no_timer "action_controller.PostsController.some_boom.view_runtime"
   end
 end

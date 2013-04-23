@@ -19,13 +19,7 @@ class NamespacedControllerInstrumentationTest < ActionController::TestCase
 
     assert_response :success
 
-    assert_counter "action_controller.status.200"
-    assert_counter "action_controller.format.html"
-
-    assert_timer "action_controller.runtime"
-    assert_timer "action_controller.view_runtime"
-
-    assert_timer "action_controller.admin.posts.index.runtime"
-    assert_timer "action_controller.admin.posts.index.view_runtime"
+    assert_timer "action_controller.Admin.PostsController.index.runtime"
+    assert_timer "action_controller.Admin.PostsController.index.view_runtime"
   end
 end

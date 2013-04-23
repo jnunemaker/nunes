@@ -1,6 +1,10 @@
 require "helper"
 
 class AdapterTest < ActiveSupport::TestCase
+  def separator
+    Nunes::Adapter::Separator
+  end
+
   test "wrap for statsd" do
     client_with_gauge_and_timing = Class.new do
       def increment(*args); end
@@ -36,5 +40,50 @@ class AdapterTest < ActiveSupport::TestCase
 
   test "wrap with nil" do
     assert_raises(ArgumentError) { Nunes::Adapter.wrap(nil) }
+  end
+
+  test "prepare leaves good metrics alone" do
+    adapter = Nunes::Adapter.new(nil)
+
+    [
+      "foo",
+      "foo1234",
+      "foo-bar",
+      "foo_bar",
+      "Foo",
+      "FooBar",
+      "FOOBAR",
+      "foo#{separator}bar",
+      "foo#{separator}bar_baz",
+      "foo#{separator}bar_baz-wick",
+      "Foo#{separator}1234",
+      "Foo#{separator}Bar1234",
+    ].each do |expected|
+      assert_equal expected, adapter.prepare(expected)
+    end
+  end
+
+  test "prepare with bad metric names" do
+    adapter = Nunes::Adapter.new(nil)
+
+    {
+      "#{separator}foo"                         => "foo",
+      "foo#{separator}"                         => "foo",
+      "foo@bar"                                 => "foo#{separator}bar",
+      "foo@$%^*^&bar"                           => "foo#{separator}bar",
+      "foo#{separator}#{separator}bar"          => "foo#{separator}bar",
+      "app/views/posts"                         => "app#{separator}views#{separator}posts",
+      "Admin::PostsController#{separator}index" => "Admin#{separator}PostsController#{separator}index",
+    }.each do |metric, expected|
+      assert_equal expected, adapter.prepare(metric)
+    end
+  end
+
+  test "prepare does not modify original metric" do
+    adapter = Nunes::Adapter.new(nil)
+    original = "app/views/posts"
+    result = adapter.prepare("original")
+
+    assert_equal "app/views/posts", original
   end
 end

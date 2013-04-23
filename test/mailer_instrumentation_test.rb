@@ -16,11 +16,11 @@ class MailerInstrumentationTest < ActionMailer::TestCase
 
   test "deliver" do
     PostMailer.created.deliver
-    assert_timer "action_mailer.deliver.post_mailer"
+    assert_timer "action_mailer.deliver.PostMailer"
   end
 
   test "receive" do
     PostMailer.receive PostMailer.created
-    assert_timer "action_mailer.receive.post_mailer"
+    assert_timer "action_mailer.receive.PostMailer"
   end
 end

@@ -10,7 +10,7 @@ module Nunes
     class TimingAliased < ::Nunes::Adapter
       # Internal: Adapter timing to gauge.
       def timing(metric, duration)
-        @client.gauge metric, duration
+        @client.gauge prepare(metric), duration
       end
     end
   end
