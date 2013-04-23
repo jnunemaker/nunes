@@ -36,7 +36,7 @@ module Nunes
         increment "action_controller.status.#{status}" if status
 
         if controller && action
-          namespace = "action_controller.#{controller}.#{action}"
+          namespace = "action_controller.controller.#{controller}.#{action}"
 
           timing "#{namespace}.runtime.total",      runtime
           timing "#{namespace}.runtime.view", view_runtime if view_runtime
