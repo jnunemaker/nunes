@@ -71,11 +71,11 @@ Based on those events, you'll get metrics like this in statsd and instrumental:
 * `action_controller.runtime`
 * `action_controller.view_runtime`
 * `action_controller.db_runtime`
-* `action_controller.posts.index.runtime` - where `posts` is the controller and `index` is the action
+* `action_controller.PostsController.index.runtime`
 * `action_view.app.views.posts.index.html.erb` - where `app.views.posts.index.html.erb` is the path of the view file
 * `action_view.app.views.posts._post.html.erb` - I can even do partials! woot woot!
-* `action_mailer.deliver.post_mailer` - where `post_mailer` is the name of the mailer
-* `action_mailer.receive.post_mailer` - where `post_mailer` is the name of the mailer
+* `action_mailer.deliver.PostMailer`
+* `action_mailer.receive.PostMailer`
 * `active_record.sql`
 * `active_record.sql.select` - also supported are insert, update, delete, transaction_begin and transaction_commit
 * `active_support.cache_read`
@@ -106,7 +106,7 @@ user = User.new(name: 'NUNES!')
 user.save
 ```
 
-An event named `instrument_method_time.nunes` will be generated, which in turn is subscribed to and sent to whatever you used to send instrumentation to (statsd, instrumental, etc.). The metric name will default to class.method. For the example above, the metric name would be `user.save`. No fear, you can customize this.
+An event named `instrument_method_time.nunes` will be generated, which in turn is subscribed to and sent to whatever you used to send instrumentation to (statsd, instrumental, etc.). The metric name will default to class.method. For the example above, the metric name would be `User.save`. No fear, you can customize this.
 
 ```ruby
 class User < ActiveRecord::Base
@@ -141,9 +141,27 @@ end
 
 If you subscribe to the event on your own, say to log some things, you'll get a key named `:pay` with a value of `"loading"` in the event's payload. Pretty neat, eh?
 
-## Test
+## `script/bootstrap`
 
-Execute `script/test` to run tests.
+This script will get all the dependencies ready so you can start hacking on nunes.
+
+```
+# to learn more about script/bootstrap
+script/bootstrap help
+```
+
+## `script/test`
+
+For your convenience, there is a script to run the tests. It will also perform `script/bootstrap`, which bundles and all that jazz.
+
+```
+# to learn more about script test
+script/test help
+```
+
+## `script/watch`
+
+If you are like me, you are too lazy to continually run `script/test`. For this scenario, I have included `script/watch`, which will run `script/test` automatically anytime a relevant file changes.
 
 ## Contributing
 
