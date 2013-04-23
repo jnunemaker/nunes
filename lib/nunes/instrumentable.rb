@@ -70,12 +70,7 @@ module Nunes
       nunes_wrap_method(method_name, action) do |old_method_name, new_method_name|
         define_method(new_method_name) do |*args, &block|
           instrumenter.instrument(MethodTimeEventName, payload) {
-            result = send(old_method_name, *args, &block)
-
-            payload[:arguments] = args
-            payload[:result] = result
-
-            result
+            send(old_method_name, *args, &block)
           }
         end
       end
