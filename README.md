@@ -1,4 +1,4 @@
-# Nunes
+# nunes
 
 The friendly gem that instruments everything for you, like I would if I could.
 
@@ -10,7 +10,7 @@ Because I don't work for you, but even that could not stop me from trying to mak
 
 Add this line to your application's Gemfile:
 
-    gem 'nunes'
+    gem "nunes"
 
 Or install it yourself as:
 
@@ -18,28 +18,31 @@ Or install it yourself as:
 
 ## Usage
 
-nunes works out of the box with statsd and instrument_agent. All you need to do is subscribe using an instance of statsd or instrumental's agent and you are good to go.
-
-### With Statsd
-
-```ruby
-require 'nunes'
-
-statsd = Statsd.new(...)
-Nunes.subscribe(statsd)
-```
+nunes works out of the box with [instrumental app](http://instrumentalapp.com) (my person favorite) and [statsd](https://github.com/reinh/statsd). All you need to do is subscribe using an instance of statsd or instrumental's agent and you are good to go.
 
 ### With Instrumental
 
 ```ruby
-require 'nunes'
+require "nunes"
 I = Instrument::Agent.new(...)
 Nunes.subscribe(I)
 ```
 
+### With Statsd
+
+```ruby
+require "nunes"
+statsd = Statsd.new(...)
+Nunes.subscribe(statsd)
+```
+
+### With Some Other Service
+
+If you would like for nunes to work with some other service, you can easily make an adapter. Check out the [existing adapters](https://github.com/jnunemaker/nunes/tree/master/lib/nunes/adapters) for examples. The key is to inherit from `Nunes::Adapter` and then convert the `increment` and `timing` methods to whatever the service requires.
+
 ## What Can I Do For You?
 
-If you are using nunes with rails, out of the box, I'll subscribe to Active Support's notifications for:
+If you are using nunes with Rails, I will subscribe to the following events:
 
 * `process_action.action_controller`
 * `render_template.action_view`
@@ -56,7 +59,7 @@ If you are using nunes with rails, out of the box, I'll subscribe to Active Supp
 
 Whoa! You would do all that for me? Yep, I would. Because I care. Deeply.
 
-Based on those events, you'll get metrics like this in statsd and instrumental:
+Based on those events, you'll get metrics like this in instrumental and statsd:
 
 #### Counters
 
@@ -77,7 +80,10 @@ Based on those events, you'll get metrics like this in statsd and instrumental:
 * `action_mailer.deliver.PostMailer`
 * `action_mailer.receive.PostMailer`
 * `active_record.sql`
-* `active_record.sql.select` - also supported are insert, update, delete, transaction_begin and transaction_commit
+* `active_record.sql.select`
+* `active_record.sql.insert`
+* `active_record.sql.update`
+* `active_record.sql.delete`
 * `active_support.cache_read`
 * `active_support.cache_generate`
 * `active_support.cache_fetch`
@@ -88,7 +94,7 @@ Based on those events, you'll get metrics like this in statsd and instrumental:
 
 ### But wait, there's more!!!
 
-In addition to doing all that work for you out of the box, I also allow you to wrap your own code with instrumentation. I know, I know, sounds too good to be true.
+In addition to doing all that automagical work for you, I also allow you to wrap your own code with instrumentation. I know, I know, sounds too good to be true.
 
 ```ruby
 class User < ActiveRecord::Base
