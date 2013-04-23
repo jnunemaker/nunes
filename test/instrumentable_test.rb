@@ -18,6 +18,14 @@ class InstrumentationTest < ActiveSupport::TestCase
     @thing_class = Class.new {
       extend Nunes::Instrumentable
 
+      class << self
+        extend Nunes::Instrumentable
+
+        def find(*args)
+          :nope
+        end
+      end
+
       def self.name
         'Thing'
       end
@@ -54,6 +62,27 @@ class InstrumentationTest < ActiveSupport::TestCase
     assert_in_delta 0, event.duration, 0.1
 
     assert_timer "Thing.yo"
+  end
+
+  test "instrument_method_time for class method without full metric name" do
+    # I'd really like to not do this, but I don't have a name for the class
+    # which makes it hard to automatically set the name. If anyone has a fix,
+    # let me know.
+    assert_raises ArgumentError do
+      thing_class.singleton_class.instrument_method_time :find
+    end
+  end
+
+  test "instrument_method_time for class method" do
+    thing_class.singleton_class.instrument_method_time :find, "Thing.find"
+
+    event = slurp_events { thing_class.find(1) }.last
+
+    assert_not_nil event, "No events were found."
+    assert_equal "Thing.find", event.payload[:metric]
+    assert_in_delta 0, event.duration, 0.1
+
+    assert_timer "Thing.find"
   end
 
   test "instrument_method_time with custom name in hash" do

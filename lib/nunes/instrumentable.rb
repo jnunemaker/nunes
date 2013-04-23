@@ -21,7 +21,11 @@ module Nunes
       instrumenter = options.fetch(:instrumenter) { ActiveSupport::Notifications }
 
       payload[:metric] = options.fetch(:name) {
-        "#{self.name}.#{method_name}"
+        if name.nil?
+          raise ArgumentError, "For class methods you must provide the full name of the metric."
+        else
+          "#{name}.#{method_name}"
+        end
       }
 
       nunes_wrap_method(method_name, action) do |old_method_name, new_method_name|
