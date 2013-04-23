@@ -17,41 +17,41 @@ module Nunes
 
         case super_operation
         when Symbol
-          timing "active_support.cache_#{super_operation}", runtime
+          timing "active_support.cache.#{super_operation}", runtime
         else
-          timing "active_support.cache_read", runtime
+          timing "active_support.cache.read", runtime
         end
 
         hit = payload[:hit]
         unless hit.nil?
           hit_type = hit ? :hit : :miss
-          increment "active_support.cache_#{hit_type}"
+          increment "active_support.cache.#{hit_type}"
         end
       end
 
       def cache_generate(start, ending, transaction_id, payload)
         runtime = ((ending - start) * 1_000).round
-        timing "active_support.cache_generate", runtime
+        timing "active_support.cache.fetch_generate", runtime
       end
 
       def cache_fetch_hit(start, ending, transaction_id, payload)
         runtime = ((ending - start) * 1_000).round
-        timing "active_support.cache_fetch_hit", runtime
+        timing "active_support.cache.fetch_hit", runtime
       end
 
       def cache_write(start, ending, transaction_id, payload)
         runtime = ((ending - start) * 1_000).round
-        timing "active_support.cache_write", runtime
+        timing "active_support.cache.write", runtime
       end
 
       def cache_delete(start, ending, transaction_id, payload)
         runtime = ((ending - start) * 1_000).round
-        timing "active_support.cache_delete", runtime
+        timing "active_support.cache.delete", runtime
       end
 
       def cache_exist?(start, ending, transaction_id, payload)
         runtime = ((ending - start) * 1_000).round
-        timing "active_support.cache_exist", runtime
+        timing "active_support.cache.exist", runtime
       end
     end
   end
