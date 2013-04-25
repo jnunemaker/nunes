@@ -1,3 +1,9 @@
+# 0.3.0
+
+## Backwards Compatibility Break
+
+* Cleaning action view template and partial paths before sending to adapter. Prior to this change, action view metrics looked like: action_view.template.app.views.posts.post.html.erb. They now look like: action_view.template.app_views_posts_post_html_erb. The reason is that "." is typically a namespace in most metric services, which means really deep nesting of metrics, especially for views rendered from engines in gems. This keeps shallows up the nesting. Thanks to @dewski for reporting.
+
 # 0.2.0
 
 ## Backwards Compatibility Break
