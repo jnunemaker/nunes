@@ -18,7 +18,7 @@ Or install it yourself as:
 
 ## Compatibility
 
-* > Ruby 1.9.3
+* >= Ruby 1.9
 
 ## Usage
 
