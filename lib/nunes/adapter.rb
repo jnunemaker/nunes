@@ -57,19 +57,17 @@ module Nunes
     # Private: The default metric namespace separator.
     Separator = "."
 
-    RegexSeparator = Regexp.escape(Separator)
-
-    # Private: Regex to match metric ending with separator.
-    StartsOrEndsWithSeparator = /\A#{RegexSeparator}|#{RegexSeparator}\Z/
-
     # Private
     Nothing = ""
 
     # Private: Prepare a metric name before it is sent to the adapter's client.
-    def prepare(metric)
-      metric = metric.to_s.gsub(ReplaceRegex, Separator)
-      metric.squeeze!(Separator)
-      metric.gsub!(StartsOrEndsWithSeparator, Nothing)
+    def prepare(metric, replacement = Separator)
+      escaped = Regexp.escape(replacement)
+      replace_begin_end_regex = /\A#{escaped}|#{escaped}\Z/
+
+      metric = metric.to_s.gsub(ReplaceRegex, replacement)
+      metric.squeeze!(replacement)
+      metric.gsub!(replace_begin_end_regex, Nothing)
       metric
     end
   end
