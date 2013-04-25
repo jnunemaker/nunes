@@ -106,11 +106,11 @@ class AdapterTest < ActiveSupport::TestCase
     end
   end
 
-  test "prepare does not modify original metric" do
+  test "prepare does not modify original metric object" do
     adapter = Nunes::Adapter.new(nil)
-    original = "app/views/posts"
+    original = "app.views.posts"
     result = adapter.prepare("original")
 
-    assert_equal "app/views/posts", original
+    assert_equal "app.views.posts", original
   end
 end
