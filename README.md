@@ -22,7 +22,7 @@ Or install it yourself as:
 
 ## Usage
 
-nunes works out of the box with [instrumental app](http://instrumentalapp.com) (my person favorite) and [statsd](https://github.com/reinh/statsd). All you need to do is subscribe using an instance of statsd or instrumental's agent and you are good to go.
+nunes works out of the box with [instrumental app](http://instrumentalapp.com) (my personal favorite) and [statsd](https://github.com/reinh/statsd). All you need to do is subscribe using an instance of statsd or instrumental's agent and you are good to go.
 
 ### With Instrumental
 
