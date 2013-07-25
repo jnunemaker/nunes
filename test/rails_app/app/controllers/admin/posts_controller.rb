@@ -7,5 +7,13 @@ class Admin::PostsController < ApplicationController
       Post.new('First'),
       Post.new('Second'),
     ]
+    respond_to do |format|
+      format.html { render }
+      format.json { render :json => @posts }
+    end
+  end
+
+  def new
+    head :forbidden
   end
 end
