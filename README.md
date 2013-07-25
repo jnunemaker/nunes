@@ -69,6 +69,8 @@ Based on those events, you'll get metrics like this in instrumental and statsd:
 
 * `action_controller.status.200`
 * `action_controller.format.html`
+* `action_controller.controller.Admin.PostsController.new.status.403`
+* `action_controller.controller.Admin.PostsController.index.format.json`
 * `action_controller.exception.RuntimeError` - where RuntimeError is the class of any exceptions that occur while processing a controller's action.
 * `active_support.cache.hit`
 * `active_support.cache.miss`
@@ -81,6 +83,8 @@ Based on those events, you'll get metrics like this in instrumental and statsd:
 * `action_controller.controller.PostsController.index.runtime.total`
 * `action_controller.controller.PostsController.index.runtime.view`
 * `action_controller.controller.PostsController.index.runtime.db`
+* `action_controller.controller.PostsController.index.status.200`
+* `action_controller.controller.PostsController.index.format.html`
 * `action_view.template.app.views.posts.index.html.erb` - where `app.views.posts.index.html.erb` is the path of the view file
 * `action_view.partial.app.views.posts._post.html.erb` - I can even do partials! woot woot!
 * `action_mailer.deliver.PostMailer`
