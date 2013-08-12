@@ -113,4 +113,24 @@ class AdapterTest < ActiveSupport::TestCase
 
     assert_equal "app.views.posts", original
   end
+
+  test "prepends a prefix to metric names" do
+    prefix   = "a.nice.prefix"
+    original = "perfectly.decent.metric.name"
+
+    adapter = Nunes::Adapter.new(nil, prefix)
+
+    result = adapter.prepare(original)
+    assert_equal [prefix, original].join(separator), result
+  end
+
+  test "prepends a prefix with a trailing separator cleanly to metric names" do
+    prefix   = "prefix.with.trailing."
+    original = "reasonable.name"
+
+    adapter = Nunes::Adapter.new(nil, prefix)
+
+    result = adapter.prepare(original)
+    assert_equal "prefix.with.trailing.reasonable.name", result
+  end
 end
