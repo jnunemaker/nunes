@@ -11,6 +11,7 @@ module Nunes
 
       def initialize(client = nil, prefix = nil)
         @client = client || {}
+        @metric_prefix = prefix
         clear
       end
 
