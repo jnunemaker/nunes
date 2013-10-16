@@ -41,6 +41,10 @@ module Nunes
           timing "#{namespace}.runtime.total",      runtime
           timing "#{namespace}.runtime.view", view_runtime if view_runtime
           timing "#{namespace}.runtime.db",   db_runtime   if db_runtime
+
+          increment "#{namespace}.format.#{format}" if format
+          increment "#{namespace}.status.#{status}" if status
+
         end
 
         if exception_info
