@@ -1,6 +1,6 @@
 RailsApp::Application.routes.draw do
   namespace :admin do
-    resources :posts, only: :index
+    resources :posts, only: [:index, :new]
   end
 
   resources :posts, only: :index
