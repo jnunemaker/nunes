@@ -9,8 +9,9 @@ module Nunes
         client.is_a?(Hash)
       end
 
-      def initialize(client = nil)
+      def initialize(client = nil, prefix = nil)
         @client = client || {}
+        @metric_prefix = prefix
         clear
       end
 

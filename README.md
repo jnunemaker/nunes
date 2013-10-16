@@ -24,12 +24,14 @@ Or install it yourself as:
 
 nunes works out of the box with [instrumental app](http://instrumentalapp.com) (my personal favorite) and [statsd](https://github.com/reinh/statsd). All you need to do is subscribe using an instance of statsd or instrumental's agent and you are good to go.
 
+If you want to add a prefix for additional namespacing of the metrics that nunes sends, for example by environment or hostname, supply that prefix along with the agent when subscribing.
+
 ### With Instrumental
 
 ```ruby
 require "nunes"
 I = Instrument::Agent.new(...)
-Nunes.subscribe(I)
+Nunes.subscribe(I) # or Nunes.subscribe(I, 'a.prefix')
 ```
 
 ### With Statsd
@@ -37,7 +39,7 @@ Nunes.subscribe(I)
 ```ruby
 require "nunes"
 statsd = Statsd.new(...)
-Nunes.subscribe(statsd)
+Nunes.subscribe(statsd) # or Nunes.subscribe(statsd, 'another.prefix')
 ```
 
 ### With Some Other Service

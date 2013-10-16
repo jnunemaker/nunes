@@ -15,16 +15,22 @@ module Nunes
   # Public: Shortcut method to setup all subscribers for a given client.
   #
   # client - The instance that will be adapted and receive all instrumentation.
+  # prefix - Optional prefix to all generated metric names.
   #
   # Examples:
   #
   #   Nunes.subscribe(Statsd.new)
   #   Nunes.subscribe(Instrumental::Agent.new)
   #
+  #   Nunes.subscribe(Statsd.new, 'a.prefix')
+  #   Nunes.subscribe(Instrument::Agent.new, 'another.prefix')
+  #
   # Returns Array of subscribers that were setup.
-  def self.subscribe(client)
+
+  def self.subscribe(client, prefix=nil)
     subscribers = []
-    adapter = Nunes::Adapter.wrap(client)
+
+    adapter = Nunes::Adapter.wrap(client, prefix)
 
     subscribers << Subscribers::ActionController.subscribe(adapter)
     subscribers << Subscribers::ActionView.subscribe(adapter)

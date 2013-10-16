@@ -1,11 +1,14 @@
 module Nunes
   class Adapter
+
+    attr_accessor :metric_prefix
+
     # Private: Wraps a given object with the correct adapter/decorator.
     #
     # client - The thing to be wrapped.
     #
     # Returns Nunes::Adapter instance.
-    def self.wrap(client)
+    def self.wrap(client, prefix=nil)
       raise ArgumentError, "client cannot be nil" if client.nil?
       return client if client.is_a?(self)
 
@@ -16,7 +19,7 @@ module Nunes
           "I have no clue how to wrap what you've given me (#{client.inspect})"
       end
 
-      adapter.new(client)
+      adapter.new(client, prefix)
     end
 
     # Private
@@ -35,8 +38,9 @@ module Nunes
     # Internal: Sets the client for the adapter.
     #
     # client - The thing being adapted to a simple interface.
-    def initialize(client)
+    def initialize(client, prefix=nil)
       @client = client
+      @metric_prefix = prefix
     end
 
     # Internal: Increment a metric by a value. Override in subclass if client
@@ -62,6 +66,7 @@ module Nunes
 
     # Private: Prepare a metric name before it is sent to the adapter's client.
     def prepare(metric, replacement = Separator)
+      metric = [metric_prefix, metric].reject { |x| x.to_s.empty? }.join(Separator)
       escaped = Regexp.escape(replacement)
       replace_begin_end_regex = /\A#{escaped}|#{escaped}\Z/
 
