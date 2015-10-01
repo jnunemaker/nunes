@@ -14,8 +14,13 @@ class MailerInstrumentationTest < ActionMailer::TestCase
     ActiveSupport::Notifications.unsubscribe @subscriber if @subscriber
   end
 
-  test "deliver" do
-    PostMailer.created.deliver
+  test "deliver_now" do
+    PostMailer.created.deliver_now
+    assert_timer "action_mailer.deliver.PostMailer"
+  end
+
+  test "deliver_later" do
+    PostMailer.created.deliver_later
     assert_timer "action_mailer.deliver.PostMailer"
   end
 

@@ -1,9 +1,8 @@
 source "https://rubygems.org"
 gemspec
 
-gem "rails", "~> 3.2.12"
-gem "sqlite3-ruby", require: "sqlite3"
-gem "minitest", '~> 4.7', :platforms => :ruby_19
+gem "rails", "~> 4.2.0"
+gem "sqlite3"
 gem "rake"
 
 group :watch do
