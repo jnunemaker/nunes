@@ -12,11 +12,19 @@ class JobInstrumentationTest < ActiveSupport::TestCase
     ActiveSupport::Notifications.unsubscribe @subscriber if @subscriber
   end
 
-  test "perform" do
+  test "perform_now" do
     p = Post.new(title: 'Testing')
-    SpamDetectorJob.new.perform(p)
+    SpamDetectorJob.perform_now(p)
 
-    assert_timer "active_job.perform"
+    assert_timer   "active_job.spam_detector_job.perform"
+  end
+
+  test "perform_later" do
+    p = Post.create!(title: 'Testing')
+    SpamDetectorJob.perform_later(p)
+
+    assert_timer   "active_job.spam_detector_job.perform"
+    assert_counter "active_job.spam_detector_job.enqueue"
   end
 
 end
