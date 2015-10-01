@@ -8,7 +8,7 @@ class NunesTest < ActiveSupport::TestCase
 
       subscribers.each do |subscriber|
         assert_instance_of \
-          ActiveSupport::Notifications::Fanout::Subscriber,
+          ActiveSupport::Notifications::Fanout::Subscribers::Timed,
           subscriber
       end
     ensure
