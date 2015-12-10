@@ -5,6 +5,7 @@ gem "rails", "~> 3.2.12"
 gem "sqlite3", "~> 1.3.7"
 gem "minitest", "~> 4.7"
 gem "rake", "~> 10.0.4"
+gem "test-unit", "~> 3.0"
 
 group :watch do
   gem "rb-fsevent", "~> 0.9.3", require: false
