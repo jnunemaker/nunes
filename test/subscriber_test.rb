@@ -30,7 +30,8 @@ class SubscriberTest < ActiveSupport::TestCase
     instance = subscriber_class.new(client)
 
     subscriber_class.stub :new, instance do
-      mock = Minitest::Mock.new
+      mock = MiniTest::Mock.new
+
       mock.expect :subscribe, :subscriber, [subscriber_class.pattern, instance]
 
       assert_equal :subscriber,
