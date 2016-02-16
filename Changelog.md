@@ -1,3 +1,9 @@
+# 0.4.0
+
+## Backwards Compatibility Break
+
+* Changed required Rails version to 4.2.
+
 # 0.3.0
 
 ## Backwards Compatibility Break
