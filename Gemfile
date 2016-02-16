@@ -1,9 +1,9 @@
 source "https://rubygems.org"
 gemspec
 
-gem "rails", "~> 3.2.12"
+gem "rails", "~> 4.2.0"
 gem "sqlite3", "~> 1.3.7"
-gem "minitest", "~> 4.7"
+gem "minitest", "~> 5.1"
 gem "rake", "~> 10.0.4"
 gem "test-unit", "~> 3.0"
 

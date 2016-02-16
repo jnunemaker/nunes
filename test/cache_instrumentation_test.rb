@@ -15,12 +15,14 @@ class CacheInstrumentationTest < ActiveSupport::TestCase
   end
 
   def setup_cache
-    ActiveSupport::Cache::MemoryStore.instrument = true
+    # Deprecated in Rails 4.2
+    # ActiveSupport::Cache::MemoryStore.instrument = true
     @cache = ActiveSupport::Cache::MemoryStore.new
   end
 
   def teardown_cache
-    ActiveSupport::Cache::MemoryStore.instrument = nil
+    # Deprecated in Rails 4.2
+    # ActiveSupport::Cache::MemoryStore.instrument = nil
     @cache = nil
   end
 

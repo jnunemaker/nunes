@@ -9,6 +9,7 @@ require "nunes/subscribers/action_view"
 require "nunes/subscribers/action_mailer"
 require "nunes/subscribers/active_support"
 require "nunes/subscribers/active_record"
+require "nunes/subscribers/active_job"
 require "nunes/subscribers/nunes"
 
 module Nunes
@@ -31,6 +32,7 @@ module Nunes
     subscribers << Subscribers::ActionMailer.subscribe(adapter)
     subscribers << Subscribers::ActiveSupport.subscribe(adapter)
     subscribers << Subscribers::ActiveRecord.subscribe(adapter)
+    subscribers << Subscribers::ActiveJob.subscribe(adapter)
     subscribers << Subscribers::Nunes.subscribe(adapter)
 
     subscribers
