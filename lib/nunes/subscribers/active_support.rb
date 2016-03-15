@@ -25,7 +25,7 @@ module Nunes
         hit = payload[:hit]
         unless hit.nil?
           hit_type = hit ? :hit : :miss
-          increment "active_support.cache.#{hit_type}"
+          increment "active_support.cache.#{hit_type}.#{payload[:key]}"
         end
       end
 
