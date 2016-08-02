@@ -1,3 +1,5 @@
+require 'active_support/core_ext/class/subclasses'
+
 module Nunes
   class Adapter
     # Private: Wraps a given object with the correct adapter/decorator.
