@@ -18,7 +18,7 @@ Or install it yourself as:
 
 ## Compatibility
 
-* >= Ruby 1.9
+* >= Ruby 2.0
 * Rails 4.2.x
 
 Note: you can use v0.3.1 is for rails 3.2.x support.
