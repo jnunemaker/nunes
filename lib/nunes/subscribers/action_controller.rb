@@ -11,14 +11,16 @@ module Nunes
         Pattern
       end
 
+      class << self
+        attr_accessor :instrument_format
+      end
+
+      self.instrument_format = true
+
       def process_action(start, ending, transaction_id, payload)
         controller = payload[:controller]
         action = payload[:action]
         status = payload[:status]
-        exception_info = payload[:exception]
-
-        format = payload[:format] || "all"
-        format = "all" if format == "*/*"
 
         db_runtime = payload[:db_runtime]
         db_runtime = db_runtime.round if db_runtime
@@ -30,27 +32,31 @@ module Nunes
 
         timing "action_controller.runtime.total", runtime
         timing "action_controller.runtime.view", view_runtime if view_runtime
-        timing "action_controller.runtime.db",   db_runtime   if db_runtime
+        timing "action_controller.runtime.db", db_runtime if db_runtime
 
-        increment "action_controller.format.#{format}" if format
         increment "action_controller.status.#{status}" if status
 
         if controller && action
           namespace = "action_controller.controller.#{controller}.#{action}"
 
-          timing "#{namespace}.runtime.total",      runtime
+          timing "#{namespace}.runtime.total", runtime
           timing "#{namespace}.runtime.view", view_runtime if view_runtime
-          timing "#{namespace}.runtime.db",   db_runtime   if db_runtime
+          timing "#{namespace}.runtime.db", db_runtime if db_runtime
 
-          increment "#{namespace}.format.#{format}" if format
           increment "#{namespace}.status.#{status}" if status
-
         end
 
-        if exception_info
-          exception_class, exception_message = exception_info
+        if self.class.instrument_format
+          format = payload[:format] || "all"
+          format = "all" if format == "*/*"
 
-          increment "action_controller.exception.#{exception_class}"
+          if format
+            increment "action_controller.format.#{format}"
+
+            if controller && action
+              increment "#{namespace}.format.#{format}"
+            end
+          end
         end
       end
 

@@ -59,7 +59,7 @@ class InstrumentationTest < ActiveSupport::TestCase
 
     assert_not_nil event, "No events were found."
     assert_equal "Thing.yo", event.payload[:metric]
-    assert_in_delta 0, event.duration, 0.1
+    assert_in_delta 0, event.duration, 0.2
 
     assert_timer "Thing.yo"
   end

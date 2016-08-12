@@ -76,7 +76,6 @@ class ControllerInstrumentationTest < ActionController::TestCase
 
     assert_response :success
 
-    assert_counter "action_controller.exception.RuntimeError"
     assert_counter "action_controller.format.html"
 
     assert_timer "action_controller.runtime.total"
@@ -84,5 +83,18 @@ class ControllerInstrumentationTest < ActionController::TestCase
 
     assert_no_timer "action_controller.runtime.view"
     assert_no_timer "action_controller.controller.PostsController.some_boom.runtime.view"
+  end
+
+  test "with instrument format disabled" do
+    begin
+      original_format_enabled = Nunes::Subscribers::ActionController.instrument_format
+      Nunes::Subscribers::ActionController.instrument_format = false
+
+      get :index
+
+      refute_counter "action_controller.format.html"
+    ensure
+      Nunes::Subscribers::ActionController.instrument_format = original_format_enabled
+    end
   end
 end

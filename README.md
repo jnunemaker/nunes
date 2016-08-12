@@ -74,7 +74,6 @@ Based on those events, you'll get metrics like this in instrumental and statsd:
 * `action_controller.format.html`
 * `action_controller.controller.Admin.PostsController.new.status.403`
 * `action_controller.controller.Admin.PostsController.index.format.json`
-* `action_controller.exception.RuntimeError` - where RuntimeError is the class of any exceptions that occur while processing a controller's action.
 * `active_support.cache.hit`
 * `active_support.cache.miss`
 
