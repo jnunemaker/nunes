@@ -16,14 +16,14 @@ class NamespacedJobInstrumentationTest < ActiveSupport::TestCase
     post = Post.new(title: 'Testing')
     Spam::DetectorJob.perform_now(post)
 
-    assert_timer   "active_job.Spam.DetectorJob.perform"
+    assert_timer   "active_job.Spam-DetectorJob.perform"
   end
 
   test "perform_later" do
     post = Post.create!(title: 'Testing')
     Spam::DetectorJob.perform_later(post)
 
-    assert_timer   "active_job.Spam.DetectorJob.perform"
-    assert_counter "active_job.Spam.DetectorJob.enqueue"
+    assert_timer   "active_job.Spam-DetectorJob.perform"
+    assert_counter "active_job.Spam-DetectorJob.enqueue"
   end
 end

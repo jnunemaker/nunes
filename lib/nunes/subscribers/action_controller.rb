@@ -33,7 +33,7 @@ module Nunes
         status = payload[:status]
         increment "action_controller.status.#{status}" if status
 
-        controller = payload[:controller]
+        controller = ::Nunes.class_to_metric(payload[:controller])
         action = payload[:action]
 
         if controller && action

@@ -24,7 +24,7 @@ module Nunes
         if name.nil?
           raise ArgumentError, "For class methods you must provide the full name of the metric."
         else
-          "#{name}.#{method_name}"
+          "#{::Nunes.class_to_metric(name)}.#{method_name}"
         end
       }
 

@@ -13,7 +13,7 @@ module Nunes
 
       def deliver(start, ending, transaction_id, payload)
         runtime = ((ending - start) * 1_000).round
-        mailer = payload[:mailer]
+        mailer = ::Nunes.class_to_metric(payload[:mailer])
 
         if mailer
           timing "action_mailer.deliver.#{mailer}", runtime
@@ -22,7 +22,7 @@ module Nunes
 
       def receive(start, ending, transaction_id, payload)
         runtime = ((ending - start) * 1_000).round
-        mailer = payload[:mailer]
+        mailer = ::Nunes.class_to_metric(payload[:mailer])
 
         if mailer
           timing "action_mailer.receive.#{mailer}", runtime

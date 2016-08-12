@@ -17,4 +17,12 @@ class NunesTest < ActiveSupport::TestCase
       end
     end
   end
+
+  test "class_to_metric" do
+    assert_equal nil, Nunes.class_to_metric(nil)
+    assert_equal "Foo", Nunes.class_to_metric("Foo")
+    assert_equal "Nunes", Nunes.class_to_metric(Nunes)
+    assert_equal "Spam-DetectorJob", Nunes.class_to_metric(Spam::DetectorJob)
+    assert_equal "Spam-DetectorJob", Nunes.class_to_metric("Spam::DetectorJob")
+  end
 end
