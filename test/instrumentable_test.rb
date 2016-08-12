@@ -1,7 +1,7 @@
 require "helper"
 
 class InstrumentationTest < ActiveSupport::TestCase
-  attr_reader :thing_class
+  attr_reader :thing_class, :namespaced_thing_class
 
   setup :setup_subscriber, :setup_class
   teardown :teardown_subscriber, :teardown_class
@@ -34,10 +34,22 @@ class InstrumentationTest < ActiveSupport::TestCase
         :dude
       end
     }
+    @namespaced_thing_class = Class.new {
+      extend Nunes::Instrumentable
+
+      def self.name
+        'Some::Thing'
+      end
+
+      def yo(args = {})
+        :dude
+      end
+    }
   end
 
   def teardown_class
     @thing_class = nil
+    @namespaced_thing_class = nil
   end
 
   test "adds methods when extended" do
@@ -116,6 +128,18 @@ class InstrumentationTest < ActiveSupport::TestCase
     assert_equal "loadin", event.payload[:pay]
 
     assert_timer "Thing.yo"
+  end
+
+  test "instrument_method_time for namespaced class" do
+    namespaced_thing_class.instrument_method_time :yo
+
+    event = slurp_events { namespaced_thing_class.new.yo(some: 'thing') }.last
+
+    assert_not_nil event, "No events were found."
+    assert_equal "Some-Thing.yo", event.payload[:metric]
+    assert_in_delta 0, event.duration, 0.2
+
+    assert_timer "Some-Thing.yo"
   end
 
   def slurp_events(&block)
