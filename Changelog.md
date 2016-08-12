@@ -1,3 +1,8 @@
+# master
+
+* no longer doing underscore on active job class name when instrumenting it (ie: active_job.spam_detector_job.perform changed to active_job.SpamDetectorJob.perform)
+* drop ruby 1.9 support
+
 # 0.4.0
 
 ## Backwards Compatibility Break
