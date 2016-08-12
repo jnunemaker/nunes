@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 gemspec
 
-gem "rails", "~> 4.2.0"
+gem "rails", "~> #{ENV["RAILS_VERSION"] || '4.2.5'}"
 gem "sqlite3", "~> 1.3.7"
 gem "minitest", "~> 5.1"
 gem "rake", "~> 10.0.4"
