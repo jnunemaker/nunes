@@ -2,6 +2,7 @@
 
 * no longer doing underscore on active job class name when instrumenting it (ie: active_job.spam_detector_job.perform changed to active_job.SpamDetectorJob.perform)
 * drop ruby 1.9 support
+* ruby namespaces are now converted to dash instead of dot in metric namespace (https://github.com/jnunemaker/nunes/pull/27)
 
 # 0.4.0
 
