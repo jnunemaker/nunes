@@ -1,8 +1,8 @@
 language: ruby
 rvm:
   - 2.0.0
-  - 2.1.0
-  - 2.2.0
+  - 2.1.10
+  - 2.2.5
 bundler_args: --without guard watch bench
 script: bundle exec rake
 env:
@@ -13,5 +13,5 @@ matrix:
   exclude:
     - rvm: 2.0.0
       env: RAILS_VERSION=5.0.0
-    - rvm: 2.1.8
+    - rvm: 2.1.10
       env: RAILS_VERSION=5.0.0
