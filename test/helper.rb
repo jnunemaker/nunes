@@ -20,6 +20,8 @@ class ActiveSupport::TestCase
   include AdapterTestHelpers
 end
 
-require "rails_app/config/environment"
+rails_version = ENV["RAILS_VERSION"] || "4.2.5"
+
+require "rails_app_#{rails_version}/config/environment"
 
 require "nunes"
