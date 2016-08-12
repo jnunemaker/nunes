@@ -11,11 +11,14 @@ module Nunes
         Pattern
       end
 
+      # Private: Used to detect the operation from the sql.
+      Space = " ".freeze
+
       def sql(start, ending, transaction_id, payload)
         runtime = ((ending - start) * 1_000).round
         name = payload[:name]
         sql = payload[:sql].to_s.strip
-        operation = sql.split(' ', 2).first.to_s.downcase
+        operation = sql.split(Space, 2).first.to_s.downcase
 
         timing "active_record.sql", runtime
 

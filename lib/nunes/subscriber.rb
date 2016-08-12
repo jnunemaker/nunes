@@ -3,7 +3,10 @@ require "active_support/notifications"
 module Nunes
   class Subscriber
     # Private: The bang character that is the first char of some events.
-    BANG = '!'
+    BANG = "!".freeze
+
+    # Private: The dot charactor used to determine the method name.
+    DOT = ".".freeze
 
     # Public: Setup a subscription for the subscriber using the
     # provided adapter.
@@ -34,7 +37,7 @@ module Nunes
       # when in production
       return if name.start_with?(BANG)
 
-      method_name = name.split('.').first
+      method_name = name.split(DOT).first
 
       if respond_to?(method_name)
         send(method_name, start, ending, transaction_id, payload)

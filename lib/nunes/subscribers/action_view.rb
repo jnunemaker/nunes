@@ -30,14 +30,17 @@ module Nunes
       end
 
       # Private: What to replace file separators with.
-      FileSeparatorReplacement = "_"
+      FileSeparatorReplacement = "_".freeze
+
+      # Private: An empty string.
+      Nothing = "".freeze
 
       # Private: Converts an identifier to a metric name. Strips out the rails
       # root from the full path.
       #
       # identifier - The String full path to the template or partial.
       def identifier_to_metric(kind, identifier)
-        view_path = identifier.to_s.gsub(::Rails.root.to_s, "")
+        view_path = identifier.to_s.gsub(::Rails.root.to_s, Nothing)
         metric = adapter.prepare(view_path, FileSeparatorReplacement)
         "action_view.#{kind}.#{metric}"
       end

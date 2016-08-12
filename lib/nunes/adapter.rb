@@ -55,10 +55,10 @@ module Nunes
     ReplaceRegex = /[^a-z0-9\-_]+/i
 
     # Private: The default metric namespace separator.
-    Separator = "."
+    Separator = ".".freeze
 
     # Private
-    Nothing = ""
+    Nothing = "".freeze
 
     # Private: Prepare a metric name before it is sent to the adapter's client.
     def prepare(metric, replacement = Separator)
