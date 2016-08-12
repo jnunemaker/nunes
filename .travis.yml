@@ -9,3 +9,4 @@ bundler_args: --without guard watch
 script: bundle exec rake
 env:
   - RAILS_VERSION=4.2.5
+  - RAILS_VERSION=5.0.0

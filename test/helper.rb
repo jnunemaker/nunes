@@ -8,6 +8,8 @@ require "action_mailer"
 root = Pathname(__FILE__).dirname.join("..").expand_path
 Dir[root.join("test/support/**/*.rb")].each { |f| require f }
 
+puts "Running tests against rails version #{Rails.version}"
+
 class ActionController::TestCase
   include AdapterTestHelpers
 end

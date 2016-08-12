@@ -1,6 +1,8 @@
 require "helper"
 
 class JobInstrumentationTest < ActiveSupport::TestCase
+  include ActiveJob::TestHelper
+
   setup :setup_subscriber
   teardown :teardown_subscriber
 
@@ -21,9 +23,11 @@ class JobInstrumentationTest < ActiveSupport::TestCase
 
   test "perform_later" do
     post = Post.create!(title: 'Testing')
-    SpamDetectorJob.perform_later(post)
+    perform_enqueued_jobs do
+      SpamDetectorJob.perform_later(post)
+    end
 
-    assert_timer   "active_job.SpamDetectorJob.perform"
     assert_counter "active_job.SpamDetectorJob.enqueue"
+    assert_timer   "active_job.SpamDetectorJob.perform"
   end
 end

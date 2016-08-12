@@ -1,6 +1,8 @@
 require "helper"
 
 class MailerInstrumentationTest < ActionMailer::TestCase
+  include ActiveJob::TestHelper
+
   tests PostMailer
 
   setup :setup_subscriber
@@ -20,7 +22,9 @@ class MailerInstrumentationTest < ActionMailer::TestCase
   end
 
   test "deliver_later" do
-    PostMailer.created.deliver_later
+    perform_enqueued_jobs do
+      PostMailer.created.deliver_later
+    end
     assert_timer "action_mailer.deliver.PostMailer"
   end
 
