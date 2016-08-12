@@ -26,7 +26,7 @@ module AdapterTestHelpers
       "Expected the timer #{metric.inspect} to be included in #{adapter.timer_metric_names.inspect}, but it was not."
   end
 
-  def assert_no_timer(metric)
+  def refute_timer(metric)
     assert ! adapter.timer?(metric),
       "Expected the timer #{metric.inspect} to not be included in #{adapter.timer_metric_names.inspect}, but it was."
   end

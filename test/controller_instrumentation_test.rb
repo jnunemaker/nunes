@@ -23,10 +23,12 @@ class ControllerInstrumentationTest < ActionController::TestCase
     assert_counter "action_controller.format.html"
 
     assert_timer "action_controller.runtime.total"
+    assert_timer "action_controller.runtime.db"
     assert_timer "action_controller.runtime.view"
 
     assert_timer "action_controller.controller.PostsController.index.runtime.total"
     assert_timer "action_controller.controller.PostsController.index.runtime.view"
+    assert_timer "action_controller.controller.PostsController.index.runtime.db"
   end
 
   test "send_data" do
@@ -67,8 +69,8 @@ class ControllerInstrumentationTest < ActionController::TestCase
     assert_timer "action_controller.runtime.total"
     assert_timer "action_controller.controller.PostsController.some_redirect.runtime.total"
 
-    assert_no_timer "action_controller.runtime.view"
-    assert_no_timer "action_controller.controller.PostsController.some_redirect.runtime.view"
+    refute_timer "action_controller.runtime.view"
+    refute_timer "action_controller.controller.PostsController.some_redirect.runtime.view"
   end
 
   test "action with exception" do
@@ -81,8 +83,8 @@ class ControllerInstrumentationTest < ActionController::TestCase
     assert_timer "action_controller.runtime.total"
     assert_timer "action_controller.controller.PostsController.some_boom.runtime.total"
 
-    assert_no_timer "action_controller.runtime.view"
-    assert_no_timer "action_controller.controller.PostsController.some_boom.runtime.view"
+    refute_timer "action_controller.runtime.view"
+    refute_timer "action_controller.controller.PostsController.some_boom.runtime.view"
   end
 
   test "with instrument format disabled" do
@@ -95,6 +97,34 @@ class ControllerInstrumentationTest < ActionController::TestCase
       refute_counter "action_controller.format.html"
     ensure
       Nunes::Subscribers::ActionController.instrument_format = original_format_enabled
+    end
+  end
+
+  test "with instrument db runtime disabled" do
+    begin
+      original_format_enabled = Nunes::Subscribers::ActionController.instrument_db_runtime
+      Nunes::Subscribers::ActionController.instrument_db_runtime = false
+
+      get :index
+
+      refute_timer "action_controller.runtime.db"
+      refute_timer "action_controller.controller.PostsController.index.runtime.db"
+    ensure
+      Nunes::Subscribers::ActionController.instrument_db_runtime = original_format_enabled
+    end
+  end
+
+  test "with instrument view runtime disabled" do
+    begin
+      original_format_enabled = Nunes::Subscribers::ActionController.instrument_view_runtime
+      Nunes::Subscribers::ActionController.instrument_view_runtime = false
+
+      get :index
+
+      refute_timer "action_controller.runtime.view"
+      refute_timer "action_controller.controller.PostsController.index.runtime.view"
+    ensure
+      Nunes::Subscribers::ActionController.instrument_view_runtime = original_format_enabled
     end
   end
 end
