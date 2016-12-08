@@ -4,6 +4,7 @@
 * drop ruby 1.9 support
 * ruby namespaces are now converted to dash instead of dot in metric namespace (https://github.com/jnunemaker/nunes/pull/27)
 * allow disabling view/db runtime, format and exception instrumentation
+* official support for rails 5
 
 # 0.4.0
 
