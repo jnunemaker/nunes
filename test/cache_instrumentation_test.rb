@@ -30,7 +30,7 @@ class CacheInstrumentationTest < ActiveSupport::TestCase
     cache.read('foo')
 
     assert_timer "active_support.cache.read"
-    assert_counter "active_support.cache.miss"
+    assert_counter "active_support.cache.miss.foo"
   end
 
   test "cache_read hit" do
@@ -39,7 +39,7 @@ class CacheInstrumentationTest < ActiveSupport::TestCase
     cache.read('foo')
 
     assert_timer "active_support.cache.read"
-    assert_counter "active_support.cache.hit"
+    assert_counter "active_support.cache.hit.foo"
   end
 
   test "cache_generate" do
