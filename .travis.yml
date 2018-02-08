@@ -10,6 +10,7 @@ script: bundle exec rake
 env:
   - RAILS_VERSION=4.2.5
   - RAILS_VERSION=5.0.0
+  - RAILS_VERSION=5.1.4
 matrix:
   # don't run rails 5 on ruby versions that can't install rack 2
   exclude:
