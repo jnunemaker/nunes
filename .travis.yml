@@ -18,3 +18,7 @@ matrix:
       env: RAILS_VERSION=5.0.0
     - rvm: 2.1
       env: RAILS_VERSION=5.0.0
+    - rvm: 2.0
+      env: RAILS_VERSION=5.1.4
+    - rvm: 2.1
+      env: RAILS_VERSION=5.1.4
