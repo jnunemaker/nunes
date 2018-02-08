@@ -1,3 +1,7 @@
+# master 
+
+* Added rails 5.1.4 build to the matrix (https://github.com/jnunemaker/nunes/pull/32).
+
 # 0.5.0
 
 * no longer doing underscore on active job class name when instrumenting it (ie: active_job.spam_detector_job.perform changed to active_job.SpamDetectorJob.perform)
