@@ -1,8 +1,10 @@
 language: ruby
 rvm:
-  - 2.0.0
-  - 2.1.10
-  - 2.2.5
+  - 2.0
+  - 2.1
+  - 2.2
+  - 2.3
+  - 2.4
 bundler_args: --without guard watch bench
 script: bundle exec rake
 env:
