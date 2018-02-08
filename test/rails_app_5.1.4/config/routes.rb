@@ -1,3 +1,12 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  namespace :admin do
+    resources :posts, only: [:index, :new]
+  end
+
+  resources :posts, only: :index
+
+  get "/some-data",     to: "posts#some_data"
+  get "/some-file",     to: "posts#some_file"
+  get "/some-redirect", to: "posts#some_redirect"
+  get "/some-boom",     to: "posts#some_boom"
 end
