@@ -16,6 +16,8 @@ module Nunes
         action = payload[:action]
         status = payload[:status]
         exception_info = payload[:exception]
+        organization_id = payload[:organization_id]
+        self.add_tag({key: 'organization_id', value: organization_id}) if organization_id.present?
 
         format = payload[:format] || "all"
         format = "all" if format == "*/*"
@@ -52,6 +54,8 @@ module Nunes
 
           increment "action_controller.exception.#{exception_class}"
         end
+
+        self.remove_tag(:organization_id) if organization_id.present?
       end
 
       ##########################################################################

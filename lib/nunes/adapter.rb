@@ -51,6 +51,45 @@ module Nunes
       @client.timing prepare(metric), duration
     end
 
+    # Internal: Adds tag key and value to postfix sent to statsd
+    def add_tag(new_tag = {})
+      return unless tag_value_changed?(new_tag)
+
+      update_postfix(new_tag)
+    end
+
+    def tag_value_changed?(tag)
+      index = tag_index(tag[:key])
+      current_value = current_tags[index].split('=').last if index.present?
+      current_value != tag[:value]
+    end
+
+    def update_postfix(tag)
+      index = tag_index(tag[:key])
+      remove_tag(tag[:key]) if index.present?
+      new_postfix = current_tags.join(',') + ",#{tag[:key]}=#{tag[:value]}"
+      @client.instance_variable_set(:@postfix, new_postfix)
+    end
+
+    def tag_index(key)
+      current_tags.index { |tag| tag.include?(key.to_s) }
+    end
+
+    def current_tags
+      postfix.split(',')
+    end
+
+    # Internal: Removes tag in postfix sent to statsd
+    def remove_tag(key)
+      tags = current_tags
+      tags.delete_at(tag_index(key))
+      @client.instance_variable_set(:@postfix, tags.join(','))
+    end
+
+    def postfix
+      @client.instance_variable_get(:@postfix)
+    end
+
     # Private: What Ruby uses to separate namespaces.
     ReplaceRegex = /[^a-z0-9\-_]+/i
 

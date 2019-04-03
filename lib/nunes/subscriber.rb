@@ -60,5 +60,23 @@ module Nunes
     def timing(metric, value)
       @adapter.timing metric, value
     end
+
+    # Internal: Adds tag to statsd postfix message.
+    #
+    # tag - Hash with key name and value of tag
+    #
+    # Returns nothing.
+    def add_tag(tag)
+      @adapter.add_tag(tag)
+    end
+
+    # Internal: Removes tag from statsd postfix message.
+    #
+    # key - name of tag key
+    #
+    # Returns nothing.
+    def remove_tag(key)
+      @adapter.remove_tag(key)
+    end
   end
 end
