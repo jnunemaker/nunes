@@ -1,4 +1,4 @@
-require "nunes/tracer/tag"
+require_relative "tag"
 
 module Nunes
   class Tracer

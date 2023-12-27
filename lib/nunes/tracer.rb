@@ -40,4 +40,4 @@ module Nunes
   end
 end
 
-require "nunes/tracer/span"
+require_relative "tracer/span"
