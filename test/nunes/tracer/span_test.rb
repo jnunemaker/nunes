@@ -25,9 +25,9 @@ class NunesTracerSpanTest < Minitest::Test
     trace.span("mysql") { }
     span = trace.spans[0]
     refute_nil span
-    assert_instance_of Time, span.started_at
-    assert_instance_of Time, span.finished_at
-    assert_instance_of Float, span.duration
+    assert_instance_of Integer, span.started_at
+    assert_instance_of Integer, span.finished_at
+    assert_instance_of Integer, span.duration
   end
 
   def test_span_can_have_children_spans
@@ -80,8 +80,8 @@ class NunesTracerSpanTest < Minitest::Test
     assert_nil span.finished_at
     result = span.time { "something" }
     assert_equal "something", result
-    assert_instance_of Time, span.started_at
-    assert_instance_of Time, span.finished_at
+    assert_instance_of Integer, span.started_at
+    assert_instance_of Integer, span.finished_at
   end
 
   def test_time_with_block_that_raises
@@ -93,8 +93,8 @@ class NunesTracerSpanTest < Minitest::Test
       result = span.time { raise }
     end
     assert_nil result
-    assert_instance_of Time, span.started_at
-    assert_instance_of Time, span.finished_at
+    assert_instance_of Integer, span.started_at
+    assert_instance_of Integer, span.finished_at
   end
 
   def test_time_yields_span

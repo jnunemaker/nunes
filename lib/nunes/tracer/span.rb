@@ -30,11 +30,11 @@ module Nunes
       end
 
       def start
-        @started_at = Time.now
+        @started_at = Nunes.now
       end
 
       def finish
-        @finished_at = Time.now
+        @finished_at = Nunes.now
       end
 
       # Returns the Float duration in milliseconds that this span lasted.
@@ -42,7 +42,7 @@ module Nunes
         return @duration if defined?(@duration)
 
         @duration = if finished_at && started_at
-          (finished_at - started_at) * 1e3
+          finished_at - started_at
         else
           nil
         end
