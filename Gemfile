@@ -1,16 +1,17 @@
+# frozen_string_literal: true
+
 source "https://rubygems.org"
+
+# Specify your gem's dependencies in nunes.gemspec
 gemspec
 
-gem "rails", "~> #{ENV["RAILS_VERSION"] || '4.2.5'}"
-gem "sqlite3", "~> 1.3.7"
-gem "minitest", "~> 5.10.3"
-gem "rake", "~> 10.0.4"
-gem "test-unit", "~> 3.0"
+gem "rake", "~> 13.0"
 
-group :watch do
-  gem "rb-fsevent", "~> 0.9.3", require: false
-end
+gem "minitest", "~> 5.16"
 
-group :bench do
-  gem "rblineprof", "~> 0.3.6"
+gem "minitest-heat", "~> 1.2"
+
+group :guard do
+  gem "guard", "~> 2.18"
+  gem "guard-minitest", "~> 2.4"
 end

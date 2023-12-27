@@ -1,10 +1,8 @@
-#!/usr/bin/env rake
-$LOAD_PATH.push File.expand_path("../lib", __FILE__)
+# frozen_string_literal: true
 
-require "rake/testtask"
-Rake::TestTask.new do |t|
-  t.libs = ["lib", "test"]
-  t.test_files = FileList["test/**/*_test.rb"]
-end
+require "bundler/gem_tasks"
+require "minitest/test_task"
 
-task :default => :test
+Minitest::TestTask.create
+
+task default: :test
