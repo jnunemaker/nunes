@@ -25,13 +25,14 @@ class NunesMiddlewareTest < Minitest::Test
   def test_it
     env = Rack::MockRequest.env_for('/', 'HTTP_X_REQUEST_ID' => '1234')
     get '/', {}, env
-    assert root = last_request.env['nunes.root_span']
+
+    assert root = Nunes.adapter.get("1234")
     assert_equal "1234", root.name
 
     tags = Hash[root.tags.map { |tag| [tag.key, tag.value] }]
 
     assert_equal "/", tags[:path]
-    assert_equal 200, tags[:status]
+    assert_equal "200", tags[:status]
     assert_equal "127.0.0.1", tags[:ip]
     assert_equal "1234", tags[:request_id]
     assert_equal "GET", tags[:request_method]

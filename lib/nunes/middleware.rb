@@ -19,10 +19,9 @@ module Nunes
         ip: request.ip,
       }
       Nunes.trace(request_id, tags: tags) { |span|
-        env["nunes.root_span"] = span
-        result = @app.call(env)
-        span.tag :status, result[0]
-        result
+        @app.call(env).tap { |(status, headers, body)|
+          span.tag :status, status
+        }
       }
     end
   end

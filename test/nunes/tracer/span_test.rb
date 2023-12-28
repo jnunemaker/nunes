@@ -109,7 +109,7 @@ class NunesTracerSpanTest < Minitest::Test
     span.tag :user_id, 5
     assert_equal 1, span.tags.length
     assert_equal :user_id, span.tags[0].key
-    assert_equal 5, span.tags[0].value
+    assert_equal "5", span.tags[0].value
   end
 
   def test_error
@@ -117,7 +117,7 @@ class NunesTracerSpanTest < Minitest::Test
     span.error
     assert_equal 1, span.tags.length
     assert_equal :error, span.tags[0].key
-    assert_equal true, span.tags[0].value
+    assert_equal "true", span.tags[0].value
   end
 
   def test_descendants

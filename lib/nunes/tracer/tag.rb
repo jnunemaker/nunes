@@ -10,7 +10,7 @@ module Nunes
 
       def initialize(key, value)
         @key = key.to_sym
-        @value = value
+        @value = value.to_s
       end
 
       def eql?(other)
