@@ -23,6 +23,10 @@ class NunesTest < Minitest::Test
     refute_equal tracer, Nunes.tracer
   end
 
+  def test_adapter
+    assert_equal Nunes.tracer.adapter, Nunes.adapter
+  end
+
   def test_trace_delegates_to_tracer
     root = nil
     Nunes.trace("request-id") { |span| root = span }
