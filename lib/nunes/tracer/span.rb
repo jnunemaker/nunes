@@ -37,7 +37,7 @@ module Nunes
         @finished_at = Nunes.now
       end
 
-      # Returns the Float duration in milliseconds that this span lasted.
+      # Returns the duration in milliseconds that this span lasted.
       def duration
         return @duration if defined?(@duration)
 
