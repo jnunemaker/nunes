@@ -1,3 +1,5 @@
+require_relative "adapters/memory"
+
 module Nunes
   class Tracer
     class MissingRootSpan < StandardError
@@ -12,14 +14,22 @@ module Nunes
       end
     end
 
-    def initialize
+    attr_reader :adapter
+
+    def initialize(adapter: nil)
       @root_span = nil
+      @adapter = adapter || default_adapter
     end
 
     def trace(request_id, tags: nil, &block)
       raise TraceAlreadyStarted if @root_span
+      request_id = request_id.to_s
       @root_span = Span.new(name: request_id, tags: tags)
-      yield @root_span
+      begin
+        yield @root_span
+      ensure
+        adapter.save(request_id, @root_span)
+      end
     ensure
       @root_span = nil
     end
@@ -36,6 +46,10 @@ module Nunes
 
     def root_span
       @root_span || raise(MissingRootSpan)
+    end
+
+    def default_adapter
+      Adapters::Memory.new
     end
   end
 end

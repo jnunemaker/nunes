@@ -56,6 +56,25 @@ class NunesTracerTest < Minitest::Test
     assert_equal "asdf", yielded_span.name
   end
 
+  def test_trace_stores_in_adapter
+    tracer = Nunes::Tracer.new
+    adapter = tracer.adapter
+    tracer.trace("1", tags: {status: "200"}) { |span|
+      span.span("a") { "a" }
+      "response#{span.name}"
+    }
+    tracer.trace("2") { |span| "response#{span.name}" }
+    tracer.trace("3") { |span| "response#{span.name}" }
+
+    assert_equal %w(3 2 1), adapter.index
+
+    assert span = adapter.get("1")
+    assert_equal "1", span.name
+    assert_equal "200", span.tags.first.value
+    assert_equal 1, span.spans.size
+    assert_equal "a", span.spans.first.name
+  end
+
   def test_span_errors_when_no_root_span
     tracer = Nunes::Tracer.new
     assert_raises Nunes::Tracer::MissingRootSpan do

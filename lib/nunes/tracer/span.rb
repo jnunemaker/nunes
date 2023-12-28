@@ -19,7 +19,7 @@ module Nunes
       attr_reader :finished_at
 
       # Returns the Array of tags if there are any else nil.
-      attr_accessor :tags
+      attr_reader :tags
 
       def initialize(name:, parent: nil, tags: nil)
         @name = name
@@ -83,6 +83,17 @@ module Nunes
         end
         descendants
       end
+
+      def eql?(other)
+        self.class.eql?(other.class) &&
+          @name == other.name &&
+          @parent == other.parent &&
+          @spans == other.spans &&
+          @tags == other.tags &&
+          @started_at == other.started_at &&
+          @finished_at == other.finished_at
+      end
+      alias_method :==, :eql?
 
       private
 
