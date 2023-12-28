@@ -18,7 +18,7 @@ module Nunes
 
     def initialize(adapter: nil)
       @root_span = nil
-      @adapter = adapter || default_adapter
+      @adapter = adapter || Adapters::Memory.new
     end
 
     def trace(request_id, tags: nil, &block)
@@ -46,10 +46,6 @@ module Nunes
 
     def root_span
       @root_span || raise(MissingRootSpan)
-    end
-
-    def default_adapter
-      Adapters::Memory.new
     end
   end
 end
