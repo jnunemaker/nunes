@@ -28,3 +28,5 @@ module Nunes
     tracer.span(...)
   end
 end
+
+require "nunes/engine" if defined?(Rails)
