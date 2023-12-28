@@ -3,13 +3,13 @@ module Nunes
     class Tag
       def self.from_hash(hash)
         return [] if hash.nil? || hash.empty?
-        hash.transform_keys(&:to_sym).map { |key, value| new(key, value) }
+        hash.map { |key, value| new(key, value) }
       end
 
       attr_reader :key, :value
 
       def initialize(key, value)
-        @key = key
+        @key = key.to_sym
         @value = value
       end
 
