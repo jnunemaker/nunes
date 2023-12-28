@@ -13,6 +13,14 @@ class NunesTracerTest < Minitest::Test
     assert executed
   end
 
+  def test_trace_can_receive_tags
+    root = nil
+    tracer = Nunes::Tracer.new
+    tracer.trace("request", tags: {request_id: "1"}) { |span| root = span }
+    assert_equal :request_id, root.tags.first.key
+    assert_equal "1", root.tags.first.value
+  end
+
   def test_trace_returns_result_of_block
     tracer = Nunes::Tracer.new
     result = tracer.trace("request") do

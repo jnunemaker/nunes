@@ -16,9 +16,9 @@ module Nunes
       @root_span = nil
     end
 
-    def trace(request_id, &block)
+    def trace(request_id, tags: nil, &block)
       raise TraceAlreadyStarted if @root_span
-      @root_span = Span.new(name: request_id)
+      @root_span = Span.new(name: request_id, tags: tags)
       yield @root_span
     ensure
       @root_span = nil
