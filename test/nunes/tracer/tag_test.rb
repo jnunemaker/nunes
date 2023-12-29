@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "test_helper"
+require "helper"
 require "nunes/tracer/tag"
 
 class NunesTracerTagTest < Minitest::Test
