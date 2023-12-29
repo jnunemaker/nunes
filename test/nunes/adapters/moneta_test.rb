@@ -3,11 +3,7 @@
 require "helper"
 require "nunes/adapters/moneta"
 
-class NunesAdaptersMonetaTest < Minitest::Test
-  def setup
-    @adapter = Nunes::Adapters::Moneta.new
-  end
-
+module NunesAdaptersMonetaTest
   def test_index_when_no_traces
     assert_equal [], @adapter.index
   end
@@ -45,5 +41,26 @@ class NunesAdaptersMonetaTest < Minitest::Test
     @adapter.save("2", span2)
 
     assert_equal({"1" => span1, "2" => span2}, @adapter.get_multi(["1", "2"]))
+  end
+end
+
+class NunesAdaptersMonetaDefaultTest < Minitest::Test
+  prepend NunesAdaptersMonetaTest
+
+  def setup
+    @adapter = Nunes::Adapters::Moneta.new
+  end
+end
+
+class NunesAdaptersMonetaPstoreTest < Minitest::Test
+  prepend NunesAdaptersMonetaTest
+
+  def setup
+    @pstore_file = TMP_PATH.join("test.pstore")
+    @adapter = Nunes::Adapters::Moneta.new(moneta: ::Moneta.new(:PStore, file: @pstore_file, threadsafe: true))
+  end
+
+  def teardown
+    @pstore_file.unlink if @pstore_file.exist?
   end
 end

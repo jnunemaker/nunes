@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require "pathname"
 require "forwardable"
 require_relative "nunes/version"
 require_relative "nunes/configuration"
@@ -8,7 +9,6 @@ require_relative "nunes/tracer"
 module Nunes
   extend self
   class Error < StandardError; end
-
 
   extend Forwardable
   def_delegators :tracer, :adapter, :trace, :span
