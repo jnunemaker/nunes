@@ -1,9 +1,9 @@
-require_relative "adapters/memory"
+require_relative "adapters/moneta"
 
 module Nunes
   class Configuration
     def initialize
-      @adapter = -> { Nunes::Adapters::Memory.new }
+      @adapter = -> { Nunes::Adapters::Moneta.new }
     end
 
     def adapter(&block)

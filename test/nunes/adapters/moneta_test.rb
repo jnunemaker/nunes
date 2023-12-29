@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 require "helper"
-require "nunes/adapters/memory"
+require "nunes/adapters/moneta"
 
-class NunesAdaptersMemoryTest < Minitest::Test
+class NunesAdaptersMonetaTest < Minitest::Test
   def setup
-    @adapter = Nunes::Adapters::Memory.new
+    @adapter = Nunes::Adapters::Moneta.new
   end
 
   def test_index_when_no_traces

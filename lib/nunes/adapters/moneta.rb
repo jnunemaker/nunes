@@ -4,11 +4,11 @@ require "moneta"
 
 module Nunes
   module Adapters
-    class Memory
+    class Moneta
       INDEX_KEY = "traces"
 
-      def initialize
-        @storage = Moneta.new(:Memory, threadsafe: true)
+      def initialize(moneta: nil)
+        @storage = moneta || ::Moneta.new(:Memory, threadsafe: true)
       end
 
       def index
