@@ -66,7 +66,7 @@ class NunesTracerTest < Minitest::Test
     tracer.trace("2") { |span| "response#{span.name}" }
     tracer.trace("3") { |span| "response#{span.name}" }
 
-    assert_equal %w(3 2 1), adapter.index
+    assert_equal %w(3 2 1), adapter.requests_index
 
     assert span = adapter.get("1")
     assert_equal "1", span.name

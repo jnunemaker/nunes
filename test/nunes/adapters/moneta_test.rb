@@ -4,23 +4,23 @@ require "helper"
 require "nunes/adapters/moneta"
 
 module NunesAdaptersMonetaTest
-  def test_index_when_no_traces
-    assert_equal [], @adapter.index
+  def test_requests_index_when_no_traces
+    assert_equal [], @adapter.requests_index
   end
 
   def test_get_when_trace_not_found
     assert_nil @adapter.get("non_existent_request_id")
   end
 
-  def test_save_get_and_index
+  def test_save_get_and_requests_index
     span = Nunes::Tracer::Span.new(name: "1")
     @adapter.save("1", span)
-    assert_equal ["1"], @adapter.index
+    assert_equal ["1"], @adapter.requests_index
     assert_equal span, @adapter.get("1")
 
     span = Nunes::Tracer::Span.new(name: "2")
     @adapter.save("2", span)
-    assert_equal ["2", "1"], @adapter.index
+    assert_equal ["2", "1"], @adapter.requests_index
     assert_equal span, @adapter.get("2")
   end
 

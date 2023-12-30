@@ -8,6 +8,7 @@ gemspec
 gem "minitest-heat", "~> 1.2"
 gem "minitest", "~> 5.16"
 gem "rack-test", "~> 2.1"
+gem 'rackup'
 gem "rake", "~> 13.0"
 
 group :guard do

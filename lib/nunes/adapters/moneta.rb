@@ -11,7 +11,7 @@ module Nunes
         @storage = moneta || ::Moneta.new(:Memory, threadsafe: true)
       end
 
-      def index
+      def requests_index
         @storage[INDEX_KEY] || []
       end
 
@@ -29,7 +29,7 @@ module Nunes
         trace_key = trace_key(request_id)
 
         if @storage.create(trace_key, span)
-          @storage.store(INDEX_KEY, index.unshift(request_id))
+          @storage.store(INDEX_KEY, requests_index.unshift(request_id))
         end
       end
 

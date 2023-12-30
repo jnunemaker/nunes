@@ -4,6 +4,7 @@ require "pathname"
 require "forwardable"
 require_relative "nunes/version"
 require_relative "nunes/configuration"
+require_relative "nunes/middleware"
 require_relative "nunes/tracer"
 
 module Nunes
@@ -12,6 +13,10 @@ module Nunes
 
   extend Forwardable
   def_delegators :tracer, :adapter, :trace, :span
+
+  def root
+    @root ||= Pathname(__FILE__).dirname.join("..").expand_path
+  end
 
   def configure
     yield configuration if block_given?

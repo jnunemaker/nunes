@@ -34,4 +34,5 @@ Gem::Specification.new do |spec|
   # spec.add_dependency "example-gem", "~> 1.0"
 
   spec.add_dependency 'moneta', '>= 0.7.0', '< 2'
+  spec.add_dependency 'rack', '>= 1.4', '< 4'
 end
