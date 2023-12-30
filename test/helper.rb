@@ -8,4 +8,3 @@ ENV['RAILS_ENV'] = 'test'
 require_relative "dummy/config/environment"
 
 require "nunes"
-TMP_PATH = Nunes.root.join("..", "tmp").tap { |path| path.mkpath }

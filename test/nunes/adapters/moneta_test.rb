@@ -56,7 +56,7 @@ class NunesAdaptersMonetaPstoreTest < Minitest::Test
   prepend NunesAdaptersMonetaTest
 
   def setup
-    @pstore_file = TMP_PATH.join("test.pstore")
+    @pstore_file = Nunes.root.join("tmp").tap { |path| path.mkpath }.join("test.pstore")
     @adapter = Nunes::Adapters::Moneta.new(moneta: ::Moneta.new(:PStore, file: @pstore_file, threadsafe: true))
   end
 
