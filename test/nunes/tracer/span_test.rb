@@ -62,7 +62,7 @@ class NunesTracerSpanTest < Minitest::Test
   def test_can_tag_error
     yielded_span = nil
     span = Nunes::Tracer::Span.new(name: "asdf")
-    result = span.span("1") { |span|
+    span.span("1") { |span|
       yielded_span = span
       begin
         raise

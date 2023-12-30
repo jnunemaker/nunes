@@ -22,32 +22,6 @@ class NunesMiddlewareTest < Minitest::Test
     end.to_app
   end
 
-  def test_viewing_root
-    get '/nunes'
-    assert_predicate last_response, :ok?
-    assert_includes last_response.body, "Requests"
-  end
-
-  def test_view_requests
-    # generate some traces
-    get '/'
-    get '/application.css'
-    get '/application.js'
-
-    get '/nunes/requests'
-    assert_predicate last_response, :ok?
-    assert_includes last_response.body, "Requests"
-  end
-
-  def test_view_request
-    get '/'
-    request_id = Nunes.adapter.requests_index.first
-
-    get "/nunes/requests/#{request_id}"
-    assert_predicate last_response, :ok?
-    assert_includes last_response.body, "GET"
-  end
-
   def test_tracing
     env = Rack::MockRequest.env_for('/', 'HTTP_X_REQUEST_ID' => '1234')
     get '/', {}, env

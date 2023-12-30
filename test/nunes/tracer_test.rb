@@ -113,7 +113,7 @@ class NunesTracerTest < Minitest::Test
   def test_span_yields_span
     yielded_span = nil
     tracer = Nunes::Tracer.new
-    result = tracer.trace("asdf") do
+    tracer.trace("asdf") do
       tracer.span("mysql") { |span| yielded_span = span }
     end
     assert_equal "mysql", yielded_span.name

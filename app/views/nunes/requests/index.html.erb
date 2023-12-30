@@ -1,0 +1,33 @@
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Verb</th>
+        <th>Path</th>
+        <th class="text-end">Status</th>
+        <th class="text-end">Duration</th>
+        <th class="text-end">When</th>
+      </tr>
+    </thead>
+    <% @requests.each do |request| %>
+      <tr>
+        <td>
+          <span class="badge text-bg-light fw-normal">
+            <%= request.request_method %></span>
+        </td>
+        <td>
+          <a href="/nunes/requests/<%= request.request_id %>" class="d-block text-decoration-none text-secondary">
+            <code><%= request.path %></code>
+          </a>
+        </td>
+        <td class="text-end">
+          <span class="badge <%= request.status_css_class %> fw-normal">
+            <%= request.status %>
+          </span>
+        </td>
+        <td class="text-end"><%= request.duration %></td>
+        <td class="text-end"><%= request.started_at %></td>
+      </tr>
+    <% end %>
+  </table>
+</div>
