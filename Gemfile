@@ -10,6 +10,7 @@ gem "rack-test", "~> 2.1"
 gem 'rackup'
 gem "rake", "~> 13.0"
 gem "sprockets-rails"
+gem "sqlite3"
 
 group :guard do
   gem "guard", "~> 2.18"
