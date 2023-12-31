@@ -59,18 +59,21 @@ class NunesTracerTest < Minitest::Test
   def test_trace_stores_in_adapter
     tracer = Nunes::Tracer.new
     adapter = tracer.adapter
-    tracer.trace("1", tags: {status: "200"}) { |span|
+    tracer.trace(:request, tags: {id: "1", status: "200"}) { |span|
       span.span("a") { "a" }
       "response#{span.name}"
     }
-    tracer.trace("2") { |span| "response#{span.name}" }
-    tracer.trace("3") { |span| "response#{span.name}" }
+    tracer.trace(:request, tags: {id: "2"}) { |span| "response#{span.name}" }
+    tracer.trace(:request, tags: {id: "3"}) { |span| "response#{span.name}" }
 
-    assert_equal %w(3 2 1), adapter.requests_index
+    assert_equal %w(3 2 1), adapter.all.map { |span| span.tags.first.value }
 
     assert span = adapter.get("1")
-    assert_equal "1", span.name
-    assert_equal "200", span.tags.first.value
+    assert_equal "request", span.name
+    refute_nil span.started_at
+    refute_nil span.finished_at
+    assert_equal "1", span.tags[0].value
+    assert_equal "200", span.tags[1].value
     assert_equal 1, span.spans.size
     assert_equal "a", span.spans.first.name
   end

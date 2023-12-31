@@ -17,16 +17,7 @@ module Nunes
       if ignore?(request)
         @app.call(env)
       else
-        request_id = env["HTTP_X_REQUEST_ID"] || SecureRandom.uuid
-        tags = {
-          type: "web",
-          request_method: request.request_method,
-          request_id: request_id,
-          path: request.path,
-          ip: request.ip,
-          started_at: Time.now.utc,
-        }
-        Nunes.trace(request_id, tags: tags) { |span|
+        Nunes.trace(:request, tags: tags_from_request(request)) { |span|
           @app.call(env).tap { |(status, headers, body)|
             span.tag :status, status
           }
@@ -35,6 +26,15 @@ module Nunes
     end
 
     private
+
+    def tags_from_request(request)
+      {
+        verb: request.request_method,
+        path: request.path,
+        ip: request.ip,
+        id: request.env["HTTP_X_REQUEST_ID"] || SecureRandom.uuid,
+      }
+    end
 
     def ignore?(request)
       Rails.application.config.nunes.ignored_requests.any? { |block|

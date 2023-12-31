@@ -11,14 +11,8 @@ module Nunes
         @storage = moneta || ::Moneta.new(:Memory, threadsafe: true)
       end
 
-      def requests_index
-        @storage[INDEX_KEY] || []
-      end
-
-      def get_multi(*request_ids)
-        request_ids = Array(request_ids).flatten.compact.map(&:to_s)
-        return {} if request_ids.empty?
-        Hash[request_ids.zip(@storage.values_at(*trace_keys(request_ids)))]
+      def all
+        get_multi(requests_index).values
       end
 
       def get(request_id)
@@ -34,6 +28,16 @@ module Nunes
       end
 
       private
+
+      def requests_index
+        @storage[INDEX_KEY] || []
+      end
+
+      def get_multi(*request_ids)
+        request_ids = Array(request_ids).flatten.compact.map(&:to_s)
+        return {} if request_ids.empty?
+        Hash[request_ids.zip(@storage.values_at(*trace_keys(request_ids)))]
+      end
 
       def trace_keys(request_ids)
         request_ids.map { |request_id| trace_key(request_id) }

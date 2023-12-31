@@ -1,8 +1,7 @@
 module Nunes
   class RequestsController < ApplicationController
     def index
-      request_ids = Nunes.adapter.requests_index.first(30)
-      @requests = Nunes.adapter.get_multi(request_ids).map { |_, span|
+      @requests = Nunes.adapter.all.map { |span|
         Middleware::Presenters::Request.new(span)
       }
     end

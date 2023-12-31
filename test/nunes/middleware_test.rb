@@ -27,15 +27,15 @@ class NunesMiddlewareTest < Minitest::Test
     get '/', {}, env
 
     assert root = Nunes.adapter.get("1234")
-    assert_equal "1234", root.name
+    assert_equal "request", root.name
 
     tags = Hash[root.tags.map { |tag| [tag.key, tag.value] }]
 
     assert_equal "/", tags[:path]
     assert_equal "200", tags[:status]
     assert_equal "127.0.0.1", tags[:ip]
-    assert_equal "1234", tags[:request_id]
-    assert_equal "GET", tags[:request_method]
+    assert_equal "1234", tags[:id]
+    assert_equal "GET", tags[:verb]
 
     assert_equal 1, root.spans.size
     assert_equal "render", root.spans[0].name

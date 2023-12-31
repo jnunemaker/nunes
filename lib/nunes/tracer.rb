@@ -21,14 +21,15 @@ module Nunes
       @adapter = adapter || Adapters::Moneta.new
     end
 
-    def trace(request_id, tags: nil, &block)
+    def trace(name, tags: nil, &block)
       raise TraceAlreadyStarted if @root_span
-      request_id = request_id.to_s
-      @root_span = Span.new(name: request_id, tags: tags)
+      tags ||= {}
+      tags[:id] ||= SecureRandom.uuid
+      @root_span = Span.new(name: name.to_s, tags: tags)
       begin
-        yield @root_span
+        @root_span.time { |span| yield span }
       ensure
-        adapter.save(request_id, @root_span)
+        adapter.save(tags[:id], @root_span)
       end
     ensure
       @root_span = nil

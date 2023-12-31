@@ -13,11 +13,11 @@ module Nunes
         end
 
         def request_id
-          name
+          tags[:id]
         end
 
-        def request_method
-          tags[:request_method]
+        def verb
+          tags[:verb]
         end
 
         def path

@@ -2,50 +2,10 @@
 
 require "helper"
 require "nunes/adapters/moneta"
-
-module NunesAdaptersMonetaTest
-  def test_requests_index_when_no_traces
-    assert_equal [], @adapter.requests_index
-  end
-
-  def test_get_when_trace_not_found
-    assert_nil @adapter.get("non_existent_request_id")
-  end
-
-  def test_save_get_and_requests_index
-    span = Nunes::Tracer::Span.new(name: "1")
-    @adapter.save("1", span)
-    assert_equal ["1"], @adapter.requests_index
-    assert_equal span, @adapter.get("1")
-
-    span = Nunes::Tracer::Span.new(name: "2")
-    @adapter.save("2", span)
-    assert_equal ["2", "1"], @adapter.requests_index
-    assert_equal span, @adapter.get("2")
-  end
-
-  def test_get_multi_when_no_traces
-    assert_equal({}, @adapter.get_multi([]))
-  end
-
-  def test_get_multi_for_non_existent_request_ids
-    expected = {"non_existent_request_id" => nil}
-    assert_equal expected, @adapter.get_multi("non_existent_request_id")
-    assert_equal expected, @adapter.get_multi(["non_existent_request_id"])
-  end
-
-  def test_get_multi
-    span1 = Nunes::Tracer::Span.new(name: "1")
-    span2 = Nunes::Tracer::Span.new(name: "2")
-    @adapter.save("1", span1)
-    @adapter.save("2", span2)
-
-    assert_equal({"1" => span1, "2" => span2}, @adapter.get_multi(["1", "2"]))
-  end
-end
+require "nunes/shared_adapter_tests"
 
 class NunesAdaptersMonetaDefaultTest < Minitest::Test
-  prepend NunesAdaptersMonetaTest
+  prepend Nunes::SharedAdapterTests
 
   def setup
     @adapter = Nunes::Adapters::Moneta.new
@@ -53,7 +13,7 @@ class NunesAdaptersMonetaDefaultTest < Minitest::Test
 end
 
 class NunesAdaptersMonetaPstoreTest < Minitest::Test
-  prepend NunesAdaptersMonetaTest
+  prepend Nunes::SharedAdapterTests
 
   def setup
     @pstore_file = Nunes.root.join("tmp").tap { |path| path.mkpath }.join("test.pstore")
