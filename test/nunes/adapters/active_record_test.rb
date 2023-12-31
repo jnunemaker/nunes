@@ -4,12 +4,16 @@ require "helper"
 require "nunes/adapters/active_record"
 require "nunes/shared_adapter_tests"
 
-class NunesAdaptersActiveRecordTest < Nunes::Test
-  prepend Nunes::SharedAdapterTests
+module Nunes
+  module Adapters
+    class ActiveRecordTest < Nunes::Test
+      prepend Nunes::SharedAdapterTests
 
-  def setup
-    Nunes::Span.delete_all
-    Nunes::Tag.delete_all
-    @adapter = Nunes::Adapters::ActiveRecord.new
+      def setup
+        Span.delete_all
+        Tag.delete_all
+        @adapter = ActiveRecord.new
+      end
+    end
   end
 end
