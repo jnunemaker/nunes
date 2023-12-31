@@ -126,11 +126,11 @@ module Nunes
     def test_allows_nesting_spans
       root_span = nil
       tracer = Tracer.new
-      tracer.trace("some_web_request_id") do |span|
-        root_span = span
-        tracer.span("User.find") do
-          tracer.span("ActiveRecord.find") do
-            tracer.span("mysql.query") do
+      tracer.trace("some_web_request_id") do |s1|
+        root_span = s1
+        s1.span("User.find") do |s2|
+          s2.span("ActiveRecord.find") do |s3|
+            s3.span("mysql.query") do |s4|
               # do the query
             end
           end

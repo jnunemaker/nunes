@@ -5,13 +5,37 @@ module Nunes
     end
 
     def test_save_and_get
-      span = Nunes::Tracer::Span.new(name: "request", tags: {id: "1"}).time { |s| s }
-      @adapter.save(span)
-      assert_equal span, @adapter.get("1")
+      tracer = Nunes::Tracer.new
+      root = nil
+      tracer.trace("request", tags: {id: "1"}) do |span|
+        root = span
+      end
+      @adapter.save(root)
+      assert_equal root, @adapter.get("1")
+    end
 
-      span = Nunes::Tracer::Span.new(name: "request", tags: {id: "2"}).time { |s| s }
-      @adapter.save(span)
-      assert_equal span, @adapter.get("2")
+    def test_save_and_get_nested
+      tracer = Nunes::Tracer.new
+      tracer_root = nil
+      tracer.trace("request", tags: {id: "1"}) do |span|
+        tracer_root = span
+        span.span("action_controller.process_action", tags: {controller: "Users", action: "show"}) { |span|
+          span.span("active_record.sql", tags: {model: "User", sql: "select * from users where id = 1"}) { |span|
+            sleep rand(0.001..0.01)
+            "User"
+          }
+          span.span("action_view.render", tags: {}) { |span|
+            span.span("action_view.render_partial", tags: {path: "app/views/shared/_head.html.erb"}) { |span|
+              "Partial"
+            }
+            "View"
+          }
+          "Action"
+        }
+      end
+      @adapter.save(tracer_root)
+      adapter_root = @adapter.get("1")
+      assert_equal tracer_root, adapter_root
     end
 
     def test_all_when_no_traces

@@ -14,13 +14,6 @@ module Nunes
         assert_equal "mysql", span.name
       end
 
-      def test_span_sets_parent
-        trace = Nunes::Tracer::Span.new(name: "asdf")
-        trace.span("mysql") { }
-        span = trace.spans[0]
-        refute_nil span
-        assert_equal trace, span.parent
-      end
 
       def test_span_times_block
         trace = Nunes::Tracer::Span.new(name: "asdf")
@@ -47,18 +40,21 @@ module Nunes
       end
 
       def test_can_have_many_nested_spans
-        span = Nunes::Tracer::Span.new(name: "asdf")
-        result = span.span("1") {
-          span.span("2") {
-            span.span("3") {
-              :result
+        root = nil
+        result = Nunes::Tracer::Span.new(name: "asdf").time { |span|
+          root = span
+          span.span("1") { |s1|
+            s1.span("2") { |s2|
+              s2.span("3") { |s3|
+                :result
+              }
             }
           }
         }
         assert_equal :result, result
-        assert_equal "1", span.spans[0].name
-        assert_equal "2", span.spans[0].spans[0].name
-        assert_equal "3", span.spans[0].spans[0].spans[0].name
+        assert_equal "1", root.spans[0].name
+        assert_equal "2", root.spans[0].spans[0].name
+        assert_equal "3", root.spans[0].spans[0].spans[0].name
       end
 
       def test_can_tag_error
@@ -73,7 +69,7 @@ module Nunes
           end
         }
         assert_equal 1, yielded_span.tags.length
-        assert_equal :error, yielded_span.tags[0].key
+        assert_equal "true", yielded_span[:error]
       end
 
       def test_time
@@ -146,6 +142,25 @@ module Nunes
           }
         }
         assert_equal %w[1 2 3 4 5 6 7 8 9 10], span.descendants.map(&:name)
+      end
+
+      def test_to_uid
+        span = Nunes::Tracer::Span.new(name: "request", tags: {id: "1"})
+        result = span.time {
+          span.span("1") { |s1|
+            s1.span("2") { |s2|
+              s2.span("3") { :result }
+            }
+          }
+        }
+
+        uri = span.to_uid
+        uid = URI::UID.parse(uri)
+        decoded = uid.decode
+
+        assert_equal "1", decoded[:id]
+        assert_equal "request", decoded.name
+        assert_equal span, decoded
       end
     end
   end

@@ -9,9 +9,6 @@ module Nunes
       # Returns the Array of child spans.
       attr_reader :spans
 
-      # Returns the parent span or nil if no parent span (ie: root).
-      attr_reader :parent
-
       # Returns the start time of the span.
       attr_reader :started_at
 
@@ -21,10 +18,8 @@ module Nunes
       # Returns the Array of tags if there are any else nil.
       attr_reader :tags
 
-      def initialize(name:, parent: nil, tags: nil)
+      def initialize(name:, tags: nil, &block)
         @name = name
-        @parent = parent
-        @parent.spans << self if parent
         @spans = []
         @tags = Tag.from_hash(tags)
       end
@@ -35,6 +30,10 @@ module Nunes
 
       def finish
         @finished_at = Nunes.now
+      end
+
+      def [](key)
+        tags.find { |tag| tag.key == key.to_sym }&.value
       end
 
       # Returns the duration in milliseconds that this span lasted.
@@ -51,7 +50,8 @@ module Nunes
       def span(name, options = nil, &block)
         original_span = current_span
         tags = options && options[:tags] ? options[:tags] : nil
-        self.current_span = Span.new(parent: original_span, name: name, tags: tags)
+        self.current_span = Span.new(name: name, tags: tags)
+        @spans << current_span
         current_span.time(&block)
       ensure
         self.current_span = original_span
@@ -87,13 +87,16 @@ module Nunes
       def eql?(other)
         self.class.eql?(other.class) &&
           @name == other.name &&
-          @parent == other.parent &&
           @spans == other.spans &&
           @tags == other.tags &&
           @started_at == other.started_at &&
           @finished_at == other.finished_at
       end
       alias_method :==, :eql?
+
+      def to_uid
+        URI::UID.build(self).to_s
+      end
 
       private
 
