@@ -19,7 +19,7 @@ module Nunes
         end
       end
 
-      def save(request_id, span)
+      def save(span)
         Span.transaction do
           root = Span.create!(
             parent_id: nil,
@@ -33,6 +33,8 @@ module Nunes
               value: tag.value,
             )
           end
+
+          # FIXME: Store children spans with parents as well...
         end
       end
     end

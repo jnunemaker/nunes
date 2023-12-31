@@ -6,11 +6,11 @@ module Nunes
 
     def test_save_and_get
       span = Nunes::Tracer::Span.new(name: "request", tags: {id: "1"}).time { |s| s }
-      @adapter.save("1", span)
+      @adapter.save(span)
       assert_equal span, @adapter.get("1")
 
       span = Nunes::Tracer::Span.new(name: "request", tags: {id: "2"}).time { |s| s }
-      @adapter.save("2", span)
+      @adapter.save(span)
       assert_equal span, @adapter.get("2")
     end
 
@@ -21,8 +21,8 @@ module Nunes
     def test_all
       span1 = Nunes::Tracer::Span.new(name: "1", tags: {id: "2"}).time { |s| s }
       span2 = Nunes::Tracer::Span.new(name: "2", tags: {id: "2"}).time { |s| s }
-      @adapter.save("1", span1)
-      @adapter.save("2", span2)
+      @adapter.save(span1)
+      @adapter.save(span2)
 
       assert_equal([span2, span1], @adapter.all)
     end

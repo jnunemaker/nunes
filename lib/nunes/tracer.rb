@@ -1,4 +1,4 @@
-require_relative "adapters/moneta"
+require_relative "adapters/memory"
 
 module Nunes
   class Tracer
@@ -18,7 +18,7 @@ module Nunes
 
     def initialize(adapter: nil)
       @root_span = nil
-      @adapter = adapter || Adapters::Moneta.new
+      @adapter = adapter || Adapters::Memory.new
     end
 
     def trace(name, tags: nil, &block)
@@ -29,7 +29,7 @@ module Nunes
       begin
         @root_span.time { |span| yield span }
       ensure
-        adapter.save(tags[:id], @root_span)
+        adapter.save(@root_span)
       end
     ensure
       @root_span = nil

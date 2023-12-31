@@ -8,3 +8,15 @@ require_relative "dummy/config/environment"
 Rails.backtrace_cleaner.remove_silencers!
 
 require "nunes"
+
+class Nunes::Test < Minitest::Test
+  def setup
+    Nunes.reset
+  end
+end
+
+class Nunes::IntegrationTest < ActionDispatch::IntegrationTest
+  def setup
+    Nunes.reset
+  end
+end

@@ -3,7 +3,7 @@
 require "helper"
 require "nunes/tracer/tag"
 
-class NunesTracerTagTest < Minitest::Test
+class NunesTracerTagTest < Nunes::Test
   def test_from_hash_returns_array_of_tags_when_hash_is_nil
     result = Nunes::Tracer::Tag.from_hash(nil)
     assert_equal [], result

@@ -39,6 +39,7 @@ module Nunes
   end
 
   def reset
+    self.configuration = Configuration.new
     Thread.current[:nunes_tracer] = nil
   end
 end

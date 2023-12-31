@@ -3,7 +3,7 @@
 require "helper"
 require "nunes/tracer"
 
-class NunesTracerTest < Minitest::Test
+class NunesTracerTest < Nunes::Test
   def test_trace_executes_block
     executed = false
     tracer = Nunes::Tracer.new

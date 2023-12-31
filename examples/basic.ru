@@ -7,14 +7,6 @@ require "bundler/setup"
 require "rack/reloader"
 require "nunes"
 
-Nunes.configure do |config|
-  config.adapter {
-    Nunes::Adapters::Moneta.new(
-      moneta: ::Moneta.new(:PStore, file: Nunes.root.join("tmp", "nunes.pstore"), threadsafe: true)
-    )
-  }
-end
-
 use Rack::Reloader
 use Nunes::Middleware
 run lambda { |env|

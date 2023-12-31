@@ -5,7 +5,7 @@ require "nunes/middleware"
 require "rack"
 require "rack/test"
 
-class NunesMiddlewareTest < Minitest::Test
+class NunesMiddlewareTest < Nunes::Test
   include Rack::Test::Methods
 
   def setup
@@ -23,6 +23,9 @@ class NunesMiddlewareTest < Minitest::Test
   end
 
   def test_tracing
+    Nunes.configure do |config|
+      config.adapter { Nunes::Adapters::Memory.new }
+    end
     env = Rack::MockRequest.env_for('/', 'HTTP_X_REQUEST_ID' => '1234')
     get '/', {}, env
 

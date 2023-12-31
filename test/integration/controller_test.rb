@@ -1,7 +1,7 @@
 require "helper"
 require "nunes/adapters/active_record"
 
-class WebRequestsTest < ActionDispatch::IntegrationTest
+class WebRequestsTest < Nunes::IntegrationTest
   test "traces rails requests" do
     get "/users"
     assert_response :success

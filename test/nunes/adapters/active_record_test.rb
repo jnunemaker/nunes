@@ -4,7 +4,7 @@ require "helper"
 require "nunes/adapters/active_record"
 require "nunes/shared_adapter_tests"
 
-class NunesAdaptersActiveRecordTest < ActiveSupport::TestCase
+class NunesAdaptersActiveRecordTest < Nunes::Test
   prepend Nunes::SharedAdapterTests
 
   def setup

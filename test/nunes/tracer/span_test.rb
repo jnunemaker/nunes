@@ -3,7 +3,7 @@
 require "helper"
 require "nunes/tracer/span"
 
-class NunesTracerSpanTest < Minitest::Test
+class NunesTracerSpanTest < Nunes::Test
   def test_span_sets_name
     trace = Nunes::Tracer::Span.new(name: "asdf")
     trace.span("mysql") { }
