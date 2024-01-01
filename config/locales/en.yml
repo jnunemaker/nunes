@@ -1,0 +1,41 @@
+en:
+  datetime:
+    distance_in_words:
+      compact_time_ago:
+        about_x_hours:
+          one: ~%{count}h
+          other: ~%{count}h
+        about_x_months:
+          one: ~%{count}mo
+          other: ~%{count}mo
+        about_x_years:
+          one: ~%{count}y
+          other: ~%{count}y
+        almost_x_years:
+          one: ~%{count}y
+          other: ~%{count}y
+        half_a_minute: ~1m
+        less_than_x_seconds:
+          one: ~1s
+          other: ~%{count}s
+        less_than_x_minutes:
+          one: ~1m
+          other: ~%{count}m
+        over_x_years:
+          one: ~%{count}y
+          other: ~%{count}y
+        x_seconds:
+          one: "~%{count}s"
+          other: "~%{count}s"
+        x_minutes:
+          one: "~%{count}m"
+          other: "~%{count}m"
+        x_days:
+          one: "~%{count}d"
+          other: "~%{count}d"
+        x_months:
+          one: "~%{count}mo"
+          other: "~%{count}mo"
+        x_years:
+          one: "~%{count}y"
+          other: "~%{count}y"

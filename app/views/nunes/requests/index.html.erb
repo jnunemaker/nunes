@@ -1,48 +1,54 @@
-<div class="card">
-  <div class="card-body">
-    <div class="btn-group mb-3" role="group" aria-label="Basic example">
-      <button type="button" class="px-2 py-0 btn btn-sm btn-dark">All</button>
-      <button type="button" class="px-2 py-0 btn btn-sm btn-light">Documents</button>
-      <button type="button" class="px-2 py-0 btn btn-sm btn-light">CSS</button>
-      <button type="button" class="px-2 py-0 btn btn-sm btn-light">JS</button>
-    </div>
 
-    <div class="table-responsive">
-      <table class="table">
-        <thead>
-          <tr class="">
-            <th class="text-uppercase small fw-normal ">Verb</th>
-            <th class="text-uppercase small fw-normal ">Path</th>
-            <th class="text-uppercase small fw-normal text-end">Status</th>
-            <th class="text-uppercase small fw-normal text-end">Duration <small class="fw-normal">(ms)</small></th>
-            <th class="text-uppercase small fw-normal text-end">When</th>
-          </tr>
-        </thead>
-        <% @requests.each do |request| %>
-          <tr>
-            <td>
-              <span class="badge text-bg-light fw-normal">
-                <%= request.verb %></span>
-            </td>
-            <td>
-              <a href="/nunes/requests/<%= request.request_id %>" class="d-block text-decoration-none text-secondary text-truncate" style="max-width: 400px">
-                <code><%= request.path %></code>
-              </a>
-            </td>
-            <td class="text-end">
-              <span class="badge <%= request.status_css_class %> fw-normal">
-                <%= request.status %>
-              </span>
-            </td>
-            <td class="text-end"><%= request.duration %></td>
-            <td class="text-end">
-              <% if request.started_at %>
-                <%= time_ago_in_words request.started_at %> ago
-              <% end %>
-            </td>
-          </tr>
-        <% end %>
-      </table>
-    </div>
+<% if @requests.present? %>
+  <!--
+  <div class="btn-group my-3" role="group" aria-label="Basic example">
+    <button type="button" class="px-2 py-0 btn btn-sm btn-dark">All</button>
+    <button type="button" class="px-2 py-0 btn btn-sm btn-light">HTML</button>
+    <button type="button" class="px-2 py-0 btn btn-sm btn-light">CSS</button>
+    <button type="button" class="px-2 py-0 btn btn-sm btn-light">JS</button>
   </div>
-</div>
+  -->
+
+  <div class="table-responsive rounded">
+    <table class="table mb-0">
+      <thead>
+        <tr>
+          <th class="bg-light text-uppercase small fw-normal ">Verb</th>
+          <th class="bg-light text-uppercase small fw-normal ">Path</th>
+          <th class="bg-light text-uppercase small fw-normal text-end">Status</th>
+          <th class="bg-light text-uppercase small fw-normal text-end">Duration <small class="fw-normal">(ms)</small></th>
+          <th class="bg-light text-uppercase small fw-normal text-end">When</th>
+        </tr>
+      </thead>
+      <% @requests.each do |request| %>
+        <tr>
+          <td>
+            <span class="badge text-bg-light fw-normal">
+              <%= request.verb %></span>
+          </td>
+          <td>
+            <a href="/nunes/requests/<%= request.request_id %>" class="d-block text-decoration-none text-secondary text-truncate" style="max-width: 400px">
+              <span class="m-0 p-0 font-monospace small"><%= request.path %></span>
+            </a>
+          </td>
+          <td class="text-end">
+            <span class="badge <%= request.status_css_class %> fw-normal">
+              <%= request.status %>
+            </span>
+          </td>
+          <td class="text-end"><%= request.duration %></td>
+          <td class="text-end text-muted small">
+            <% if request.started_at %>
+              <%= compact_time_ago request.started_at %> ago
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+<% else %>
+  <div class="container-fluid p-5">
+    <h1 class="display-5 fw-bold">Yay!</h1>
+    <p class="col-md-8 fs-4">You are all setup correctly. Go visit some pages in your app and come back here.</p>
+  </div>
+<% end %>
