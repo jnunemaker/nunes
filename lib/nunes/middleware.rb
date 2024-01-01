@@ -20,6 +20,9 @@ module Nunes
         Nunes.trace(:request, tags: tags_from_request(request)) { |span|
           @app.call(env).tap { |(status, headers, body)|
             span.tag :status, status
+            if content_type = headers["content-type"] || headers["Content-Type"]
+              span.tag :content_type, content_type
+            end
           }
         }
       end
