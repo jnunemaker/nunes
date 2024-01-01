@@ -38,9 +38,7 @@
           </td>
           <td class="text-end"><%= request.duration %></td>
           <td class="text-end text-muted small">
-            <% if request.started_at %>
-              <%= compact_time_ago request.started_at %> ago
-            <% end %>
+            <%= compact_time_ago request.started_at %>
           </td>
         </tr>
       <% end %>

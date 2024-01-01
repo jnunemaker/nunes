@@ -7,7 +7,7 @@ module NunesHelper
         Time.now.utc,
         time,
         scope: "datetime.distance_in_words.compact_time_ago"
-      )
+      ) + " ago"
     end
   end
 end
