@@ -36,7 +36,7 @@ module Nunes
         path: request.path,
         ip: request.ip,
         id: request.env["HTTP_X_REQUEST_ID"] || SecureRandom.uuid,
-        started_at: Time.now.utc,
+        started_at: Time.now.to_i,
       }
     end
 

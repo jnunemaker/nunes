@@ -37,7 +37,7 @@ module Nunes
       tags = Hash[root.tags.map { |tag| [tag.key, tag.value] }]
 
       assert_equal "/", tags[:path]
-      assert_equal "200", tags[:status]
+      assert_equal 200, tags[:status]
       assert_equal "127.0.0.1", tags[:ip]
       assert_equal "1234", tags[:id]
       assert_equal "GET", tags[:verb]
