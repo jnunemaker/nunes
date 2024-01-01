@@ -14,7 +14,6 @@ module Nunes
         assert_equal "mysql", span.name
       end
 
-
       def test_span_times_block
         trace = Nunes::Tracer::Span.new(name: "asdf")
         trace.span("mysql") { }
