@@ -1,1 +1,43 @@
-<%= @request.verb %>
+<div class="card shadow-sm">
+  <div class="card-header">
+    Request Details
+  </div>
+  <div class="card-body">
+    <dl class="row mb-0">
+      <dt class="fw-normal col-12 col-md-2">Verb</dt>
+      <dd class="col-12 col-md-10"><%= @request.verb %></dd>
+
+      <dt class="fw-normal col-12 col-md-2">Path</dt>
+      <dd class="col-12 col-md-10">
+        <span class="m-0 p-0 font-monospace small"><%= @request.path %></span>
+      </dd>
+
+      <dt class="fw-normal col-12 col-md-2">Status</dt>
+      <dd class="col-12 col-md-10">
+        <span class="badge <%= @request.status_css_class %> fw-normal">
+          <%= @request.status %>
+        </span>
+      </dd>
+
+      <dt class="fw-normal col-12 col-md-2">Duration</dt>
+      <dd class="col-12 col-md-10"><%= @request.duration %>ms</dd>
+
+      <dt class="fw-normal col-12 col-md-2">When</dt>
+      <dd class="col-12 col-md-10"><%= compact_time_ago @request.started_at %></dd>
+
+      <dt class="fw-normal col-12 col-md-2">IP</dt>
+      <dd class="col-12 col-md-10"><%= @request.ip %></dd>
+
+      <dt class="fw-normal col-12 col-md-2">ID</dt>
+      <dd class="col-12 col-md-10"><%= @request.request_id %></dd>
+    </dl>
+  </div>
+</div>
+
+<div class="card shadow-sm">
+  <div class="card-body">
+    <% @request.spans.each do |span| %>
+      <%= span.name %>
+    <% end %>
+  </div>
+</div>

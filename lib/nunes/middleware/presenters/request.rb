@@ -16,6 +16,10 @@ module Nunes
           tags[:id]
         end
 
+        def ip
+          tags[:ip]
+        end
+
         def verb
           tags[:verb]
         end

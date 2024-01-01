@@ -1,43 +1,51 @@
-
-<% if @requests.present? %>
-  <div class="table-responsive rounded">
-    <table class="table mb-0">
-      <thead>
-        <tr>
-          <th class="bg-light text-uppercase small fw-normal ">Verb</th>
-          <th class="bg-light text-uppercase small fw-normal ">Path</th>
-          <th class="bg-light text-uppercase small fw-normal text-end">Status</th>
-          <th class="bg-light text-uppercase small fw-normal text-end">Duration <small class="fw-normal">(ms)</small></th>
-          <th class="bg-light text-uppercase small fw-normal text-end">When</th>
-        </tr>
-      </thead>
-      <% @requests.each do |request| %>
-        <tr>
-          <td>
-            <span class="badge text-bg-light fw-normal">
-              <%= request.verb %></span>
-          </td>
-          <td>
-            <a href="/nunes/requests/<%= request.request_id %>" class="d-block text-decoration-none text-secondary text-truncate" style="max-width: 400px">
-              <span class="m-0 p-0 font-monospace small"><%= request.path %></span>
-            </a>
-          </td>
-          <td class="text-end">
-            <span class="badge <%= request.status_css_class %> fw-normal">
-              <%= request.status %>
-            </span>
-          </td>
-          <td class="text-end"><%= request.duration %></td>
-          <td class="text-end text-muted small">
-            <%= compact_time_ago request.started_at %>
-          </td>
-        </tr>
-      <% end %>
-    </table>
-  </div>
-<% else %>
-  <div class="container-fluid p-5">
-    <h1 class="display-5 fw-bold">Yay!</h1>
-    <p class="col-md-8 fs-4">You are all setup correctly. Go visit some pages in your app and come back here.</p>
-  </div>
-<% end %>
+<div class="bg-white text-bg-white border rounded shadow-sm">
+  <% if @requests.present? %>
+    <div class="table-responsive rounded align-middle">
+      <table class="table mb-0">
+        <thead class="table-light">
+          <tr>
+            <th class="small fw-normal ps-3">Verb</th>
+            <th class="small fw-normal ">Path</th>
+            <th class="small fw-normal text-end">Status</th>
+            <th class="small fw-normal text-end">Duration <small class="fw-normal">(ms)</small></th>
+            <th class="small fw-normal text-end pe-3">When</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @requests.each do |request| %>
+            <tr>
+              <td class="ps-3">
+                <span class="badge text-bg-light fw-normal">
+                  <%= request.verb %></span>
+              </td>
+              <td>
+                <a href="/nunes/requests/<%= request.request_id %>" class="d-block text-decoration-none text-secondary text-truncate" style="max-width: 400px">
+                  <span class="m-0 p-0 font-monospace small"><%= request.path %></span>
+                </a>
+              </td>
+              <td class="text-end">
+                <span class="badge <%= request.status_css_class %> fw-normal">
+                  <%= request.status %>
+                </span>
+              </td>
+              <td class="text-end text-muted small">
+                <%= request.duration %>ms
+              </td>
+              <td class="text-end text-muted small pe-3">
+                <%= compact_time_ago request.started_at %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <div class="container p-5">
+      <h1 class="display-5 fw-bold">Yay!</h1>
+      <p class="col-md-8 fs-4">
+        You are all setup correctly.<br>
+        Go make some requests in your app and come back here.
+      </p>
+    </div>
+  <% end %>
+</div>
