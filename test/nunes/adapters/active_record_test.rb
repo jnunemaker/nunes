@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require "helper"
-require "nunes/adapters/active_record"
-require "nunes/shared_adapter_tests"
+require 'helper'
+require 'nunes/adapters/active_record'
+require 'nunes/shared_adapter_tests'
 
 module Nunes
   module Adapters

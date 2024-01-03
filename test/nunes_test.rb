@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "helper"
+require 'helper'
 
 class NunesTest < Minitest::Test
   def setup
@@ -29,19 +29,8 @@ class NunesTest < Minitest::Test
 
   def test_trace_delegates_to_tracer
     root = nil
-    Nunes.trace("request-id") { |span| root = span }
+    Nunes.trace('request-id') { |span| root = span }
     assert_instance_of Nunes::Tracer::Span, root
-    assert_equal "request-id", root.name
-  end
-
-  def test_span_delegates_to_tracer
-    span = nil
-
-    Nunes.trace("request-id") do |root|
-      Nunes.span("child") { |child| span = child }
-    end
-
-    assert_instance_of Nunes::Tracer::Span, span
-    assert_equal "child", span.name
+    assert_equal 'request-id', root.name
   end
 end

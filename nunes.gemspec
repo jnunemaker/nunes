@@ -1,21 +1,21 @@
 # frozen_string_literal: true
 
-require_relative "lib/nunes/version"
-require_relative "lib/nunes/metadata"
+require_relative 'lib/nunes/version'
+require_relative 'lib/nunes/metadata'
 
 Gem::Specification.new do |spec|
-  spec.name = "nunes"
+  spec.name = 'nunes'
   spec.version = Nunes::VERSION
-  spec.authors = ["John Nunemaker"]
-  spec.email = ["nunemaker@gmail.com"]
+  spec.authors = ['John Nunemaker']
+  spec.email = ['nunemaker@gmail.com']
 
-  spec.summary = %q{The friendly gem that instruments everything for you, like I would if I could.}
-  spec.description = %q{The friendly gem that instruments everything for you, like I would if I could.}
-  spec.homepage = "https://github.com/jnunemaker/nunes"
-  spec.license = "MIT"
-  spec.required_ruby_version = ">= 3.0.0"
+  spec.summary = 'The friendly gem that instruments everything for you, like I would if I could.'
+  spec.description = 'The friendly gem that instruments everything for you, like I would if I could.'
+  spec.homepage = 'https://github.com/jnunemaker/nunes'
+  spec.license = 'MIT'
+  spec.required_ruby_version = '>= 3.0.0'
 
-  spec.metadata["homepage_uri"] = spec.homepage
+  spec.metadata['homepage_uri'] = spec.homepage
   spec.metadata = Nunes::METADATA
 
   # Specify which files should be added to the gem when it is released.
@@ -26,10 +26,9 @@ Gem::Specification.new do |spec|
         f.start_with?(*%w[bin/ test/ spec/ features/ .git .github appveyor Gemfile])
     end
   end
-  spec.bindir = "exe"
+  spec.bindir = 'exe'
   spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
-  spec.require_paths = ["lib"]
+  spec.require_paths = ['lib']
 
-  spec.add_dependency "rails", ">= 7.0.0", "< 8.0.0"
-  spec.add_dependency "universalid"
+  spec.add_dependency 'rails', '>= 7.0.0', '< 8.0.0'
 end
