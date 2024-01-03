@@ -1,0 +1,8 @@
+Metrics/MethodLength:
+  Max: 50
+  Exclude:
+    - 'test/**/*'
+Metrics/AbcSize:
+  Max: 30
+  Exclude:
+    - 'test/**/*'
