@@ -64,7 +64,7 @@ module Nunes
         end
 
         def started_at
-          Time.at(tags[:started_at])
+          Time.at(tags[:started_at].to_i)
         end
       end
     end
