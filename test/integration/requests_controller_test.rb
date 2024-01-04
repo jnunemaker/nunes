@@ -3,7 +3,7 @@ require 'nunes/adapters/active_record'
 
 module Nunes
   class RequestsControllerTest < ActionDispatch::IntegrationTest
-    test 'traces rails requests' do
+    test 'renders requests index and show' do
       freeze_time do
         get '/users'
         assert_response :success
@@ -27,6 +27,11 @@ module Nunes
         get "/nunes/requests/#{span.trace_id}"
         assert_response :success
       end
+    end
+
+    test "renders 404 when viewing a request that doesn't exist" do
+      get '/nunes/requests/123'
+      assert_response :not_found
     end
   end
 end
