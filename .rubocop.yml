@@ -1,8 +1,10 @@
 Metrics/MethodLength:
   Max: 50
   Exclude:
-    - 'test/**/*'
+    - "test/**/*"
 Metrics/AbcSize:
   Max: 30
   Exclude:
-    - 'test/**/*'
+    - "test/**/*"
+Style/TrailingCommaInLiteral:
+  EnforcedStyleForMultiline: comma
