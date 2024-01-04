@@ -49,17 +49,17 @@ module Nunes
         end
 
         def status_css_class
-          case status[0]
-          when "1"
-            "text-bg-primary"
-          when "2"
-            "text-bg-success"
-          when "3"
-            "text-bg-warning"
-          when "4", "5"
-            "text-bg-danger"
+          case status.to_s[0]
+          when '1'
+            'text-bg-primary'
+          when '2'
+            'text-bg-success'
+          when '3'
+            'text-bg-warning'
+          when '4', '5'
+            'text-bg-danger'
           else
-            "text-bg-secondary"
+            'text-bg-secondary'
           end
         end
 
