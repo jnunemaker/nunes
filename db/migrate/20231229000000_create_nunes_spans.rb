@@ -5,8 +5,8 @@ class CreateNunesSpans < ActiveRecord::Migration[7.0]
       t.string :trace_id, null: false
       t.string :parent_id, null: true
       t.string :name, null: false
-      t.integer :started_at, null: false
-      t.integer :finished_at, null: false
+      t.bigint :started_at, null: false
+      t.bigint :finished_at, null: false
       t.timestamps
     end
 
