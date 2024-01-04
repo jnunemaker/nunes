@@ -1,4 +1,4 @@
-require_relative "base"
+require_relative 'base'
 
 module Nunes
   class Middleware
@@ -10,10 +10,6 @@ module Nunes
 
         def tags
           @tags ||= Hash[span.tags.map { |tag| [tag.key, tag.value] }]
-        end
-
-        def request_id
-          tags[:id]
         end
 
         def ip

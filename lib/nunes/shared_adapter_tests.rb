@@ -1,7 +1,7 @@
 module Nunes
   module SharedAdapterTests
     def test_get_when_trace_not_found
-      assert_nil @adapter.get('non_existent_request_id')
+      assert_nil @adapter.get('non_existent_trace_id')
     end
 
     def test_all_when_no_traces

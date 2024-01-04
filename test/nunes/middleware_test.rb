@@ -35,7 +35,6 @@ module Nunes
       assert_equal '/', tags[:path]
       assert_equal 200, tags[:status]
       assert_equal '127.0.0.1', tags[:ip]
-      assert_equal '1234', tags[:id]
       assert_equal 'GET', tags[:verb]
       assert_equal 'text/html', tags[:content_type]
       refute_nil tags[:started_at]

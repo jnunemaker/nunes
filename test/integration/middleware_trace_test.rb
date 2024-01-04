@@ -18,7 +18,6 @@ module Nunes
         assert_equal '/users', span[:path]
         assert_equal '200', span[:status]
         assert_equal '123.123.123.123', span[:ip]
-        assert_equal '123', span[:id]
         assert_equal Time.now.to_i.to_s, span[:started_at]
       end
     end
