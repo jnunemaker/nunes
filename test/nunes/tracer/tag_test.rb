@@ -5,7 +5,7 @@ require 'nunes/tracer/tag'
 
 module Nunes
   class Tracer
-    class TagTest < Nunes::Test
+    class TagTest < ActiveSupport::TestCase
       def test_from_hash_returns_array_of_tags_when_hash_is_nil
         result = Tag.from_hash(nil)
         assert_equal [], result

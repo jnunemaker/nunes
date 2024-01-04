@@ -4,7 +4,7 @@ require 'helper'
 require 'nunes/tracer'
 
 module Nunes
-  class TracerTest < Nunes::Test
+  class TracerTest < ActiveSupport::TestCase
     def test_trace
       executed = false
       yielded_span = nil

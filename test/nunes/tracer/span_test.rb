@@ -5,7 +5,7 @@ require 'nunes/tracer/span'
 
 module Nunes
   class Tracer
-    class SpanTest < Nunes::Test
+    class SpanTest < ActiveSupport::TestCase
       def test_initialize
         span = Tracer::Span.new(name: 'asdf')
         assert_equal 'asdf', span.name

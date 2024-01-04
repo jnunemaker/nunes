@@ -1,14 +1,19 @@
 module Nunes
   class RequestsController < ApplicationController
     def index
-      @requests = Nunes.adapter.all.map { |span|
+      @requests = Nunes.adapter.all.map do |span|
         Middleware::Presenters::Request.new(span)
-      }
+      end
     end
 
     def show
-      span = Nunes.adapter.get(params[:id])
-      @request = Middleware::Presenters::Request.new(span)
+      spans = Nunes.adapter.get(params[:id])
+      root = spans.detect { |span| span.parent_id.nil? } || raise("No root span found for #{params[:id]}")
+      @spans = spans.sort_by!(&:started_at).map do |span|
+        Middleware::Presenters::Request.new(span)
+      end
+
+      @request = Middleware::Presenters::Request.new(root)
     end
   end
 end

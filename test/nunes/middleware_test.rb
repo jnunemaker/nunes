@@ -6,12 +6,8 @@ require 'rack'
 require 'rack/test'
 
 module Nunes
-  class MiddlewareTest < Nunes::Test
+  class MiddlewareTest < ActiveSupport::TestCase
     include Rack::Test::Methods
-
-    def setup
-      Nunes.reset
-    end
 
     def app
       @app ||= Rack::Builder.new do

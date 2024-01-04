@@ -6,12 +6,10 @@ require 'nunes/shared_adapter_tests'
 
 module Nunes
   module Adapters
-    class MemoryTest < Nunes::Test
+    class MemoryTest < ActiveSupport::TestCase
       prepend Nunes::SharedAdapterTests
 
-      def setup
-        @adapter = Memory.new
-      end
+      setup { @adapter = Memory.new }
     end
   end
 end

@@ -1,10 +1,10 @@
-require_relative "adapters/null"
-require_relative "adapters/active_record"
+require_relative 'adapters/null'
+require_relative 'adapters/active_record'
 
 module Nunes
   class Configuration
     def initialize
-      @adapter = -> {
+      @adapter = lambda {
         Rails.env.production? ? Adapters::Null.new : Adapters::ActiveRecord.new
       }
     end
@@ -15,6 +15,10 @@ module Nunes
       else
         @adapter.call
       end
+    end
+
+    def tracer
+      @tracer ||= Tracer.new(adapter:)
     end
   end
 end

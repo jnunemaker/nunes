@@ -12,6 +12,7 @@ module Nunes
   class Error < StandardError; end
 
   extend Forwardable
+  def_delegators :configuration, :tracer
   def_delegators :tracer, :adapter, :trace
 
   def root
@@ -23,24 +24,20 @@ module Nunes
   end
 
   def configuration
-    @configuration ||= Configuration.new
+    Thread.current[:nunes_config] ||= Configuration.new
   end
 
   def configuration=(configuration)
-    @configuration = configuration
+    Thread.current[:nunes_config] = configuration
   end
 
   def now
     Process.clock_gettime(Process::CLOCK_MONOTONIC, :millisecond)
   end
 
-  def tracer
-    Thread.current[:nunes_tracer] ||= Tracer.new(adapter: configuration.adapter)
-  end
-
   def reset
-    self.configuration = Configuration.new
-    Thread.current[:nunes_tracer] = nil
+    Nunes::Tracer.reset
+    Thread.current[:nunes_config] = nil
   end
 end
 

@@ -6,10 +6,10 @@ require 'nunes/shared_adapter_tests'
 
 module Nunes
   module Adapters
-    class ActiveRecordTest < Nunes::Test
+    class ActiveRecordTest < ActiveSupport::TestCase
       prepend Nunes::SharedAdapterTests
 
-      def setup
+      setup do
         Span.delete_all
         Tag.delete_all
         @adapter = ActiveRecord.new

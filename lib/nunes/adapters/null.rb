@@ -5,11 +5,11 @@ module Nunes
         []
       end
 
-      def get(id)
+      def get(_trace_id)
         nil
       end
 
-      def save(span)
+      def save(_context)
         nil
       end
     end

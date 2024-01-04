@@ -14,6 +14,10 @@ module Nunes
       end
     end
 
+    def self.reset
+      Thread.current[:nunes_tracer_context] = { spans: [] }
+    end
+
     attr_reader :adapter
 
     def initialize(adapter: nil)
@@ -22,7 +26,7 @@ module Nunes
     end
 
     def reset
-      Thread.current[:nunes_tracer_context] = { spans: [] }
+      self.class.reset
     end
 
     def trace(name, tags: nil, &block)
