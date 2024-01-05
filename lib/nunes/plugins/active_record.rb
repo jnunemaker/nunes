@@ -9,10 +9,13 @@ module Nunes
             parent_id = active_span.id
             trace_id = active_span.trace_id
             tags = {
-              name: payload[:name],
               sql: payload[:sql],
               event_id:,
             }
+
+            if (name = payload[:name])
+              tags[:name] = name
+            end
 
             if (statement_name = payload[:statement_name])
               tags[:statement_name] = statement_name
