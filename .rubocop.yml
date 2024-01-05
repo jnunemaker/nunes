@@ -6,5 +6,7 @@ Metrics/AbcSize:
   Max: 30
   Exclude:
     - "test/**/*"
-Style/TrailingCommaInLiteral:
+Style/TrailingCommaInArrayLiteral:
+  EnforcedStyleForMultiline: comma
+Style/TrailingCommaInHashLiteral:
   EnforcedStyleForMultiline: comma
