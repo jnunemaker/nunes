@@ -32,7 +32,7 @@
                 <%= request.duration %>ms
               </td>
               <td class="text-end text-muted small pe-3 request-when">
-                <%= compact_time_ago request.started_at %>
+                <%= compact_time_ago request.trace_started_at %>
               </td>
             </tr>
           <% end %>

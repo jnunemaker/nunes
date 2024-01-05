@@ -1,0 +1,68 @@
+require_relative 'base'
+
+module Nunes
+  module Presenters
+    class Waterfall < Base
+      def spans
+        __getobj__
+      end
+
+      def width
+        '400px'
+      end
+
+      def padding_left_for(span)
+        (100.0 * (span.started_at - started_at) / duration).round(2)
+      end
+
+      MIN_WIDTH = 0.5
+
+      def width_for(span)
+        [(100.0 * span.duration / duration).round(2), MIN_WIDTH].max
+      end
+
+      def ordered
+        spans.sort_by(&:started_at)
+      end
+
+      def root
+        @root ||= begin
+          root = spans.detect { |span| span.parent_id.nil? }
+          raise 'no root span found' unless root
+
+          Presenters::Request.new(root.span)
+        end
+      end
+
+      def trace_started_at
+        root.trace_started_at
+      end
+
+      def started_at
+        root.started_at
+      end
+
+      def finished_at
+        spans.max_by(&:finished_at).finished_at
+      end
+
+      def duration
+        @duration ||= finished_at - started_at
+      end
+
+      def parent_for(span)
+        spans.detect { |s| s.id == span.parent_id }
+      end
+
+      def children_for(span)
+        (by_parent_id[span.id] || []).sort_by!(&:started_at)
+      end
+
+      private
+
+      def by_parent_id
+        @by_parent_id ||= spans.group_by(&:parent_id)
+      end
+    end
+  end
+end

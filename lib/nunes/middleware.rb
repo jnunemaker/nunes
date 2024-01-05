@@ -3,7 +3,6 @@
 require 'erb'
 require 'securerandom'
 require_relative 'tracer'
-require_relative 'middleware/presenters/request'
 
 module Nunes
   # Middleware that adds tracing to all Rack requests.

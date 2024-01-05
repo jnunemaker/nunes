@@ -4,7 +4,12 @@ module Nunes
       def self.install
         return if @installed
 
-        ActiveSupport::Notifications.monotonic_subscribe('sql.active_record') do |_name, started_at, finished_at, event_id, payload|
+        ActiveSupport::Notifications.monotonic_subscribe('sql.active_record') do |_name, start, finish, event_id, payload|
+          # Port the monotonic here to nunes as best we can so we have milli mono everywhere.
+          duration = finish - start
+          started_at = Nunes.now - duration
+          finished_at = started_at + duration
+
           if (active_span = Nunes.tracer.active_span)
             parent_id = active_span.id
             trace_id = active_span.trace_id

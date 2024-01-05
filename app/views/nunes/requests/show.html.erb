@@ -5,58 +5,61 @@
   <div class="card-body">
     <dl class="row mb-0">
       <dt class="fw-normal col-12 col-md-2">Verb</dt>
-      <dd class="col-12 col-md-10"><%= @request.verb %></dd>
+      <dd class="col-12 col-md-10"><%= @waterfall.root.verb %></dd>
 
       <dt class="fw-normal col-12 col-md-2">Path</dt>
       <dd class="col-12 col-md-10">
-        <span class="m-0 p-0 font-monospace small"><%= @request.path %></span>
+        <span class="m-0 p-0 font-monospace small"><%= @waterfall.root.path %></span>
       </dd>
 
       <dt class="fw-normal col-12 col-md-2">Status</dt>
       <dd class="col-12 col-md-10">
-        <span class="badge <%= @request.status_css_class %> fw-normal">
-          <%= @request.status %>
+        <span class="badge <%= @waterfall.root.status_css_class %> fw-normal">
+          <%= @waterfall.root.status %>
         </span>
       </dd>
 
       <dt class="fw-normal col-12 col-md-2">Duration</dt>
-      <dd class="col-12 col-md-10"><%= @request.duration %>ms</dd>
+      <dd class="col-12 col-md-10"><%= @waterfall.root.duration %>ms</dd>
 
       <dt class="fw-normal col-12 col-md-2">When</dt>
-      <dd class="col-12 col-md-10"><%= compact_time_ago @request.started_at %></dd>
+      <dd class="col-12 col-md-10"><%= compact_time_ago @waterfall.trace_started_at %></dd>
 
       <dt class="fw-normal col-12 col-md-2">IP</dt>
-      <dd class="col-12 col-md-10"><%= @request.ip %></dd>
+      <dd class="col-12 col-md-10"><%= @waterfall.root.ip %></dd>
     </dl>
   </div>
 </div>
 
 <div class="card shadow-sm">
   <div class="card-body">
-    <div class="table-responsive rounded align-middle">
-      <table class="table">
-        <thead>
+    <table class="table">
+      <thead>
+        <tr>
           <th>Name</th>
-          <th>Duration</th>
-          <th>Tags</th>
-        </thead>
-        <tbody>
-          <% @spans.each do |span| %>
-            <tr>
-              <td><%= span.name %></td>
-              <td><%= span.duration %>ms</td>
-              <td>
-                <dl>
-                  <% span.tags.each do |key, value| %>
-                    <dt><%= key%></dt>
-                    <dd><%= value %></dd>
-                  <% end %>
-                </dl>
-              </td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
+          <th>&nbsp;</th>
+          <th class="text-end">Time</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @waterfall.ordered.each do |span| %>
+          <tr class="small">
+            <td>
+              <%= span.title %>
+            </td>
+            <td>
+              <div style="padding-left: <%= @waterfall.padding_left_for(span) %>%; width: <%= @waterfall.width %>">
+                <div style="width: <%= @waterfall.width_for(span) %>%" class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                  <div class="progress-bar" style="width: 0"></div>
+                </div>
+              </div>
+            </td>
+            <td class="text-end">
+              <%= span.duration %>ms
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
   </div>
 </div>
