@@ -25,10 +25,10 @@ module Nunes
       assert executed
       assert_equal 'result', result
 
-      assert trace = tracer.adapter.all.first
-      assert_equal yielded_span, trace
-      assert_equal 'GET', trace.tags.first.value
-      assert_equal 5, tracer.adapter.get(trace.trace_id).size
+      assert root = tracer.adapter.all.first
+      assert_equal yielded_span, root
+      assert_equal 'GET', root[:verb]
+      assert_equal 5, tracer.adapter.get(root.trace_id).size
 
       assert_nil tracer.active_span
       assert_nil tracer.trace_id
@@ -45,9 +45,9 @@ module Nunes
         end
       end
 
-      assert trace = tracer.adapter.all.first
-      assert_equal yielded_span, trace
-      assert_equal 'GET', trace.tags.first.value
+      assert root = tracer.adapter.all.first
+      assert_equal yielded_span, root
+      assert_equal 'GET', root[:verb]
 
       assert_nil tracer.active_span
       assert_nil tracer.trace_id

@@ -8,10 +8,6 @@ module Nunes
           __getobj__
         end
 
-        def tags
-          @tags ||= Hash[span.tags.map { |tag| [tag.key, tag.value] }]
-        end
-
         def ip
           tags[:ip]
         end

@@ -29,8 +29,7 @@ module Nunes
         assert_equal 'parent-id', span.parent_id
         assert_equal 'asdf', span.name
         assert_equal 1, span.tags.length
-        assert_equal :foo, span.tags[0].key
-        assert_equal 'bar', span.tags[0].value
+        assert_equal 'bar', span[:foo]
         assert_equal 0, span.started_at
         assert_equal 1, span.finished_at
       end
@@ -92,8 +91,7 @@ module Nunes
         span = Tracer::Span.new(name: 'asdf')
         span.tag :user_id, 5
         assert_equal 1, span.tags.length
-        assert_equal :user_id, span.tags[0].key
-        assert_equal '5', span.tags[0].value
+        assert_equal '5', span[:user_id]
       end
     end
   end

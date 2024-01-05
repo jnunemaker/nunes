@@ -1,4 +1,4 @@
-require_relative 'tag'
+# frozen_string_literal: true
 
 module Nunes
   class Tracer
@@ -20,7 +20,14 @@ module Nunes
         @parent_id = parent_id
         @started_at = started_at
         @finished_at = finished_at
-        @tags = Tag.from_hash(tags)
+        @tags = {}
+
+        return unless tags
+        raise ArgumentError, 'tags must be a Hash' unless tags.is_a?(Hash)
+
+        tags.each do |key, value|
+          tag(key, value)
+        end
       end
 
       def start
@@ -44,7 +51,7 @@ module Nunes
       end
 
       def [](key)
-        tags.find { |tag| tag.key == key.to_sym }&.value
+        tags[key.to_sym]
       end
 
       def duration
@@ -52,8 +59,8 @@ module Nunes
       end
 
       def tag(key, value)
-        self.tags ||= []
-        self.tags << Tag.new(key, value)
+        self.tags ||= {}
+        tags[key.to_sym] = value.to_s
       end
 
       def eql?(other) # rubocop:disable Metrics/CyclomaticComplexity

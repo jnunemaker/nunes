@@ -30,13 +30,11 @@ module Nunes
       assert root = Nunes.adapter.all.first
       assert_equal 'request', root.name
 
-      tags = Hash[root.tags.map { |tag| [tag.key, tag.value] }]
-
-      assert_equal '/', tags[:path]
-      assert_equal '200', tags[:status]
-      assert_equal '127.0.0.1', tags[:ip]
-      assert_equal 'GET', tags[:verb]
-      refute_nil tags[:started_at]
+      assert_equal '/', root[:path]
+      assert_equal '200', root[:status]
+      assert_equal '127.0.0.1', root[:ip]
+      assert_equal 'GET', root[:verb]
+      refute_nil root[:started_at]
 
       spans = Nunes.adapter.get(root.trace_id)
       assert_equal 2, spans.size

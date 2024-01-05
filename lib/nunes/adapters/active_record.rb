@@ -29,11 +29,8 @@ module Nunes
               started_at: span.started_at,
               finished_at: span.finished_at
             )
-            span.tags.each do |tag|
-              record.tags.create!(
-                key: tag.key,
-                value: tag.value
-              )
+            span.tags.each do |key, value|
+              record.tags.create!(key:, value:)
             end
           end
         end
