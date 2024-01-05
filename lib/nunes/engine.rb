@@ -5,8 +5,11 @@ module Nunes
     config.before_configuration do
       config.nunes = ActiveSupport::OrderedOptions.new.update(
         ignored_requests: [
-          ->(request) { request.path =~ %r{\A/nunes} },
-          ->(request) { request.path =~ %r{\A/mini-profiler-resources} },
+          lambda { |request|
+            %w[/nunes /mini-profiler-resources /vite-dev].any? do |path|
+              request.path.start_with?(path)
+            end
+          },
         ]
       )
     end
