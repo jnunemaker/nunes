@@ -3,6 +3,10 @@ require_relative 'base'
 module Nunes
   module Presenters
     class Waterfall < Base
+      # What is the minimum % width a span should be rendered as. This is so no
+      # span is a sliver so small it cannot be seen.
+      MIN_WIDTH = 0.5
+
       def spans
         __getobj__
       end
@@ -14,8 +18,6 @@ module Nunes
       def padding_left_for(span)
         (100.0 * (span.started_at - started_at) / duration).round(2)
       end
-
-      MIN_WIDTH = 0.5
 
       def width_for(span)
         [(100.0 * span.duration / duration).round(2), MIN_WIDTH].max
