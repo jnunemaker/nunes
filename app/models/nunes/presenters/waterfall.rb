@@ -5,7 +5,7 @@ module Nunes
     class Waterfall < Base
       # What is the minimum % width a span should be rendered as. This is so no
       # span is a sliver so small it cannot be seen.
-      MIN_WIDTH = 0.5
+      MIN_WIDTH_PERCENTAGE = 1.0
 
       def spans
         __getobj__
@@ -20,7 +20,15 @@ module Nunes
       end
 
       def width_for(span)
-        [(100.0 * span.duration / duration).round(2), MIN_WIDTH].max
+        [(100.0 * span.duration / duration).round(2), MIN_WIDTH_PERCENTAGE].max
+      end
+
+      COLORS = {
+        'sql.active_record' => 'bg-primary-subtle',
+      }.freeze
+
+      def color_for(span)
+        COLORS[span.name].presence || 'bg-secondary-subtle'
       end
 
       def ordered
