@@ -93,7 +93,7 @@ module Nunes
         span.tag :user_id, 5
         assert_equal 1, span.tags.length
         assert_equal :user_id, span.tags[0].key
-        assert_equal 5, span.tags[0].value
+        assert_equal '5', span.tags[0].value
       end
     end
   end

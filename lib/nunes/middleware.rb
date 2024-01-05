@@ -19,12 +19,10 @@ module Nunes
         @app.call(env)
       else
         Nunes.trace(:request, tags: tags_from_request(request)) do |span|
-          @app.call(env).tap do |(status, headers, _body)|
-            span.tag :status, status
-            if (content_type = headers['content-type'] || headers['Content-Type'])
-              span.tag :content_type, content_type
-            end
-          end
+          result = @app.call(env)
+          status, _headers, _body = result
+          span.tag :status, status
+          result
         end
       end
     end
@@ -36,7 +34,7 @@ module Nunes
         verb: request.request_method,
         path: request.path,
         ip: request.ip,
-        started_at: Time.now.to_i
+        started_at: Time.now.to_i,
       }
     end
 

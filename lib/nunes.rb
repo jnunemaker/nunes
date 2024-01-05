@@ -37,7 +37,7 @@ module Nunes
 
   def reset
     Nunes::Tracer.reset
-    Thread.current[:nunes_config] = nil
+    self.configuration = Configuration.new
   end
 end
 

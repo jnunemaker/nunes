@@ -13,18 +13,9 @@ module Nunes
         raise ArgumentError, 'Nunes tag key is required' if key.nil? || key.empty?
 
         @key = key.to_sym
+        raise ArgumentError, "Nunes tag value is required for #{key.inspect}" if value.blank?
 
-        raise ArgumentError, "Nunes tag value is required for #{key.inspect}" if value.nil? || value.to_s.strip.empty?
-
-        @value = case value
-                 when Symbol
-                   value.to_s
-                 when TrueClass, FalseClass, Numeric, String
-                   value
-                 else
-                   raise ArgumentError,
-                         "Nunes tag value must be a true, false, Numeric, String or Symbol (was #{value.inspect})"
-                 end
+        @value = value.to_s
       end
 
       def eql?(other)

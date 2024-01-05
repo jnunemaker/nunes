@@ -4,13 +4,12 @@ require_relative 'adapters/active_record'
 module Nunes
   class Configuration
     def initialize
-      @adapter = lambda {
-        Rails.env.production? ? Adapters::Null.new : Adapters::ActiveRecord.new
-      }
+      @adapter = -> { Adapters::ActiveRecord.new }
     end
 
     def adapter(&block)
       if block_given?
+        @tracer = nil
         @adapter = block
       else
         @adapter.call

@@ -20,8 +20,8 @@ module Nunes
 
     attr_reader :adapter
 
-    def initialize(adapter: nil)
-      @adapter = adapter || Adapters::Memory.new
+    def initialize(adapter: Adapters::Memory.new)
+      @adapter = adapter
       reset
     end
 

@@ -33,8 +33,30 @@
 
 <div class="card shadow-sm">
   <div class="card-body">
-    <% @spans.each do |span| %>
-      <%= span.name %>
-    <% end %>
+    <div class="table-responsive rounded align-middle">
+      <table class="table">
+        <thead>
+          <th>Name</th>
+          <th>Duration</th>
+          <th>Tags</th>
+        </thead>
+        <tbody>
+          <% @spans.each do |span| %>
+            <tr>
+              <td><%= span.name %></td>
+              <td><%= span.duration %>ms</td>
+              <td>
+                <dl>
+                  <% span.tags.each do |key, value| %>
+                    <dt><%= key%></dt>
+                    <dd><%= value %></dd>
+                  <% end %>
+                </dl>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>

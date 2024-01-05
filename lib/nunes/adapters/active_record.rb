@@ -40,6 +40,8 @@ module Nunes
 
         true
       rescue ::ActiveRecord::ActiveRecordError => e
+        raise if Rails.env.test?
+
         Rails.logger.error(e)
         false
       end

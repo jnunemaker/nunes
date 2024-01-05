@@ -6,7 +6,7 @@ gemspec
 
 gem 'minitest', '~> 5.16'
 gem 'minitest-focus', '~> 1.4'
-gem 'minitest-heat', '~> 1.2'
+# gem 'minitest-heat', '~> 1.2'
 gem 'rack-test', '~> 2.1'
 gem 'rackup', '~> 2.1'
 gem 'rake', '~> 13.0'
