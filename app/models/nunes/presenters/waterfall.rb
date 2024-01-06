@@ -15,7 +15,7 @@ module Nunes
         '400px'
       end
 
-      def padding_left_for(span)
+      def offset_for(span)
         (100.0 * (span.started_at - started_at) / duration).round(2)
       end
 
@@ -23,12 +23,20 @@ module Nunes
         [(100.0 * span.duration / duration).round(2), MIN_WIDTH_PERCENTAGE].max
       end
 
-      COLORS = {
-        'sql.active_record' => 'bg-primary-subtle',
-      }.freeze
-
+      # bg-danger-subtle for redis...
       def color_for(span)
-        COLORS[span.name].presence || 'bg-secondary-subtle'
+        case span.name
+        when /\.active_record/
+          'bg-primary-subtle'
+        when /\.action_view/
+          'bg-info-subtle'
+        when /\.active_support/
+          'bg-success-subtle'
+        when /\.active_job/
+          'bg-warning-subtle'
+        else
+          'bg-secondary-subtle'
+        end
       end
 
       def ordered

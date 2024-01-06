@@ -13,7 +13,7 @@ module Nunes
 
   extend Forwardable
   def_delegators :configuration, :tracer
-  def_delegators :tracer, :adapter, :trace
+  def_delegators :tracer, :adapter, :trace, :manual_trace
 
   def root
     @root ||= Pathname(__FILE__).dirname.join('..').expand_path

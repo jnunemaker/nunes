@@ -15,7 +15,7 @@ module Nunes
         id: SecureRandom.uuid
       )
         @id = id
-        @name = name
+        @name = name.to_s
         @trace_id = trace_id
         @parent_id = parent_id
         @started_at = started_at

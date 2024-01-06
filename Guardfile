@@ -18,4 +18,7 @@ guard :minitest, all_on_start: false do
   watch(%r{^lib/nunes/shared_adapter_tests\.rb$}) do
     Dir.glob('test/nunes/adapters/**/*.rb')
   end
+  watch(%r{^lib/nunes/event\.rb$}) do
+    'test/integration/middleware_trace_test.rb'
+  end
 end

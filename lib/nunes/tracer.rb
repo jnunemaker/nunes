@@ -29,6 +29,13 @@ module Nunes
       self.class.reset
     end
 
+    # Don't use this unless you are me.
+    def manual_trace(...)
+      span = Span.new(...)
+      spans << span
+      span
+    end
+
     def trace(name, tags: nil, &block)
       name = name.to_s
       context[:trace_id] ||= SecureRandom.uuid

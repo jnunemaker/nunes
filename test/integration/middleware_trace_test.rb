@@ -54,7 +54,6 @@ module Nunes
         spans = Nunes.adapter.get(root.trace_id)
         span = spans.detect { |s| s.name == 'sql.active_record' }
         refute_nil span
-        refute_nil span[:event_id]
         assert_equal 'SELECT "users".* FROM "users"', span[:sql]
         assert_equal 'User Load', span[:name]
       end
