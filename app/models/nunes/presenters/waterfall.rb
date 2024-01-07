@@ -5,14 +5,10 @@ module Nunes
     class Waterfall < Base
       # What is the minimum % width a span should be rendered as. This is so no
       # span is a sliver so small it cannot be seen.
-      MIN_WIDTH_PERCENTAGE = 1.0
+      MIN_WIDTH_PERCENTAGE = 2
 
       def spans
         __getobj__
-      end
-
-      def width
-        '400px'
       end
 
       def offset_for(span)

@@ -13,6 +13,7 @@ module Nunes
               /site.webmanifest
               /favicon-16x16.png
               /favicon-32x32.png
+              /ahoy/events
             ].any? do |path|
               request.path.start_with?(path)
             end

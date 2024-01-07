@@ -33,42 +33,15 @@
 
 <div class="card shadow-sm mb-4">
   <div class="card-body">
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>&nbsp;</th>
-          <th class="text-end">Time</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @waterfall.ordered.each do |span| %>
-          <%
-            offset = @waterfall.offset_for(span)
-            color = @waterfall.color_for(span)
-            width = @waterfall.width_for(span)
-          %>
-          <tr class="small">
-            <td>
-              <%= span.title %>
-            </td>
-            <td style="width: <%= @waterfall.width %>;">
-              <div style="padding-left: <%= offset %>%;">
-                <div class="rounded <%= color %>" style="width: <%= width %>%">&nbsp;</div>
-              </div>
-            </td>
-            <td class="text-end">
-              <%= span.duration %>ms
-            </td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
-</div>
-
-<div class="card shadow-sm">
-  <div class="card-body">
-    <%= debug @waterfall.ordered %>
+    <div>
+      <div class="row border-bottom">
+        <div class="col-12 col-md-4">&nbsp;</div>
+        <div class="col-12 col-md-6 small fw-bold">Name</div>
+        <div class="col-12 col-md-2 small fw-bold text-end">Time</div>
+      </div>
+      <% @waterfall.ordered.each do |span| %>
+        <%= render "span", span: span %>
+      <% end %>
+    </div>
   </div>
 </div>

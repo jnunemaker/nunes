@@ -1,0 +1,31 @@
+<%
+  offset = @waterfall.offset_for(span)
+  color = @waterfall.color_for(span)
+  width = @waterfall.width_for(span)
+%>
+<div class="row d-flex align-items-center small border-bottom px-0 py-2">
+  <div class="col-12 col-md-4 mb-3 mb-md-0">
+    <div class="position-relative">
+      <div class="position-absolute rounded <%= color %>"
+        style="left: <%= offset %>%; width: <%= width %>%;">
+        &nbsp;
+      </div>
+      &nbsp;
+    </div>
+  </div>
+  <div class="col-12 col-md-6">
+    <pre class="m-0 p-0 fw-bold"><%= span.title %></pre>
+  </div>
+  <div class="col-12 col-md-2 small text-md-end">
+    <%= span.duration %>ms
+  </div>
+  <div class="col-12" id="span-details-<%= span.id %>">
+    <div class="row">
+      <div class="col-md-6 offset-md-4">
+        <% if preview = span.preview %>
+          <small class="text-muted"><%= preview %></small>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

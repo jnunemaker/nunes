@@ -4,8 +4,7 @@
 module Nunes
   class Event # rubocop:disable Metrics/ClassLength
     def self.skip?(name)
-      name.start_with?('!') ||
-        name == 'start_processing.action_controller'
+      name.start_with?('!')
     end
 
     # Exception could be in any payload.
@@ -40,6 +39,23 @@ module Nunes
       when 'unpermitted_parameters.action_controller'
         # :keys	The unpermitted keys
         # :context	Hash with the following keys: :controller, :action, :params, :request
+      when 'start_processing.action_controller'
+        # :controller	The controller name
+        # :action	The action
+        # :params	Hash of request parameters without any filtered parameter
+        # :headers	Request headers
+        # :format	html/js/json/xml etc
+        # :method	HTTP request verb
+        # :path	Request path
+        %i[controller action format path].each do |key|
+          if (value = payload[key])
+            tags[key] = value
+          end
+        end
+
+        if (value = payload[:method])
+          tags[:verb] = value
+        end
       when 'process_action.action_controller'
         # :controller	The controller name
         # :action	The action
