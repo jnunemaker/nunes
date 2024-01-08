@@ -11,6 +11,8 @@ module Nunes
 
       def title
         case name
+        when 'request'
+          "#{span[:verb]} #{span[:path]}"
         when 'start_processing.action_controller'
           'Start ' + span[:controller] + '#' + span[:action]
         when 'process_action.action_controller'

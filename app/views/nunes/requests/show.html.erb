@@ -1,40 +1,7 @@
 <div class="card shadow-sm mb-4">
-  <div class="card-header">
-    Request Details
-  </div>
-  <div class="card-body">
-    <dl class="row mb-0">
-      <dt class="fw-normal col-12 col-md-2">Verb</dt>
-      <dd class="col-12 col-md-10"><%= @waterfall.root.verb %></dd>
-
-      <dt class="fw-normal col-12 col-md-2">Path</dt>
-      <dd class="col-12 col-md-10">
-        <span class="m-0 p-0 font-monospace small"><%= @waterfall.root.path %></span>
-      </dd>
-
-      <dt class="fw-normal col-12 col-md-2">Status</dt>
-      <dd class="col-12 col-md-10">
-        <span class="badge <%= @waterfall.root.status_css_class %> fw-normal">
-          <%= @waterfall.root.status %>
-        </span>
-      </dd>
-
-      <dt class="fw-normal col-12 col-md-2">Duration</dt>
-      <dd class="col-12 col-md-10"><%= @waterfall.root.duration %>ms</dd>
-
-      <dt class="fw-normal col-12 col-md-2">When</dt>
-      <dd class="col-12 col-md-10"><%= compact_time_ago @waterfall.trace_started_at %></dd>
-
-      <dt class="fw-normal col-12 col-md-2">IP</dt>
-      <dd class="col-12 col-md-10"><%= @waterfall.root.ip %></dd>
-    </dl>
-  </div>
-</div>
-
-<div class="card shadow-sm mb-4">
   <div class="card-body">
     <div>
-      <div class="row border-bottom">
+      <div class="row border-bottom d-none d-md-flex">
         <div class="col-12 col-md-4">&nbsp;</div>
         <div class="col-12 col-md-6 small fw-bold">Name</div>
         <div class="col-12 col-md-2 small fw-bold text-end">Time</div>
