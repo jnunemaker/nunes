@@ -12,11 +12,11 @@
         <% @requests.each do |request| %>
           <div class="row d-flex align-items-center small border-bottom px-0 py-2">
             <div class="col-12 col-md-1">
-              <span class="badge text-bg-light fw-normal"><%= request.verb %></span>
+              <span class="badge text-bg-light fw-normal request-verb"><%= request.verb %></span>
             </div>
             <div class="col-12 col-md-5">
               <a href="/nunes/requests/<%= request.trace_id %>" class="d-block text-decoration-none text-secondary text-truncate">
-                <span class="m-0 p-0 font-monospace small"><%= request.path %></span>
+                <span class="m-0 p-0 font-monospace small request-path"><%= request.path %></span>
               </a>
             </div>
             <div class="col-12 col-md-2 text-end request-status">
