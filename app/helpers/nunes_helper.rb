@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module NunesHelper
   def compact_time_ago(time)
     if time.blank?

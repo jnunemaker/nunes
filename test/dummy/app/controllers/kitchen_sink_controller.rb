@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class KitchenSinkController < ApplicationController
   def boom
     raise "boom"

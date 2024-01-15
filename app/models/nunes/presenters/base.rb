@@ -1,4 +1,6 @@
-require 'delegate'
+# frozen_string_literal: true
+
+require "delegate"
 
 module Nunes
   module Presenters

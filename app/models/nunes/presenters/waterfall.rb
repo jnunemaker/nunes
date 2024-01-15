@@ -1,4 +1,6 @@
-require_relative 'base'
+# frozen_string_literal: true
+
+require_relative "base"
 
 module Nunes
   module Presenters
@@ -23,15 +25,15 @@ module Nunes
       def color_for(span)
         case span.name
         when /\.active_record/
-          'bg-primary-subtle'
+          "bg-primary-subtle"
         when /\.action_view/
-          'bg-info-subtle'
+          "bg-info-subtle"
         when /\.active_support/
-          'bg-success-subtle'
+          "bg-success-subtle"
         when /\.active_job/
-          'bg-warning-subtle'
+          "bg-warning-subtle"
         else
-          'bg-secondary-subtle'
+          "bg-secondary-subtle"
         end
       end
 
@@ -42,19 +44,15 @@ module Nunes
       def root
         @root ||= begin
           root = spans.detect { |span| span.parent_id.nil? }
-          raise 'no root span found' unless root
+          raise "no root span found" unless root
 
           Presenters::Request.new(root.span)
         end
       end
 
-      def trace_started_at
-        root.trace_started_at
-      end
+      delegate :trace_started_at, to: :root
 
-      def started_at
-        root.started_at
-      end
+      delegate :started_at, to: :root
 
       def finished_at
         spans.max_by(&:finished_at).finished_at

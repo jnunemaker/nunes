@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Nunes
   class MetricsReporter
     def add_to_counter(metric, increment: 1, labels: {})

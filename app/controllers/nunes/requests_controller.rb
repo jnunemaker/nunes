@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Nunes
   class RequestsController < ApplicationController
     def index

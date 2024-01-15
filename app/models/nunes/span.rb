@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Nunes::Span < ApplicationRecord
   scope :by_recent, -> { order(created_at: :desc) }
   scope :roots, -> { where(parent_id: nil) }

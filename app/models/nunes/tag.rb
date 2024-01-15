@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Nunes::Tag < ApplicationRecord
   belongs_to :span
 

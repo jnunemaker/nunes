@@ -1,4 +1,6 @@
-require_relative 'base'
+# frozen_string_literal: true
+
+require_relative "base"
 
 module Nunes
   module Presenters
@@ -29,16 +31,16 @@ module Nunes
 
       def status_css_class
         case status.to_s[0]
-        when '1'
-          'text-bg-primary'
-        when '2'
-          'text-bg-success'
-        when '3'
-          'text-bg-warning'
-        when '4', '5'
-          'text-bg-danger'
+        when "1"
+          "text-bg-primary"
+        when "2"
+          "text-bg-success"
+        when "3"
+          "text-bg-warning"
+        when "4", "5"
+          "text-bg-danger"
         else
-          'text-bg-secondary'
+          "text-bg-secondary"
         end
       end
     end

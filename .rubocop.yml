@@ -26,6 +26,7 @@ Style/Documentation:
 Style/FrozenStringLiteralComment:
   Enabled: true
   EnforcedStyle: always
+  SafeAutoCorrect: true
 
 Style/PercentLiteralDelimiters:
   Enabled: true
