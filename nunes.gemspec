@@ -30,5 +30,11 @@ Gem::Specification.new do |spec|
   spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
+  spec.add_dependency 'opentelemetry-instrumentation-mysql2'
+  spec.add_dependency 'opentelemetry-instrumentation-net_http'
+  spec.add_dependency 'opentelemetry-instrumentation-pg'
+  spec.add_dependency 'opentelemetry-instrumentation-rack'
+  spec.add_dependency 'opentelemetry-instrumentation-rails'
+  spec.add_dependency 'opentelemetry-sdk'
   spec.add_dependency 'rails', '>= 7.0.0', '< 8.0.0'
 end

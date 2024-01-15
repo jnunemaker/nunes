@@ -1,3 +1,8 @@
+require:
+  - rubocop-minitest
+  - rubocop-performance
+  - rubocop-rails
+
 Metrics/MethodLength:
   Max: 50
   Exclude:
@@ -11,6 +16,16 @@ Metrics/AbcSize:
 Performance:
   Exclude:
     - "test/**/*"
+
+Layout/FirstHashElementIndentation:
+  EnforcedStyle: consistent
+
+Style/Documentation:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: true
+  EnforcedStyle: always
 
 Style/PercentLiteralDelimiters:
   Enabled: true
