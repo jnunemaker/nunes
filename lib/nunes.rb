@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "nunes/version"
+require_relative "nunes/span_processor"
 
 module Nunes
   extend self
@@ -12,7 +13,7 @@ module Nunes
   end
 
   def span_processor
-    @span_processor ||= OpenTelemetry::SDK::Trace::Export::SimpleSpanProcessor.new(exporter)
+    @span_processor ||= SpanProcessor.new(exporter)
   end
 
   def tracer
