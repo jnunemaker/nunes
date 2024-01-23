@@ -2,6 +2,14 @@
 
 require_relative "nunes/version"
 require_relative "nunes/span_processor"
+require_relative "nunes/active_record_exporter"
+
+require "opentelemetry/sdk"
+require "opentelemetry-instrumentation-rails"
+require "opentelemetry-instrumentation-mysql2"
+require "opentelemetry-instrumentation-net_http"
+require "opentelemetry-instrumentation-pg"
+require "opentelemetry-instrumentation-rack"
 
 module Nunes
   extend self
@@ -9,7 +17,11 @@ module Nunes
   class Error < StandardError; end
 
   def exporter
-    @exporter ||= OpenTelemetry::SDK::Trace::Export::InMemorySpanExporter.new
+    @exporter ||= ActiveRecordExporter.new
+  end
+
+  def exporter=(exporter)
+    @exporter = exporter
   end
 
   def span_processor
@@ -18,6 +30,10 @@ module Nunes
 
   def tracer
     @tracer ||= OpenTelemetry.tracer_provider.tracer("Nunes", Nunes::VERSION)
+  end
+
+  def untraced(&block)
+    OpenTelemetry::Common::Utilities.untraced(&block)
   end
 
   ACTIVE_SUPPORT_EVENTS = [
@@ -115,10 +131,3 @@ module Nunes
 end
 
 require "nunes/engine" if defined?(Rails)
-
-require "opentelemetry/sdk"
-require "opentelemetry-instrumentation-rails"
-require "opentelemetry-instrumentation-mysql2"
-require "opentelemetry-instrumentation-net_http"
-require "opentelemetry-instrumentation-pg"
-require "opentelemetry-instrumentation-rack"

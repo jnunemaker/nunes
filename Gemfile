@@ -4,6 +4,7 @@ source "https://rubygems.org"
 
 gemspec
 
+gem "factory_bot", "~> 6.4"
 gem "minitest", "~> 5.16"
 gem "minitest-focus", "~> 1.4"
 gem "opentelemetry-test-helpers"

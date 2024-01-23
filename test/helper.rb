@@ -11,16 +11,19 @@ require "nunes"
 
 ActiveSupport::TestCase.setup do
   # Delete sql data...
-  User.delete_all
-  Nunes::Tag.delete_all
-  Nunes::Span.delete_all
+  Nunes.untraced do
+    User.delete_all
+    Nunes::Property.delete_all
+    Nunes::Event.delete_all
+    Nunes::Span.delete_all
+  end
 
   # Reset otel...
   OpenTelemetry::TestHelpers.reset_opentelemetry
 
   # Reset some nunes state...
   Nunes.unsubscribe
-  Nunes.exporter.reset
+  Nunes.exporter.reset if Nunes.exporter.respond_to?(:reset)
 
   # Let's make sure we can print out errors so we know about them...
   Nunes.configure do |c|

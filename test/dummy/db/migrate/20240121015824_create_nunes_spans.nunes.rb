@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# This migration comes from nunes (originally 20231229000000)
 class CreateNunesSpans < ActiveRecord::Migration[7.0]
   def change
     create_table :nunes_spans do |t|
