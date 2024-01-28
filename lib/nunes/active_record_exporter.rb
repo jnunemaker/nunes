@@ -9,14 +9,6 @@ module Nunes
     FAILURE = OpenTelemetry::SDK::Trace::Export::FAILURE
     TIMEOUT = OpenTelemetry::SDK::Trace::Export::TIMEOUT
 
-    def finished_spans
-      Nunes.untraced do
-        Nunes::Span.connection_pool.with_connection do
-          Span.order(:id)
-        end
-      end
-    end
-
     def export(span_datas, timeout: nil)
       Nunes.untraced do
         Nunes::Span.connection_pool.with_connection do
