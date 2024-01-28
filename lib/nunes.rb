@@ -14,28 +14,6 @@ require "opentelemetry-instrumentation-rack"
 module Nunes
   extend self
 
-  class Error < StandardError; end
-
-  def exporter
-    @exporter ||= ActiveRecordExporter.new
-  end
-
-  def exporter=(exporter)
-    @exporter = exporter
-  end
-
-  def span_processor
-    @span_processor ||= SpanProcessor.new(exporter)
-  end
-
-  def tracer
-    @tracer ||= OpenTelemetry.tracer_provider.tracer("Nunes", Nunes::VERSION)
-  end
-
-  def untraced(&block)
-    OpenTelemetry::Common::Utilities.untraced(&block)
-  end
-
   ACTIVE_SUPPORT_EVENTS = [
     "send_file.action_controller",
     "send_data.action_controller",
@@ -101,6 +79,28 @@ module Nunes
     "service_update_metadata.active_storage",
     "process.action_mailbox",
   ].freeze
+
+  class Error < StandardError; end
+
+  def exporter
+    @exporter ||= ActiveRecordExporter.new
+  end
+
+  def exporter=(exporter)
+    @exporter = exporter
+  end
+
+  def span_processor
+    @span_processor ||= SpanProcessor.new(exporter)
+  end
+
+  def tracer
+    @tracer ||= OpenTelemetry.tracer_provider.tracer("Nunes", Nunes::VERSION)
+  end
+
+  def untraced(&block)
+    OpenTelemetry::Common::Utilities.untraced(&block)
+  end
 
   def configure
     ENV["OTEL_SERVICE_NAME"] ||= Rails.application.class.name.split("::").first.underscore
