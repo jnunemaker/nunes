@@ -20,6 +20,10 @@ Performance:
 Layout/FirstHashElementIndentation:
   EnforcedStyle: consistent
 
+Layout/EndAlignment:
+  EnforcedStyleAlignWith: variable
+  SafeAutoCorrect: true
+
 Style/Documentation:
   Enabled: false
 
