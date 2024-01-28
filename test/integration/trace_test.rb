@@ -13,13 +13,13 @@ module Nunes
       assert_not_nil span
 
       assert_equal "UsersController#index", span.name
-      assert_equal "www.example.com", span["http.host"]
-      assert_equal "GET", span["http.method"]
-      assert_equal "http", span["http.scheme"]
-      assert_equal "/users", span["http.target"]
-      assert_equal 200, span["http.status_code"]
-      assert_equal "UsersController", span["code.namespace"]
-      assert_equal "index", span["code.function"]
+      assert_equal "www.example.com", span.property("http.host")
+      assert_equal "GET", span.property("http.method")
+      assert_equal "http", span.property("http.scheme")
+      assert_equal "/users", span.property("http.target")
+      assert_equal 200, span.property("http.status_code")
+      assert_equal "UsersController", span.property("code.namespace")
+      assert_equal "index", span.property("code.function")
     end
 
     test "traces active jobs" do
@@ -45,18 +45,18 @@ module Nunes
       assert_not_nil span
 
       assert_equal "KitchenSinkController#boom", span.name
-      assert_equal "www.example.com", span["http.host"]
-      assert_equal "GET", span["http.method"]
-      assert_equal "http", span["http.scheme"]
-      assert_equal "/boom", span["http.target"]
-      assert_nil span["http.status_code"]
-      assert_equal "KitchenSinkController", span["code.namespace"]
-      assert_equal "boom", span["code.function"]
+      assert_equal "www.example.com", span.property("http.host")
+      assert_equal "GET", span.property("http.method")
+      assert_equal "http", span.property("http.scheme")
+      assert_equal "/boom", span.property("http.target")
+      assert_nil span.property("http.status_code")
+      assert_equal "KitchenSinkController", span.property("code.namespace")
+      assert_equal "boom", span.property("code.function")
       assert_not_nil event = span.events.first
       assert_equal "exception", event.name
-      assert_equal "RuntimeError", event["exception.type"]
-      assert_equal "boom", event["exception.message"]
-      assert_not_nil event["exception.stacktrace"]
+      assert_equal "RuntimeError", event.property("exception.type")
+      assert_equal "boom", event.property("exception.message")
+      assert_not_nil event.property("exception.stacktrace")
       # assert_equal 2, span.status.code
     end
 
@@ -66,11 +66,11 @@ module Nunes
 
       span = find_span("active_record sql")
       assert_not_nil span
-      assert_equal 'SELECT "users".* FROM "users"', span["sql"]
-      assert_equal "User Load", span["name"]
-      assert_predicate span["binds"], :blank?
-      assert_predicate span["type_casted_binds"], :blank?
-      assert_not span["async"]
+      assert_equal 'SELECT "users".* FROM "users"', span.property("sql")
+      assert_equal "User Load", span.property("name")
+      assert_predicate span.property("binds"), :blank?
+      assert_predicate span.property("type_casted_binds"), :blank?
+      assert_not span.property("async")
     end
 
     private
@@ -81,10 +81,10 @@ module Nunes
 
     def find_spans(string_or_pattern)
       matcher = if string_or_pattern.is_a?(Regexp)
-                  ->(span) { span.name =~ string_or_pattern }
-                else
-                  ->(span) { span.name == string_or_pattern }
-                end
+        ->(span) { span.name =~ string_or_pattern }
+      else
+        ->(span) { span.name == string_or_pattern }
+      end
 
       Nunes::Span.all.select(&matcher)
     end

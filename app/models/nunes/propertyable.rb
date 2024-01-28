@@ -6,7 +6,10 @@ module Nunes
 
     included do
       has_many :properties, class_name: "Nunes::Property", as: :owner, dependent: :destroy
-      delegate :[], to: :properties_hash
+    end
+
+    def property(key)
+      properties_hash[key]
     end
 
     def properties_hash
