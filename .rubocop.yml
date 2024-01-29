@@ -27,6 +27,10 @@ Layout/EndAlignment:
 Style/Documentation:
   Enabled: false
 
+Style/Lambda:
+  EnforcedStyle: literal
+  SafeAutoCorrect: true
+
 Style/FrozenStringLiteralComment:
   Enabled: true
   EnforcedStyle: always
