@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
-  mount Nunes::Engine => "/nunes" if Rails.env.development? || Rails.env.test?
+  mount Nunes::Engine => "/nunes" if Rails.env.test?
 
   resources :users
   get "/boom" => "kitchen_sink#boom"
