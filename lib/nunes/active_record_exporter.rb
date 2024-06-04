@@ -11,13 +11,15 @@ module Nunes
 
     def export(span_datas, timeout: nil)
       Nunes.untraced do
-        return unless Span.table_exists?
-        return unless Event.table_exists?
-        return unless Property.table_exists?
+        Rails.logger.silence do
+          Nunes::Span.connection_pool.with_connection do
+            return unless Span.table_exists?
+            return unless Event.table_exists?
+            return unless Property.table_exists?
 
-        Nunes::Span.connection_pool.with_connection do
-          span_datas.each do |span_data|
-            create_span(span_data)
+            span_datas.each do |span_data|
+              create_span(span_data)
+            end
           end
         end
       end
