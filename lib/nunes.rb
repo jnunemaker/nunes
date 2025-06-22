@@ -112,9 +112,7 @@ module Nunes
       c.add_span_processor Nunes.span_processor
       c.use_all(
         "OpenTelemetry::Instrumentation::Rack" => {
-          untraced_requests: ->(env) {
-            env["PATH_INFO"].start_with?("/nunes")
-          },
+          untraced_requests: ->(env) { env["PATH_INFO"].start_with?("/nunes") },
         },
       )
     end
