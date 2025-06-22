@@ -9,10 +9,10 @@ module Nunes
       get "/users"
       assert_response :success
 
-      span = find_span("UsersController#index")
-      assert_not_nil span
+      span = find_span("GET /users")
+      assert_not_nil span, Nunes::Span.all.map(&:name).join(", ")
 
-      assert_equal "UsersController#index", span.name
+      assert_equal "GET /users", span.name
       assert_equal "www.example.com", span.property("http.host")
       assert_equal "GET", span.property("http.method")
       assert_equal "http", span.property("http.scheme")
@@ -41,10 +41,10 @@ module Nunes
         get "/boom"
       end
 
-      span = find_span("KitchenSinkController#boom")
+      span = find_span("GET /boom")
       assert_not_nil span
 
-      assert_equal "KitchenSinkController#boom", span.name
+      assert_equal "GET /boom", span.name
       assert_equal "www.example.com", span.property("http.host")
       assert_equal "GET", span.property("http.method")
       assert_equal "http", span.property("http.scheme")
@@ -64,7 +64,7 @@ module Nunes
       get "/users"
       assert_response :success
 
-      span = find_span("active_record sql")
+      span = find_span("sql.active_record")
       assert_not_nil span
       assert_equal 'SELECT "users".* FROM "users"', span.property("sql")
       assert_equal "User Load", span.property("name")

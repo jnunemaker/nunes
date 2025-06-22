@@ -3,13 +3,13 @@
 module Nunes
   class RequestsController < ApplicationController
     def index
-      @requests = Nunes.adapter.all.map do |span|
+      @requests = Span.requests.order(created_at: :desc).map do |span|
         Presenters::Request.new(span)
       end
     end
 
     def show
-      spans = Nunes.adapter.get(params[:id])
+      spans = Span.where(trace_id: params[:id])
       render(:not_found, status: :not_found) && return if spans.blank?
 
       spans = spans.map { |span| Presenters::Span.new(span) }

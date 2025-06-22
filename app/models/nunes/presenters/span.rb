@@ -11,16 +11,14 @@ module Nunes
 
       def title
         case name
-        when "request"
-          "#{span[:verb]} #{span[:path]}"
         when "start_processing.action_controller"
-          "Start " + span[:controller] + "#" + span[:action]
+          "Start #{span[:controller]}##{span[:action]}"
         when "process_action.action_controller"
-          "Finish " + span[:controller] + "#" + span[:action]
+          "Finish #{span[:controller]}##{span[:action]}"
         when "sql.active_record"
           span[:name].presence || name
         when "render_partial.action_view", "render_collection.action_view", "render_layout.action_view", "render_template.action_view"
-          "View " + clean_path(span[:identifier])
+          "View #{clean_path(span[:identifier])}"
         else
           name
         end

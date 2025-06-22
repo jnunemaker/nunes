@@ -9,24 +9,16 @@ module Nunes
         __getobj__
       end
 
-      def trace_started_at
-        Time.at(tags[:started_at].to_i)
-      end
-
-      def ip
-        tags[:ip]
-      end
-
       def verb
-        tags[:verb]
+        span.property("http.method")
       end
 
       def path
-        tags[:path]
+        span.property("http.target")
       end
 
       def status
-        tags[:status]
+        span.property("http.status_code")
       end
 
       def status_css_class

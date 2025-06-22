@@ -6,3 +6,8 @@ set -vx
 bundle install
 
 # Do any other automated setup that you need to do here
+
+cd test/dummy
+bundle install
+bundle exec rails db:create db:migrate
+cd ../..

@@ -1,0 +1,4 @@
+#!/bin/sh
+
+foreman start -p 3000
+

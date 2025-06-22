@@ -9,12 +9,16 @@ module Nunes
       # span is a sliver so small it cannot be seen.
       MIN_WIDTH_PERCENTAGE = 2
 
+      delegate :start_timestamp, to: :root
+      delegate :end_timestamp, to: :root
+
       def spans
         __getobj__
       end
 
       def offset_for(span)
-        (100.0 * (span.started_at - started_at) / duration).round(2)
+        start_offset = (span.start_timestamp - start_timestamp) / 1000.0
+        (100.0 * start_offset / duration).round(2)
       end
 
       def width_for(span)
@@ -38,28 +42,20 @@ module Nunes
       end
 
       def ordered
-        spans.sort_by(&:started_at)
+        spans.sort_by(&:start_timestamp)
       end
 
       def root
         @root ||= begin
-          root = spans.detect { |span| span.parent_id.nil? }
+          root = spans.detect(&:root?)
           raise "no root span found" unless root
 
           Presenters::Request.new(root.span)
         end
       end
 
-      delegate :trace_started_at, to: :root
-
-      delegate :started_at, to: :root
-
-      def finished_at
-        spans.max_by(&:finished_at).finished_at
-      end
-
       def duration
-        @duration ||= finished_at - started_at
+        @duration ||= (end_timestamp - start_timestamp) / 1000.0
       end
 
       def parent_for(span)
@@ -67,7 +63,7 @@ module Nunes
       end
 
       def children_for(span)
-        (by_parent_id[span.id] || []).sort_by!(&:started_at)
+        (by_parent_id[span.id] || []).sort_by!(&:start_timestamp)
       end
 
       private
