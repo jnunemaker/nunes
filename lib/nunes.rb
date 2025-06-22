@@ -12,7 +12,7 @@ require "opentelemetry-instrumentation-pg"
 require "opentelemetry-instrumentation-rack"
 
 module Nunes
-  extend self
+  module_function
 
   ACTIVE_SUPPORT_EVENTS = [
     "send_file.action_controller",
@@ -110,7 +110,13 @@ module Nunes
       c.logger = ::Rails.logger
       c.service_name = ENV["OTEL_SERVICE_NAME"]
       c.add_span_processor Nunes.span_processor
-      c.use_all
+      c.use_all(
+        "OpenTelemetry::Instrumentation::Rack" => {
+          untraced_requests: ->(env) {
+            env["PATH_INFO"].start_with?("/nunes")
+          },
+        },
+      )
     end
 
     ACTIVE_SUPPORT_EVENTS.each do |event_name|
