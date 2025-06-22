@@ -29,7 +29,7 @@ module Nunes
     end
 
     def duration
-      (end_timestamp - start_timestamp) / 1000.0
+      (end_timestamp - start_timestamp) / 1_000_000.0
     end
   end
 end

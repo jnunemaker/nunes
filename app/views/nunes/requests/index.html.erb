@@ -10,7 +10,6 @@
           <div class="col-12 col-md-2 small fw-bold text-end">When</div>
         </div>
         <% @requests.each do |request| %>
-        <%= debug request.properties.map(&:key) %>
           <div class="row d-flex align-items-center small border-bottom px-0 py-2">
             <div class="col-12 col-md-1">
               <span class="badge text-bg-light fw-normal request-verb"><%= request.verb %></span>
