@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require_relative "nunes/version"
-require_relative "nunes/span_processor"
 require_relative "nunes/active_record_exporter"
 
 require "opentelemetry/sdk"
@@ -10,6 +9,7 @@ require "opentelemetry-instrumentation-mysql2"
 require "opentelemetry-instrumentation-net_http"
 require "opentelemetry-instrumentation-pg"
 require "opentelemetry-instrumentation-rack"
+require "opentelemetry/sdk/trace/export/batch_span_processor"
 
 module Nunes
   module_function
@@ -32,9 +32,9 @@ module Nunes
     # "render_partial.action_view", # handled by otel action view
     # "render_collection.action_view", # handled by otel action view
     # "render_layout.action_view", # handled by otel action view
-    "sql.active_record",
-    "strict_loading_violation.active_record",
-    "instantiation.active_record",
+    # "sql.active_record",
+    # "strict_loading_violation.active_record",
+    # "instantiation.active_record",
     "deliver.action_mailer",
     "process.action_mailer",
     "cache_read.active_support",
@@ -91,7 +91,7 @@ module Nunes
   end
 
   def span_processor
-    @span_processor ||= SpanProcessor.new(exporter)
+    @span_processor ||= OpenTelemetry::SDK::Trace::Export::BatchSpanProcessor.new(exporter)
   end
 
   def tracer
@@ -117,9 +117,9 @@ module Nunes
       )
     end
 
-    ACTIVE_SUPPORT_EVENTS.each do |event_name|
-      subscribers << OpenTelemetry::Instrumentation::ActiveSupport.subscribe(tracer, event_name)
-    end
+    # ACTIVE_SUPPORT_EVENTS.each do |event_name|
+    #   subscribers << OpenTelemetry::Instrumentation::ActiveSupport.subscribe(tracer, event_name)
+    # end
   end
 
   def subscribers
