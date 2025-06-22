@@ -21,6 +21,14 @@ module Nunes
         span.property("http.status_code")
       end
 
+      def controller
+        span.property("code.namespace")
+      end
+
+      def action
+        span.property("code.function")
+      end
+
       def status_css_class
         case status.to_s[0]
         when "1"
