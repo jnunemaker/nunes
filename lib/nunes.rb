@@ -91,7 +91,7 @@ module Nunes
   end
 
   def span_processor
-    @span_processor ||= OpenTelemetry::SDK::Trace::Export::BatchSpanProcessor.new(exporter)
+    @span_processor ||= OpenTelemetry::SDK::Trace::Export::BatchSpanProcessor.new(exporter, schedule_delay: 1)
   end
 
   def tracer
