@@ -113,7 +113,7 @@ module Nunes
       c.use_all(
         "OpenTelemetry::Instrumentation::Rack" => {
           untraced_requests: ->(env) { env["PATH_INFO"].start_with?("/nunes") },
-        },
+        }
       )
     end
 
