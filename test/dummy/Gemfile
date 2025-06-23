@@ -69,3 +69,7 @@ end
 
 gem "ostruct"
 gem "json"
+
+gem "solid_queue", "~> 1.1"
+
+gem "mission_control-jobs", "~> 1.0"

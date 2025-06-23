@@ -2,6 +2,7 @@
 
 Rails.application.routes.draw do
   mount Nunes::Engine => "/nunes" if Rails.env.test?
+  mount MissionControl::Jobs::Engine, at: "/jobs" if Rails.env.development?
 
   resources :users
   get "/boom" => "kitchen_sink#boom"
