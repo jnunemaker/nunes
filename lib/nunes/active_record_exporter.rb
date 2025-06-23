@@ -18,6 +18,8 @@ module Nunes
             return unless Property.table_exists?
 
             span_datas.each do |span_data|
+              next if should_ignore_span?(span_data)
+
               create_span(span_data)
             end
           end
@@ -36,6 +38,12 @@ module Nunes
     end
 
     private
+
+    # Ignore spans that are related to Nunes models and operations. I use
+    # untraced whenever possible but console and other places still sneak in.
+    def should_ignore_span?(span_data)
+      span_data.name&.start_with?("Nunes::")
+    end
 
     def create_span(span_data)
       span_record = Span.create!({
